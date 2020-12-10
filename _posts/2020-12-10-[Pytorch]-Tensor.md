@@ -39,6 +39,7 @@ x = torch.Tensor(5, 3) # 5x3 행렬
 ```
 
 - torch.rand() : 무작위로 초기화 된 행렬을 생성할 수 있다.
+
 ```python
 x = torch.rand(5, 3) # 5x3 행렬
 >>> print(x)
@@ -56,6 +57,7 @@ x = torch.rand(5, 3) # 5x3 행렬
 ```
 
 - torch.zeors() : 값이 0인 행렬 생성
+
 ```python
 x = torch.zeros(5, 3)
 >>> print(x)
