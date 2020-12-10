@@ -14,4 +14,14 @@ Python 기반의 과학 연산 패키지로 기계학습(딥러닝)을 가능하
 
 **지금부터는 실제 Pytorch을 이용해 Tensor을 다뤄보도록 하자.**
 
-1. 
+1. Tensor
+```python
+import torch
+print(torch.__vserion__) # 1.4.0
+
+x = torch.Tensor(5, 3)
+y = torch.empty(5, 3)
+print(x, '\n')
+print(y, '\n')
+print(type(x), x.dtype, type(y), y,dtype)
+```
