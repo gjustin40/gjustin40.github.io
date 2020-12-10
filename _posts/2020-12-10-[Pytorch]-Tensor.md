@@ -56,6 +56,7 @@ x = torch.rand(5, 3) # 5x3 행렬
 # torch.Size([5, 3])
 ```
 
+<br>
 - torch.zeors() : 값이 0인 행렬 생성
 
 ```python
@@ -69,4 +70,54 @@ x = torch.zeros(5, 3)
 
 >>> print(x.dtype)
 # torch.float32
+```
+
+<br>
+- dtype 옵션을 통해 data type을 설정할 수 있다.
+
+```python
+x = torch.zeros(5, 3, dtype = torch.long) # 값은 0이고 data type이 long인 행렬 생성
+>>> print(x)
+# tensor([[0, 0, 0],
+#         [0, 0, 0],
+#         [0, 0, 0],
+#         [0, 0, 0],
+#         [0, 0, 0]])
+
+>>> print(x.dtype)
+# torch.int64
+```
+
+<br>
+- 직접 값을 입력하여 행렬을 생성할 수 있다.
+
+```python
+x = torch.Tensor([1, 5])
+>>> print(x)
+# tensor([1., 5.])
+```
+
+<br>
+- torch.zeros_like() : 입력한 Tensor와 동일한 shape, dtype을 가진 Tensor 생성
+- 이미 정의한 Tensor을 이용해서 동일한 shape의 행렬을 생성할 수 있다.<br>
+(사용자가 새로운 값을 적용하지 않는 한 입력한 인자들의 속성을 복사한다.)
+
+```python
+x = torch.zeros(5, 3) # 값이 0인 5x3행렬
+>>> print(x, x.dtype)
+# tensor([[0, 0, 0],
+#         [0, 0, 0],
+#         [0, 0, 0],
+#         [0, 0, 0],
+#         [0, 0, 0]]) 
+# torch.float32
+
+y = torch.zeors_like(x)
+print(y, y.dtype)
+# tensor([[0, 0, 0],
+#         [0, 0, 0],
+#         [0, 0, 0],
+#         [0, 0, 0],
+#         [0, 0, 0]]) 
+# torch.float32 
 ```
