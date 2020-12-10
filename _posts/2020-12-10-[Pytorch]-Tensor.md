@@ -20,7 +20,7 @@ Python 기반의 과학 연산 패키지로 기계학습(딥러닝)을 가능하
 
 ### 1. Tensor
 - Pytorch에서 가장 기본이 되는 데이터 형태
-- torch.Tensor()을 이용해서 가장 기본 형태의 Tensor 생성이 가능하다.
+- torch.Tensor() : 가장 기본 형태의 Tensor 생성이 가능하다.
 
 ```python
 import torch
@@ -38,7 +38,7 @@ x = torch.Tensor(5, 3) # 5x3 행렬
 # <class 'torch.Tensor'> torch.float32 <class 'torch.Tensor'> torch.float32
 ```
 
-- torch.rand()을 통해 무작위로 초기화 된 행렬을 생성할 수 있다.
+- torch.rand() : 무작위로 초기화 된 행렬을 생성할 수 있다.
 ```python
 x = torch.rand(5, 3) # 5x3 행렬
 >>> print(x)
@@ -55,4 +55,16 @@ x = torch.rand(5, 3) # 5x3 행렬
 # torch.Size([5, 3])
 ```
 
-- 
+- torch.zeors() : 값이 0인 행렬 생성
+```python
+x = torch.zeros(5, 3)
+>>> print(x)
+# tensor([[0., 0., 0.],
+#         [0., 0., 0.],
+#         [0., 0., 0.],
+#         [0., 0., 0.],
+#         [0., 0., 0.]])
+
+>>> print(x.dtype)
+# torch.float32
+```
