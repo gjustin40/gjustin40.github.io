@@ -27,8 +27,8 @@ y = torch.empty(5, 3)
 
 print(x, '\n')
 print(y, '\n')
-print(type(x), x.dtype, type(y), y,dtype)
->>> 
+>>>
+''' 
 tensor([[1.0653e-38, 4.2246e-39, 1.0286e-38],
         [1.0653e-38, 1.0194e-38, 8.4490e-39],
         [1.0469e-38, 9.3674e-39, 9.9184e-39],
@@ -40,6 +40,9 @@ tensor([[1.0561e-38, 1.0653e-38, 4.1327e-39],
         [1.0561e-38, 1.0653e-38, 1.0469e-38],
         [9.5510e-39, 9.1837e-39, 1.0561e-38],
         [1.0469e-38, 9.0000e-39, 1.0653e-38]]) 
-
-<class 'torch.Tensor'> torch.float32 <class 'torch.Tensor'> torch.float32
+'''
+print(type(x), x.dtype, type(y), y,dtype)
+'''
+>>> <class 'torch.Tensor'> torch.float32 <class 'torch.Tensor'> torch.float32
+'''
 ```
