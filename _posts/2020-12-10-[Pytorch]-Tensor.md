@@ -1,7 +1,7 @@
 ---
 layout: post
-title: [Pytorch] - Tensor
-date: 2020-12-10 22:00:00 +0900
+title: '[Pytorch] - Tensor'
+date: 2020-12-10 22:00:00 
 category: Pytorch
 ---
 AI기술이 향상되면서 많은 사람들이 기계가 학습하는 기술, Machine Learning에 대해 관심을 가지게 되었다. 나도 그 기술에 매료되어 공부를 시작했고, 그 도구로 Pytorch를 이용했다. 앞으로 Pytorch category에 올리는 포스트에는 Pytorch로 공부한 내용을 업로드 할 예정이다.
