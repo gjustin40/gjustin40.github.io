@@ -2,7 +2,7 @@
 layout: post
 title:  "자료구조 : 개요, 배열(Array), 큐(Queue)"
 date:   2020-01-15 21:00:00
-categories: 자료구조
+categories: Data-Structure
 ---
 
 
