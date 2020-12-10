@@ -41,7 +41,7 @@ Bangalore, India의 길거리에서 찍은 *영어*와 *칸나다어*를 기본 
 
 *영어*의 경우 대문자와 소문자(각각 26개씩) 그리고 10개의 숫자를 합쳐서 총 62개의 class를 이용했고 *칸나다어*의 경우 기본 49개의 alpha-syllabary(알파벳 자음표)와 자음과 모음의 조합으로 만들 수 있는 600개의 단어들을 합쳐 총 657개의 class를 이용했다.
 
-![3](https://i.imgur.com/gXVj2al.png)
+
 
 1. **Natural Images Datasets(*Img*)**
  - 간판이나 광고판, 슈퍼마켓 등에서 직접 촬영한 이미지 1922장
@@ -49,7 +49,8 @@ Bangalore, India의 길거리에서 찍은 *영어*와 *칸나다어*를 기본 
  - 분할은 rectangle bounding box와 polygonal segments 두 가지로 진행<br>(**실험 결과에 의하면 polygonal은 아무 효과가 없어서 bounding box만 사용**)
  - *영어*는 총 12503개 중 7705개의 단어 사용(상태불량인 단어 제외)
  - *칸나다어*는 총 4194개 중 3345개의 단어 사용(상태불량인 단어 제외)
-![2](https://i.imgur.com/I7GKGWn.png)
+
+![2](https://i.imgur.com/I7GKGWn.png)W
 
 2. **Hand-Printed Datasets(*Hnd*)**
  - 테블릿PC를 이용하여 다양한 두께의 펜으로 작성된 글씨
@@ -61,6 +62,8 @@ Bangalore, India의 길거리에서 찍은 *영어*와 *칸나다어*를 기본 
  - *영어*만 이용함
  - 254개의 폰트와 4개의 스타일(normal, bold, italic, bold+italic) 적용
  - 총 62992개의 글자 생성<br>
+ 
+![3](https://i.imgur.com/gXVj2al.png)
 
 논문에서는 위 3가지의 데이터셋을 각각 *Img*, *Hnd*, *Fnt*로 표기했다.
 
