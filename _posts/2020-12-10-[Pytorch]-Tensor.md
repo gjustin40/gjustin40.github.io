@@ -1,6 +1,6 @@
 ---
 layout: post
-title: post-sample
+title: [Pytorch] - Tensor
 date: 2020-12-10 22:00:00 +0900
 category: Pytorch
 ---
@@ -18,7 +18,6 @@ Python 기반의 과학 연산 패키지로 기계학습(딥러닝)을 가능하
 ```python
 import torch
 print(torch.__vserion__) # 1.4.0
-
 x = torch.Tensor(5, 3)
 y = torch.empty(5, 3)
 print(x, '\n')
