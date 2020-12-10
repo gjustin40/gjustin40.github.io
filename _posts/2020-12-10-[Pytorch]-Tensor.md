@@ -22,27 +22,15 @@ Python 기반의 과학 연산 패키지로 기계학습(딥러닝)을 가능하
 ```python
 import torch
 print(torch.__vserion__) # 1.4.0
-x = torch.Tensor(5, 3)
-y = torch.empty(5, 3)
 
-print(x, '\n')
-print(y, '\n')
->>>
-''' 
-tensor([[1.0653e-38, 4.2246e-39, 1.0286e-38],
-        [1.0653e-38, 1.0194e-38, 8.4490e-39],
-        [1.0469e-38, 9.3674e-39, 9.9184e-39],
-        [8.7245e-39, 9.2755e-39, 8.9082e-39],
-        [9.9184e-39, 8.4490e-39, 9.6429e-39]]) 
+x = torch.Tensor(5, 3) # 5 x 3 행렬
+>>> print(x, '\n')
+# tensor([[1.0653e-38, 4.2246e-39, 1.0286e-38],
+#         [1.0653e-38, 1.0194e-38, 8.4490e-39],
+#         [1.0469e-38, 9.3674e-39, 9.9184e-39],
+#         [8.7245e-39, 9.2755e-39, 8.9082e-39],
+#         [9.9184e-39, 8.4490e-39, 9.6429e-39]]) 
 
-tensor([[1.0561e-38, 1.0653e-38, 4.1327e-39],
-        [8.9082e-39, 9.8265e-39, 9.4592e-39],
-        [1.0561e-38, 1.0653e-38, 1.0469e-38],
-        [9.5510e-39, 9.1837e-39, 1.0561e-38],
-        [1.0469e-38, 9.0000e-39, 1.0653e-38]]) 
-'''
-print(type(x), x.dtype, type(y), y,dtype)
-'''
->>> <class 'torch.Tensor'> torch.float32 <class 'torch.Tensor'> torch.float32
-'''
+>>> print(type(x), x.dtype, type(y), y,dtype)
+# <class 'torch.Tensor'> torch.float32 <class 'torch.Tensor'> torch.float32
 ```
