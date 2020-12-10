@@ -15,6 +15,7 @@ description: Bag of Visual Words에 대하여
 
 
 ## 분류(Classification)
+<hr>
 우리가 보통 이미지를 분류하는 문제를 다룰 때 어떻게 해왔는가? 물론 지금은 딥러닝이 많이 발전해서 end-to-end모델에 이미지를 원본(또는 약간의 수정) 그대로 넣어 분류문제를 해결하지만, 과거에 머신러닝(ML, 딥러닝이 아닌 머신러닝)을 이용하던 때에는 이미지를 컴퓨터(모델)가 이해할 수 있도록 변환시킨 후 모델에 대입했었다. 따라서 이미지를 표현(Represent)하는 여러 방법들이 연구되었고, 그 중 하나가 바로 Bag-of-Visual-Words기법이었다. computer vision분야에서 좋은 성과를 선보였던 Bag-of-Visual-Words기법에 대해 알아보자.<br>
 (편의상 BOVW로 칭하자. 너무 길어요ㅠㅠ)
 
@@ -23,6 +24,7 @@ description: Bag of Visual Words에 대하여
 
 
 ## Bag-of-Words(BOW)
+<hr>
 BOVW를 알기 전에 먼저 BOW(Bag-of-Words)에 대해 알아보자. BOW는 자연어처리(NLP, Natural Language Processing)에서 흔히 사용되는 기법으로 문서(Document)들을 분류할 때 자주 사용한다. 문서들의 뭉치에 포함되어 있는 단어들의 분포를 파악하여 해당 문서가 어떤 문서인지 분류하는 기법을 말한다. 예를 들어 논문(문서)에 '세포', '바이러스', 'DNA' 등의 단어들이 자주 나오면 이 논문은 '생물학'과 관련된 내용으로 분류하게 되고, 'CO2', 'NH4' , 'O2' 등의 화학기호가 많이 나오면 '화학'과 관련된 내용으로 분류하게 된다. 문서들의 뭉치에서 나온 단어들을 가방(Bag)에 넣고 단어들의 사용 횟수(분포)를 파악하여 각 클래스별로 분류를 짓는 방식이다.
 
 ![사진-BOW](https://i.imgur.com/HlaJZ51.png)
@@ -39,8 +41,7 @@ BOW와 마찬가지로 BOVW 또한 이러한 방식을 모방한 기법인데, N
 
 
 ## Bag-of-Visual-Words(BOVW)
-<br>
-
+<hr>
 ### 가정(Hypothesis)
 본 개념의 이해를 돕기 위해 가정을 한 가지 세워보자.<br>
 지금부터 우리는 (강아지, 사람, 자동차) 이 3가지의 클래스에 대해 '분류'작업을 실시한다고 가정하자. 그러면 한 이미지에 대해 해당 이미지가 3가지 클래스 중 어느곳에 속하는지 알아내야 하는데, 그 과정을 생각하면서 개념을 이해해보자.
@@ -81,6 +82,7 @@ BOVW는 세 가지의 과정을 거쳐서 완성된다.
  - 알고리즘을 적용하면 특징점(x,y)을 얻을 수 있다.
  - 여기서 특징점(Keypoints)는 픽셀(pixel)이 될 수도 있고, 더 넓은 구역(patch)가 될 수도 있다.
  - 모든 사진에 대해 Keypoints를 추출한다.
+
 ![사진-feature 결과](https://i.imgur.com/oz0Za9Q.png)
 
 <br>
@@ -90,6 +92,7 @@ BOVW는 세 가지의 과정을 거쳐서 완성된다.
  - (x,y)좌표로는 해당 점이 무엇을 나타내는지 컴퓨터가 알 수 없다(이미지에서 단순히 위치정보만 포함).
  - 하나의 '기준'을 토대로 해당 점을 설명하는 vector를 만든다(의미부여). --> Description
  - 다양한 descriptor가 있지만 대표적으로 SIFT나 HOG등이 있다.(SIFT는 detector와 descriptor 둘 다 가능)
+
 ![사진-feature description 결과](https://i.imgur.com/9KsxIXg.png)
 
 <br>
@@ -98,6 +101,7 @@ BOVW는 세 가지의 과정을 거쳐서 완성된다.
  - 모든 Keypoints에 대해 Description을 만들면 비슷한 부분들이 많다. 따라서 그 중 대표적인 Description들만 추출하기 위해 비지도학습 알고리즘을 적용하여 k개의 대표값(Codebook)을 추출한다.
  - 비지도학습으로 [K-means Clustering][k-means-docs] 알고리즘을 많이 사용한다.
  - k값은 결국 대표값(Codebook)의 size을 뜻하고, 결국 BOVW의 Size가 된다.
+
 ![사진-codebook 사진](https://i.imgur.com/XxXvtr5.png)
 
 <br>
@@ -105,6 +109,7 @@ BOVW는 세 가지의 과정을 거쳐서 완성된다.
 **4. Histogram**
  - 완성된 Codebook을 토대로 각 이미지마다 히스토그램을 만든다.
  - Codebook의 크기가 k라면, 히스토그램의 x축의 크기(bin의 개수)도 k가 된다.
+
 ![사진-Histogram 사진](https://i.imgur.com/xzDKDZW.png)
 
 <br>
