@@ -208,3 +208,27 @@ y = x.view(16) # 1x16 행렬
 z = x.view(-1, 8) # 8열, 나머지는 행으로(2x8)
 r = x.view(8, -1) # 8행, 나머지는 열로(8x2)
 ```
+
+### 5. Numpy와 Tensor의 변환
+- Numpy와 Tensor는 '행렬'이라는 동일한 개념을 사용하기 때문에 서로 변환이 가능하다.
+
+```python
+import numpy as np
+a = np.ones(5)
+>>> print(a, type(a))
+# [1. 1. 1. 1. 1.] <class 'numpy.ndarray'> 
+
+b = torch.from_numpy(a) # 주소를 공유하는 복사이기 때문에 a값이 변하면 같이 변한다.
+>>> print(a, type(a))
+# [1. 1. 1. 1. 1.] <class 'numpy.ndarray'> 
+
+np.add(a, 1, out=a)   # np.add를 사용하면 b값도 같이 변한다 <<< 이유가...(깊은 복사 vs 얕은 복사)
+>>> print(a, type(a))
+>>> print(b, type(b))
+# [2. 2. 2. 2. 2.] <class 'numpy.ndarray'> 
+# tensor([2., 2., 2., 2., 2.], dtype=torch.float64) <class 'torch.Tensor'>
+```
+<br>
+간단하게 Tensor을 다루는 방법에 대해 알아보았다. Pytorch을 이용해서 딥러닝을 할 때 가장 기본이 되는 요소이기 때문에 충분한 연습을 통해 Tensor를 능숙하게 다룰 줄 알아야 한다. 이 밖에도 여러가지 기능이 있지만, 모든 기능을 한 번에 다 공부하는 것 보다는 프로젝트를 하거나 공부를 할 때 궁금하거나 필요하게 되었을 때 찾아보는 것이 더 효율적이다. 다음 장에는 이러한 Tensor을 이용해서 무엇을 할 수 있는지에 대해 알아보자.
+
+### **읽어주셔서 감사합니다.(댓글과 수정사항은 언제나 환영입니다!)**
