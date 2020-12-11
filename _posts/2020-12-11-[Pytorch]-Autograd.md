@@ -21,4 +21,20 @@ category: Pytorch
 # AutoGrad
 <hr>
 
-Pytorch에서는 이러한 '미분'값을 쉽고 빠르게 구할 수 있도록 하는 기능을 제공한다.
+Pytorch에서는 이러한 '미분'값을 쉽고 빠르게 구할 수 있도록 하는 자동미분 기능을 제공한다.
+- 앞에서 배웠던 torch.Tensor() 클래스로 Tensor을 생성
+- 클래스 안에 .requires_grad 속성을 True로 설정하면 자동미분 기능을 켤 수 있다.
+- 자동미분이 적용되는 Tensor의 모든 연산을 추적한다.
+- 계산이 완료되면 .backward()를 호출하여 변화도(미분)를 자동으로 계산할 수 있다.
+
+![2](../public/img/pytorch-autograd/gradient-descent-graph.png){ width=10% }
+<img  src="../public/img/pytorch-autograd/eq1.png" width="400" style='margin: 0px auto;'/>
+
+```python
+import torch
+x = torch.ones(2,2, requires_grad=True) # 2x2 행렬(값이 모두 1)
+>>> print(x)
+# tensor([[1., 1.],
+#         [1., 1.]], requires_grad=True)
+
+```
