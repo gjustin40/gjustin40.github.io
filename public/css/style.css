@@ -253,6 +253,12 @@ article.home h4 a:hover {
 	color: #e74c3c;
 }
 
+.center-image
+{
+    margin: 0 auto;
+    display: block;
+}
+
 header.post-header {
 	padding: 50px 0px 10px 0px;
 	margin-bottom: 30px;
