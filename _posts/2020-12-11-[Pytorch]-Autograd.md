@@ -17,6 +17,7 @@ category: Pytorch
 따라서 효율적인 학습을 위해 Loss값을 이용한 '손실 함수'를 지표로 이용하게 된다.
 
 <img  src="/public/img/pytorch/gradient-descent-graph.png" width="400" style='margin: 0px auto;'/>
+<img  src="../public/img/pytorch/gradient-descent-graph.png" width="400" style='margin: 0px auto;'/>
 
 # AutoGrad
 <hr>
@@ -28,6 +29,11 @@ Pytorch에서는 이러한 '미분'값을 쉽고 빠르게 구할 수 있도록 
 - 계산이 완료되면 .backward()를 호출하여 변화도(미분)를 자동으로 계산할 수 있다.
 
 <img class='center-image' src="/public/img/pytorch/eq1.png" width="400"/>
+<img class='center-image' src="../public/img/pytorch/eq1.png" width="400"/>
+
+<br>
+
+위의 식을 예로 코드를 작성해보자.
 
 ```python
 import torch
