@@ -27,6 +27,7 @@ Pytorch에서는 이러한 '미분'값을 쉽고 빠르게 구할 수 있도록 
 - 클래스 안에 .requires_grad 속성을 True로 설정하면 자동미분 기능을 켤 수 있다.
 - 자동미분이 적용되는 Tensor의 모든 연산을 추적한다.
 - 계산이 완료되면 .backward()를 호출하여 변화도(미분)를 자동으로 계산할 수 있다.
+- loss값에 대한 미분이기 때문에 자동미분을 계산하기 전에는 1개의 값으로 나와야한다.(Scalar)
 
 <img class='center-image' src="/public/img/pytorch/eq1.png" width="400"/>
 <img class='center-image' src="../public/img/pytorch/eq1.png" width="400"/>
@@ -42,4 +43,30 @@ x = torch.ones(2,2, requires_grad=True) # 2x2 행렬(값이 모두 1)
 # tensor([[1., 1.],
 #         [1., 1.]], requires_grad=True)
 
+y = x + 1 
+>>> print(y)
+# tensor([[2., 2.],
+#         [2., 2.]], grad_fn=<AddBackward0>) # AddBackward : 덧셈에 대한 미분 추적
+
+z = 3 * y**2
+>>> print(z)
+# tensor([[12., 12.],
+#         [12., 12.]], grad_fn=<MulBackward0>) # MulBackward : 다양한 사칙연산에 대한 미분 추적
+
+out = z.mean()
+>>> print(out)
+# tensor(12., grad_fn=<MeanBackward0>)
 ```
+
+ 결국에 x에 대한 식으로 정리하면 아래와 같다.
+ <img class='center-image' src="/public/img/pytorch/eq2.png" width="400"/>
+<img class='center-image' src="../public/img/pytorch/eq2.png" width="400"/>
+
+행렬에서 각 x에 대한 미분값은 다음과 같다.
+
+```python
+>>> print(x.grad)
+# tensor([[3., 3.],
+#         [3., 3.]])
+```
+
