@@ -16,7 +16,7 @@ category: Pytorch
 만약 '정확도'를 지표로 사용을 한다면 위에서 언급한 '미분'값이 대부분의 장소에서 0값이 되기 때문이다. 예를 들어 100장의 사진을 예측했는데 32장만 올바르게 예측했다면 이 모델은 32%의 정확도를 띈다. 하지만 정확도를 향상시키기 위해 가중치 매개변수의 값을 조금 바꾼다고 해도 일정하게 유지하는 경향이 있고, 값이 바뀐다고 하더라도 35.12355...% 와 같은 연속적인 숫자보다도 37%, 38% 등의 불연속적인 값으로 바뀐다.
 따라서 효율적인 학습을 위해 Loss값을 이용한 '손실 함수'를 지표로 이용하게 된다.
 
-![1](https://imgur.com/LjvNwz0)
+<img  src="../public/img/pytorch-autograd/gradient-descent-graph.png" width="400" style='margin: 0px auto;'/>
 
 # AutoGrad
 <hr>
@@ -27,8 +27,7 @@ Pytorch에서는 이러한 '미분'값을 쉽고 빠르게 구할 수 있도록 
 - 자동미분이 적용되는 Tensor의 모든 연산을 추적한다.
 - 계산이 완료되면 .backward()를 호출하여 변화도(미분)를 자동으로 계산할 수 있다.
 
-![2](../public/img/pytorch-autograd/gradient-descent-graph.png){ width=10% }
-<img  src="../public/img/pytorch-autograd/eq1.png" width="400" style='margin: 0px auto;'/>
+<img  src="../public/img/pytorch-autograd/eq1.png" width="400" style='margin: auto auto;'/>
 
 ```python
 import torch
