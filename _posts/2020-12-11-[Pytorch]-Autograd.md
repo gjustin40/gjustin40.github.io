@@ -27,7 +27,7 @@ Pytorch에서는 이러한 '미분'값을 쉽고 빠르게 구할 수 있도록 
 - 자동미분이 적용되는 Tensor의 모든 연산을 추적한다.
 - 계산이 완료되면 .backward()를 호출하여 변화도(미분)를 자동으로 계산할 수 있다.
 
-<img class='center-image' src="/public/img/pytorch/eq1.png" width="400" style='text-align: center'/>
+<img class='center-image' src="/public/img/pytorch/eq1.png" width="400"/>
 
 ```python
 import torch
