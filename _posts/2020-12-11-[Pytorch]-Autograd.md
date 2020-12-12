@@ -3,6 +3,7 @@ layout: post
 title: '[Pytorch] - Autograd'
 date: 2020-12-11 19:00:00 
 category: Pytorch
+use_math: true
 ---
 신경망이 학습을 하는 원리는 기본적으로 '모델 f(x)가 입력 x에 대해 적절한 예측값인 y을 출력하게 하는 모델 f(x)의 구성품인 매개변수(가중치)을 정하는 작업'이다. 데이터를 입력하고 나온 결과인 예측값과 정답값을 비교하여 그 차이인 Loss값을 구하고 그 값을 최소화하는 방향으로 학습을 하게 된다. 즉, Loss값을 최소화하기 위해 loss값의 함수인 '손실함수'를 사용한다.
 신경망 학습에서는 최적의 매개변수(가중치)를 탐색할 때 손실 함수의 값을 가능한 한 작게 하는 매개변수(가중치)를 찾는다. 즉, Loss에 대한 각각의 매개변수의 미분을 계산하고, 그 미분 값을 서서히 갱신하여 최적의 매개변수를 찾는 과정으로 학습을 한다.
@@ -60,9 +61,9 @@ out = z.mean()
 
  결국에 x에 대한 식으로 정리하면 아래와 같다.
  <img class='center-image' src="/public/img/pytorch/eq2.png" width="400"/>
-<img class='center-image' src="../public/img/pytorch/eq2.png" width="400"/>
+<img class='center-image' src="../Public/img/pytorch/eq2.png" width="400"/>
 
-행렬에서 각 x에 대한 미분값은 다음과 같다.
+x 행렬에서 각 요소들에 대한 미분값은 다음과 같다.
 
 ```python
 >>> print(x.grad)
@@ -70,3 +71,145 @@ out = z.mean()
 #         [3., 3.]])
 ```
 
+## Multiple Input
+위 예제에서는 한 값에 대한 미분(x=1)을 구해보았다. Pytorch에서는 여러 입력값에 대한 각각의 미분값을 구하는 기능을 제공한다.
+
+```python
+x = torch.randn(3, requires_grad=True) # 1x3행렬(랜덤값)
+y = x * 2
+inputs = torch.tensor([1,2,3])
+y.backward(inputs)
+>>> print(x.grad)
+
+```
+This formula $f(x) = x^2$
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
