@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Pytorch] - Autograd"
+title: "[Pytorch] - 자동미분(Autograd)"
 date: 2020-12-11 19:00:00
 category: Pytorch
 use_math: true
