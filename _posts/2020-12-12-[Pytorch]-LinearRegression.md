@@ -124,8 +124,19 @@ $$
 \frac{\partial y}{\partial x} = \frac{y_2 - y_1}{x_2 - x_1} = \frac{76 - 72}{180 - 174} = \frac{4}{6} \approx 0.6666
 $$
 
+$$
+y_1 = 0.6666x_1 + y_0
+$$
 
-$$ y_1 = 0.6666x_1 + y_0 $$
+
+$$
+\begin{aligned}
+y_0 & = y_1 - 0.6666x_1 \\
+ & = 72 - 0.6666 * 174 \\ 
+ & \approx -43.988\\
+\end{aligned}
+$$
+
 
 
 
