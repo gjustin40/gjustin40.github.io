@@ -222,6 +222,69 @@ with torch.no_grad():
 
 실제 값과 얼추 비슷한 예측값이 나왔다. 물론 $\theta_1$값이 근사값이라 오차가 많이 날 수 있는데, $\theta_1$값이 수렴할수록 더 정확한 결과가 나온다.
 
+### 정규방정식
+<br>
+
+위에서는 두 점의 좌표를 알 때 직선의 방정식을 구하는 방법으로 $\theta$값을 구했다. 하지만 위와 같은 방법은 두 점의 좌표를 알 때 구하는 방법이지, 노이즈가 포함되어 있는 수많은 데이터에 맞는 직선을 찾기 위해서는 예측한 직선과 데이터들 사이의 오차가 최소가 되는 $\theta$값을 찾아야 한다. 즉, 손실함수를 최소화하는 $\theta$값을 찾아야하는데, 그것이 바로 정규방정식이다. 정규방정식을 구하기 전에 먼저 벡터 형태의 선형회구모델의 예측식을 구하면 다음과 같다.
+
+$$ 
+\hat{y} = h_\theta(\text{x}) = \theta^T \cdot \text{x}
+$$
+
+- $\theta$는 $\theta_0$에서 $\theta_n$까지의 특성 가중치를 포함하는 파라미터 벡터
+- $\text{x}$는 $x_0$에서 $x_n$까지 담고 있는 샘플의 특성벡터이다.($x_0$는 항상 1)
+- $h_\theta$는 모델 파라미터 $\theta$를 사용한 가설 함수이다.
+
+<br>
+
+그러면 비용함수는 어떻게 구하는 것일까? 선형회귀모델에서 가장 많이 그리고 널리 사용되는 성능 측정 지표는 **평균 제곱근 오차(RMSE)** 이다. 이 지표에 대한 구체적인 내용은 다른 포스터에서 다루기로 하고, 여기서는 단지 $\theta$를 구하기 위한 하나의 방법이라고만 알고 넘어가기로 하자. 하지만 실제로는 **RMSE**보다 **평균 제곱 오차(MSE)** 더 선호한다. 그 이유는 같은 결과를 내면서도 더 간단하게 계산할 수 있기 때문이다. **MSE**의 식은 다음과 같다.
+
+$$
+\text{MSE}(X,h_\theta) = \frac{1}{m}\sum_{i=1}^m(\theta^T\cdot \text{x}^{(i)}-y^{(i)})^2 = \text{MSE}(\theta)
+$$
+
+이 식을 지지고 볶고 미분하면 손실함수를 최소화하는 $\theta$값을 구하는 정규방정식으로 변한다.<br>
+(손실함수$J(\theta)$를 미분했을 때 0이 되도록 하는 $\theta$를 찾는 것이 기본 개념이다.)
+
+$$
+\hat{\theta} = (\text{X}^T\cdot X)^{-1} \cdot \text{X}^T\cdot y
+$$
+
+- $\hat{\theta}$은 손실함수를 최소로 하는 $\theta$값
+- y는 $y^{(1)}$부터 $y^{(m)}$까지 포함하는 종속변수 벡터
+
+위의 식을 코드로 계산을 하면 다음과 같다.
+
+$$
+\begin{aligned}
+& (1)\qquad (\text{X}^T\cdot \text{X})^{-1}   \\
+& (2)\qquad (1)\cdot \text{X}^T  \\ 
+& (3)\qquad (2)\cdot y\\
+\end{aligned}
+$$
+
+```python
+def dot(a,b):                     # dot : a와 b의 내적
+    return torch.matmul(a,b)
+
+cm = [174, 180, 169, 171] # x
+kg = [ 72,  76,  65,  68] # y
+
+data_x = torch.tensor(cm, dtype=torch.float, requires_grad=False).reshape(len(cm), 1)
+data_y = torch.tensor(kg, dtype=torch.float, requires_grad=False).reshape(len(cm), 1)
+
+X = data_x
+y = data_y
+
+dot1 = torch.inverse(dot(X.T, X)) # torch.inverse() : 역행렬
+dot2 = dot(dot1, X.T)
+dot3 = dot(dot2, y)
+>>> print(dot3)
+# tensor([[0.4052]])
+```
+
+선형회귀모델을 최소로 하는 $\theta$를 구하기 위해 '두 좌표로 구하는 방식'과 '정규방정식으로 구하는 방식'을 사용했다. 결과에서도 알 수 있듯이 비슷한 값이 나왔다.()
+
 <br>
 <br><br>
 <br>
