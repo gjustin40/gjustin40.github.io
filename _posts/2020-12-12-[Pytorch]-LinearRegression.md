@@ -119,6 +119,7 @@ $$ y = \theta_1x + \theta_0 $$
 선형회귀모델에서 손실함수를 최소화하는 $\theta$값을 구하는 방법인 '정규방정식'이 있다. 하지만 이 방정식을 이용하기 전에 간단하게 1차함수를 구하는 방법으로 $\theta$값을 구해보자.<br>
 
 $$ y = \theta_1x + \theta_0 =  \frac{\partial y}{\partial x}x + y_0 $$
+
 <br>
 $$
 \frac{\partial y}{\partial x} = \frac{y_2 - y_1}{x_2 - x_1} = \frac{76 - 72}{180 - 174} = \frac{4}{6} \approx 0.6666
