@@ -19,7 +19,7 @@ use_math: true
 따라서 효율적인 학습을 위해 Loss값을 이용한 '손실 함수'를 지표로 이용하게 된다.
 
 <img  src="/public/img/pytorch/gradient-descent-graph.png" width="400" style='margin: 0px auto;'/>
-<img  src="../public/img/pytorch/gradient-descent-graph.png" width="400" style='margin: 0px auto;'/>
+<!-- <img  src="../public/img/pytorch/gradient-descent-graph.png" width="400" style='margin: 0px auto;'/> -->
 
 # 미분
 
@@ -32,8 +32,29 @@ use_math: true
 $$\frac{df(x)}{dx} = \lim_{h \rightarrow 0}\frac{f(x+h) - f(x)}{h}$$
 
 Python으로 위 식을 계산하면 아래와 같다.
-```python
 
+$$
+\left\{
+\begin{array}{ll}
+x = 1 \\ 
+y = 3(x+1)^2\\
+\end{array} 
+\right.
+$$
+
+```python
+def f(x):
+    y = 3*(x+1)**2
+    return y
+
+def diff(F, X):
+    h = 0.001 # 매우 작은 수
+    return (f(x+h) - f(x)) / h
+
+x = torch.ones(1)
+d = diff(f, x)
+>>> print(d)
+# tensor(12.0020) # 12에 근사한 값
 ```
 따라서 우리는 위의 식을 이용해 기울기를 구하고, 매개변수들을 조금씩 변화시키면서 손실함수의 값이 최소가 되는 지점을 찾아야 한다. 여러가지 방법이 있지만 그 방법에 대해서는 나중에 다룰 예정이고, 이번 포스트에서는 미분값을 쉽게 구하는 방법에 대해 얘기할 것이다.
 
@@ -52,8 +73,8 @@ Pytorch에서는 이러한 '미분'값을 쉽고 빠르게 구할 수 있도록 
 $$
 \left\{
 \begin{array}{ll}
-y = x+1 \\ 
-z = 3y^2\\
+x = 1 \\ 
+y = 3(x+1)^2\\
 \end{array} 
 \right.
 $$
@@ -62,41 +83,42 @@ $$
 
 ```python
 import torch
-x = torch.ones(2,2, requires_grad=True) # 2x2 행렬(값이 모두 1)
+x = torch.ones(1, requires_grad=True) # 2x2 행렬(값이 모두 1)
 >>> print(x)                            # requires_grad=True로 자동미분 실행
-# tensor([[1., 1.],
-#         [1., 1.]], requires_grad=True)
+# tensor([1.], requires_grad=True)
 
-y = x + 1
->>> print(y)
-# tensor([[2., 2.],
-#         [2., 2.]], grad_fn=<AddBackward0>) # AddBackward : 덧셈에 대한 미분 추적
+y = 3 * x**2
+y.backward() # y에 대한 x의 기울기 계산
 
-z = 3 * y**2
->>> print(z)
-# tensor([[12., 12.],
-#         [12., 12.]], grad_fn=<MulBackward0>) # MulBackward : 다양한 사칙연산에 대한 미분 추적
-
-out = z.mean()
->>> print(out)
-# tensor(12., grad_fn=<MeanBackward0>)
+>>> print(x.gard) # y에 대한 x의 기울기 출력
+# tensor([12.])
 ```
 
-결국에 x에 대한 식으로 정리하면 아래와 같다.
+위 코드에서 볼 수 있듯이 .backward()을 호출하여 기울기를 쉽게 계산하고 $x$.grad()을 통해 $f(x)$에 대한 $x$의 기울기가 12임을 출력한다. 위 예시는 너무 간단했기 떄문에 좀 더 복잡한 식에 대한 기울기를 구해보았다.
+<br>
+$$
+x = \begin{Bmatrix} 
+1 &1 &1 &1 \\ 
+1 &1 &1 &1 \\ 
+1 &1 &1 &1 \\ 
+1 &1 &1 &1
+\end{Bmatrix} 
+\text{,}
+\text{ }
+\text{ } y = x^4 + 3x^3 + 8x^2 + 3
+$$
 
-$$out = \frac{3(x+1)^2}{4}$$
-
-x 행렬에서 각 요소들에 대한 미분값은 다음과 같다.
-
-```python
->>> print(x.grad)
-# tensor([[3., 3.],
-#         [3., 3.]])
-```
-
-위에서 계산한 식에서 $x$는 요소가 4개뿐인 2x2행렬이었다. 하지만 신경망에서는 모든 매개변수(가중치$w$)에 대해 미분값을 계산해야 하는데, 자동미분 기능을 이용하면 쉽고 빠르게 미분값을 구하고 학습할 수 있다. 
-
-
+$$
+x = \begin{Bmatrix} 
+1 &1 &1 &1 \\ 
+1 &1 &1 &1 \\ 
+1 &1 &1 &1 \\ 
+1 &1 &1 &1
+\end{Bmatrix} 
+$$
+$$
+y = x^4 + 3x^3 + 8x^2 + 3
+$$
 
 <br>
 <br>
