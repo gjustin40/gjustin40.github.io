@@ -61,7 +61,7 @@ out = z.mean()
 
 결국에 x에 대한 식으로 정리하면 아래와 같다.
 
-<span class='math-size' style='font-size: 250%'> $out = \frac{3(x+1)^2}{4}$
+<span class='math-font'> $out = \frac{3(x+1)^2}{4}$ </span>
 
 x 행렬에서 각 요소들에 대한 미분값은 다음과 같다.
 

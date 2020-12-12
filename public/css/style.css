@@ -53,6 +53,12 @@ body {
 	color: #2c3e50;
 }
 
+span.math-font {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	font-size: 30px;
+}
+
 a {
 	text-decoration: none;
 	color: #007bff;
