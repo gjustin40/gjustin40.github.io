@@ -59,9 +59,9 @@ out = z.mean()
 # tensor(12., grad_fn=<MeanBackward0>)
 ```
 
- 결국에 x에 대한 식으로 정리하면 아래와 같다.
- <img class='center-image' src="/public/img/pytorch/eq2.png" width="400"/>
-<img class='center-image' src="../Public/img/pytorch/eq2.png" width="400"/>
+결국에 x에 대한 식으로 정리하면 아래와 같다.
+
+<span class='math-size' style='font-size: 250%'> $out = \frac{3(x+1)^2}{4}$
 
 x 행렬에서 각 요소들에 대한 미분값은 다음과 같다.
 
@@ -82,14 +82,6 @@ y.backward(inputs)
 >>> print(x.grad)
 
 ```
-$$
-  f(n) =
-\left.
-\begin{cases}
-n/2,  & \text{if $n$ is even} \\
-3n+1, & \text{if $n$ is odd}
-\end{cases}
-$$
 
 $
 \frac{(n^2+n)(2n+1)}{6} = 
@@ -99,7 +91,6 @@ $
 $
 dddfdf
 $
-
 
 
 <br>
