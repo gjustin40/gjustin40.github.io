@@ -104,8 +104,8 @@ x=
 1 &1 &1 &1 \\ 
 1 &1 &1 &1 \\ 
 1 &1 &1 &1
-\end{Bmatrix} 
-\text{,}
+\end{Bmatrix},
+\quad 
 y = x^4 + 3x^3 + 8x^2 + 3
 $$
 
