@@ -33,6 +33,8 @@ $$ y = \theta_0x_0 + \theta_1x_1  + \theta_2x_2  +\cdot\cdot\cdot\text{ }+ \thet
 - $x$는 독립변수 이외에 입력변수, 예측 변수, 독립 변수 등으로 불린다.
 - $y$는 종속변수 이외에 응답변수라고도 불린다.
 - $n$은 특성의 수로 독립변수의 종류를 뜻한다.(데이터의 개수와는 다른 의미이다.)
+<img  src="/public/img/pytorch/regression.png" width="400" style='margin: 0px auto;'/>
+<img  src="../public/img/pytorch/regression.png" width="400" style='margin: 0px auto;'/>
 
 
 
