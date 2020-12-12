@@ -82,10 +82,24 @@ y.backward(inputs)
 >>> print(x.grad)
 
 ```
-$f(x) = x^2$<br>
-$f(x) = 2$<br>
-$f(x) = 333$<br>
-$y(x_1)$
+$$
+  f(n) =
+\left.
+\begin{cases}
+n/2,  & \text{if $n$ is even} \\
+3n+1, & \text{if $n$ is odd}
+\end{cases}
+$$
+
+$
+\frac{(n^2+n)(2n+1)}{6} = 
+\sum_{i=0}^n i^2 
+$
+
+$
+dddfdf
+$
+
 
 
 <br>
