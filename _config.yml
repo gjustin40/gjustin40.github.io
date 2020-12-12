@@ -37,7 +37,7 @@ plugins:
 category_dir: category/
 tag_dir: tag/
 
-markdown: kramdown
+markdown: kramdow
 lsi: false
 excerpt_separator: "\n\n"
 incremental: false
