@@ -83,8 +83,8 @@ y.backward(inputs)
 
 ```
 This formula $f(x) = x^2$
-$f(x) = 2$
-$f(x) = 333$
+this formaul $f(x) = 2$
+this for $f(x) = 333$
 
 <br>
 <br>
