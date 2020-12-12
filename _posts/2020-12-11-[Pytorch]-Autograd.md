@@ -82,9 +82,11 @@ y.backward(inputs)
 >>> print(x.grad)
 
 ```
-This formula $f(x) = x^2$
-this formaul $f(x) = 2$
-this for $f(x) = 333$
+This formula 
+$f(x) = x^2$<br>
+f(x) = 2
+f(x) = 333
+$
 
 <br>
 <br>
