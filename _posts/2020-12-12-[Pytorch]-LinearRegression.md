@@ -85,6 +85,7 @@ $$ y = \theta_1\cdot x + \theta_0$$
 | 5000 |  69 |56|70|36|72|
 | 1200 |  56 |55|97|12|120|
 |$\cdot\cdot\cdot$|$\cdot\cdot\cdot$|$\cdot\cdot\cdot$|$\cdot\cdot\cdot$|$\cdot\cdot\cdot$|$\cdot\cdot\cdot$
+
 <br>
 
 
