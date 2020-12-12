@@ -20,6 +20,28 @@ use_math: true
 <img  src="/public/img/pytorch/gradient-descent-graph.png" width="400" style='margin: 0px auto;'/>
 <img  src="../public/img/pytorch/gradient-descent-graph.png" width="400" style='margin: 0px auto;'/>
 
+# 미분
+<hr>
+
+미분의 기본 개념은 '함수 $f(x)$에 대해 $x$가 변할 때 $f(x)$가 변하는 정도'이다. $x$ 지점에서 $f(x)$의 변화율을 뜻한다. $f(x)$의 미분은 $\frac{d(fx)}{dx)}$로 나타낼 수 있고 이것이 $x$지점에서 $f(x)$의 접선의 기울기이다.
+<br>
+미분값은 다음과 같이 계산한다.
+<span class='math-font'>
+$
+\frac{df(x)}{dx} = \lim_{h \rightarrow 0}\frac{f(x+h) - f(x)}{h}
+$
+</span>
+
+
+
+
+
+
+
+
+
+
+
 # AutoGrad
 <hr>
 
@@ -61,7 +83,7 @@ out = z.mean()
 
 결국에 x에 대한 식으로 정리하면 아래와 같다.
 
-<span class='math-font'> $out = \frac{3(x+1)^2}{4}$ </span>
+<span class='math-font'> $out = \frac{3(x+1)^2}{4}$</span>
 
 x 행렬에서 각 요소들에 대한 미분값은 다음과 같다.
 
