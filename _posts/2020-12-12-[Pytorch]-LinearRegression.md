@@ -82,6 +82,7 @@ $$ y = \theta_1\cdot x + \theta_0$$
 
 
 위 데이터를 토대로 만든 다중선형회귀 모델은 다음과 같다.
+
 $$
 \hat{y} = \theta_0 + \theta_1서비스 + \theta_2가격 + \theta_3접근성 + \theta_4인테리어 + \theta_5추천수
 $$
