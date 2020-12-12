@@ -89,7 +89,7 @@ $$
 데이터를 이용하여 해당 모델을 예측하여 각 독립변수들에 대한 계수들의 수치를 알면 방문객 수에 가장 많은 영향을 주는 요소가 무엇인지 알 수 있다. 이러한 상관관계 분석을 하는데 있어서 매우 유용한 기법인 것 같다!
 <br>
 
-# 코드 실습
+# 실습
 <hr>
 
 Pytorch에는 선형회귀를 쉽고 빠르게 할 수 있도록 모듈을 제공해준다. 밑바닥부터 코딩하기 전에 이미 제공하고 있는 모듈을 이용하여 실습을 진행해보자.
@@ -108,7 +108,7 @@ Pytorch에는 선형회귀를 쉽고 빠르게 할 수 있도록 모듈을 제�
 
 <br>
 
-위 데이터를 이용하면 $\theta$값을 구할 수 있다.
+위 데이터를 이용하면 아래의 $\theta$값을 구할 수 있다.
 
 <br>
 
@@ -120,14 +120,19 @@ $$ y = \theta_1x + \theta_0 $$
 
 $$ y = \theta_1x + \theta_0 =  \frac{\partial y}{\partial x}x + y_0 $$
 
+먼저 $\frac{\partial y}{\partial x}$는 두 점의 기울기를 뜻하고, 아래와 같이 구할 수 있다.
+
 $$
 \frac{\partial y}{\partial x} = \frac{y_2 - y_1}{x_2 - x_1} = \frac{76 - 72}{180 - 174} = \frac{4}{6} \approx 0.6666
 $$
+
+기울기를 구했으면 1차 함수에서 모르는 값은 $y$절편인 $y_0$값 하나 뿐이다. $y_0$값도 간단하게 계산하면 다음과 같다.
 
 $$
 y_1 = 0.6666x_1 + y_0
 $$
 
+$y_0$값을 제외한 모든 항을 이항하여 1차 방정식을 만들어준다.
 
 $$
 \begin{aligned}
@@ -137,8 +142,85 @@ y_0 & = y_1 - 0.6666x_1 \\
 \end{aligned}
 $$
 
+이렇게 처음 식 $y = \theta_1x + \theta_0$에서 각각의 계수를 모두 구했다.
 
+$$ \theta_1 \approx 0.6666 \text{, } \theta_0 \approx -44 $$
 
+### Pytorch 코드 실습
+<br>
+
+Pytorch에서 제공하는 선형회귀함수를 호출하고 위에서 구한 $\theta_0$와 $\theta_1$을 대입하여 선형회귀모델을 생성해보자. 이때 사용하는 모듈은 ```torch.nn.Linear()```이다.
+
+```python
+import torch.nn as nn
+
+simple_regression = nn.Linear(1, 1, bias=True) # 인자 : x의 크기, y의 크기, y절편 유무
+>>> print(simple_regression)
+# Linear(in_features=1, out_features=1, bias=True)
+
+init_weight = simple_regression.weight
+init_bias = simple_regression.bias
+
+>>> print(init_weight)
+# Parameter containing: 
+# tensor([[-0.4460]], requires_grad=True)
+
+>>> print(init_bias)
+# Parameter containing:
+# tensor([-0.0001], requires_grad=True)
+
+>>> print(init_weight.size())
+>>> print(init_bias.size())
+# torch.Size([1, 1])
+# torch.Size([1])
+```
+
+위 코드에서 ```init_weight```와 ```bias```는 각각 $\theta_1$와 $\theta_0$을 뜻한다. 그리고 초기값은 ```kaiming_uniform```을 통해 랜덤으로 초기화된다. 따라서 우리가 찾은 값으로 대체를 해줘야한다.
+
+```python
+my_weight = torch.tensor([0.6666], dtype=torch.float).reshape_as(init_weight) # init_weight와 같은 size로 변환
+my_bias = torch.tensor([-44], dtype=torch.float).reshape_as(init_bias) # init_bias와 같은 size로 변환
+
+new_weight = nn.Parameter(my_weight) 
+new_bias = nn.Parameter(my_bias)
+
+simple_regression.weight = new_weight
+simple_regression.bias = new_bias
+ 
+>>> print(simple_regression.weight)
+>>> print(simple_regression.bias)
+# Parameter containing:
+# tensor([[0.6666]], requires_grad=True)
+# Parameter containing:
+# tensor([-44.], requires_grad=True)
+```
+
+위 코드에서 ```new_weight```와 ```new_bias```을 ```nn.Parameter()```로 감싸주었는데, 그 이유는 ```nn.Linear()```의 Variables의 class가 ```Parameter```이기 때문이다.
+
+```python
+>>> type(simple_regression.weight)
+# torch.nn.parameter.Parameter
+```
+
+자, 우리가 원하던 선형회귀모델을 얻었다. 실제 결과와 비슷하게 나오는지 확인을 해보자.
+
+```python
+cm = [174, 180, 169, 171]
+kg = [ 72,  76,  65,  68]
+
+data_x = torch.tensor(cm, dtype=torch.float, requires_grad=False).reshape(len(cm), 1)
+data_y = torch.tensor(kg, dtype=torch.float, requires_grad=False).reshape(len(cm), 1)
+
+with torch.no_grad():
+    kg_prediction = simple_regression(data_x)
+
+>>> print(kg_prediction.reshape(1,-1))
+>>> print(data_y.reshape(1,-1))
+# tensor([[71.9884, 75.9880, 68.6554, 69.9886]])
+# tensor([[72., 76., 65., 68.]])
+```
+
+실제 값과 얼추 비슷한 예측값이 나왔다. 물론 $\theta_1$값이 근사값이라 오차가 많이 날 수 있는데, $\theta_1$값이 수렴할수록 더 정확한 결과가 나온다.
 
 <br>
 <br><br>
