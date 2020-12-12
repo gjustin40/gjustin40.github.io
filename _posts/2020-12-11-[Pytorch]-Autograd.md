@@ -25,11 +25,11 @@ use_math: true
 
 <hr>
 
-미분의 기본 개념은 '함수 $f(x)$에 대해 $x$가 변할 때 $f(x)$가 변하는 정도'이다. $x$ 지점에서 $f(x)$의 변화율을 뜻한다. $f(x)$의 미분은 $\frac{d(fx)}{dx)}$로 나타낼 수 있고 이것이 $x$지점에서 $f(x)$의 접선의 기울기이다.
+미분의 기본 개념은 '함수 $f(x)$에 대해 $x$가 변할 때 $f(x)$가 변하는 정도'이다. $x$ 지점에서 $f(x)$의 변화율을 뜻한다. $f(x)$의 미분은 $\frac{\partial y}{\partial x}$로 나타낼 수 있고 이것이 $x$지점에서 $f(x)$의 접선의 기울기이다.
 <br>
 미분값은 다음과 같이 계산한다.
 
-$$\frac{df(x)}{dx} = \lim_{h \rightarrow 0}\frac{f(x+h) - f(x)}{h}$$
+$$\frac{\partial y}{\partial x} = \lim_{h \rightarrow 0}\frac{f(x+h) - f(x)}{h}$$
 
 Python으로 위 식을 계산하면 아래와 같다.
 
