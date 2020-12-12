@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[Pytorch] - Tensor'
+title: '[Pytorch] - 텐서(Tensor)'
 date: 2020-12-10 22:00:00 
 category: Pytorch
 ---
