@@ -82,10 +82,10 @@ y.backward(inputs)
 >>> print(x.grad)
 
 ```
-This formula 
 $f(x) = x^2$<br>
-$f(x) = 2$
-$f(x) = 333$
+$f(x) = 2$<br>
+$f(x) = 333$<br>
+$y(x_1)$
 
 
 <br>
