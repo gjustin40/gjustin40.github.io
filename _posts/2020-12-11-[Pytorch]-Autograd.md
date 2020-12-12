@@ -27,21 +27,10 @@ use_math: true
 <br>
 미분값은 다음과 같이 계산한다.
 
-$$
-\begin
-\frac{df(x)}{dx} = \lim_{h \rightarrow 0}\frac{f(x+h) - f(x)}{h}
-\end
-$$
-
-$$ 
-\begin{array}{cc|c}
-  1&2&3\\
-  4&5&6
-\end{array}
-$$
-
-
 <span class='math-font'>
+$
+\frac{df(x)}{dx} = \lim_{h \rightarrow 0}\frac{f(x+h) - f(x)}{h}
+$
 </span>
 
 
