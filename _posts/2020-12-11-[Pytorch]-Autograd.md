@@ -84,9 +84,9 @@ y.backward(inputs)
 ```
 This formula 
 $f(x) = x^2$<br>
-f(x) = 2
-f(x) = 333
-$
+$f(x) = 2$
+$f(x) = 333$
+
 
 <br>
 <br>
