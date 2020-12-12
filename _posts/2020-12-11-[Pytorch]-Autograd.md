@@ -31,6 +31,10 @@ use_math: true
 
 $$\frac{df(x)}{dx} = \lim_{h \rightarrow 0}\frac{f(x+h) - f(x)}{h}$$
 
+Python으로 위 식을 계산하면 아래와 같다.
+```python
+
+```
 따라서 우리는 위의 식을 이용해 기울기를 구하고, 매개변수들을 조금씩 변화시키면서 손실함수의 값이 최소가 되는 지점을 찾아야 한다. 여러가지 방법이 있지만 그 방법에 대해서는 나중에 다룰 예정이고, 이번 포스트에서는 미분값을 쉽게 구하는 방법에 대해 얘기할 것이다.
 
 # AutoGrad
@@ -49,7 +53,7 @@ $$
 \left\{
 \begin{array}{ll}
 y = x+1 \\ 
-z = y^2\\
+z = 3y^2\\
 \end{array} 
 \right.
 $$
@@ -59,7 +63,7 @@ $$
 ```python
 import torch
 x = torch.ones(2,2, requires_grad=True) # 2x2 행렬(값이 모두 1)
->>> print(x)
+>>> print(x)                            # requires_grad=True로 자동미분 실행
 # tensor([[1., 1.],
 #         [1., 1.]], requires_grad=True)
 
@@ -80,7 +84,7 @@ out = z.mean()
 
 결국에 x에 대한 식으로 정리하면 아래와 같다.
 
-<span class='math-font'> $out = \frac{3(x+1)^2}{4}$</span>
+$$out = \frac{3(x+1)^2}{4}$$
 
 x 행렬에서 각 요소들에 대한 미분값은 다음과 같다.
 
@@ -90,27 +94,9 @@ x 행렬에서 각 요소들에 대한 미분값은 다음과 같다.
 #         [3., 3.]])
 ```
 
-## Multiple Input
+위에서 계산한 식에서 $x$는 요소가 4개뿐인 2x2행렬이었다. 하지만 신경망에서는 모든 매개변수(가중치$w$)에 대해 미분값을 계산해야 하는데, 자동미분 기능을 이용하면 쉽고 빠르게 미분값을 구하고 학습할 수 있다. 
 
-위 예제에서는 한 값에 대한 미분(x=1)을 구해보았다. Pytorch에서는 여러 입력값에 대한 각각의 미분값을 구하는 기능을 제공한다.
 
-```python
-x = torch.randn(3, requires_grad=True) # 1x3행렬(랜덤값)
-y = x * 2
-inputs = torch.tensor([1,2,3])
-y.backward(inputs)
->>> print(x.grad)
-
-```
-
-$
-\frac{(n^2+n)(2n+1)}{6} = 
-\sum_{i=0}^n i^2 
-$
-
-$
-dddfdf
-$
 
 <br>
 <br>
