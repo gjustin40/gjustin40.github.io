@@ -31,13 +31,20 @@ $$
 \frac{df(x)}{dx} = \lim_{h \rightarrow 0}\frac{f(x+h) - f(x)}{h}
 $$
 
+$$
+\lim_{x\to 0}{\frac{e^x-1}{2x}}
+\overset{\left[\frac{0}{0}\right]}{\underset{\mathrm{H}}{=}}
+\lim_{x\to 0}{\frac{e^x}{2}}={\frac{1}{2}}
+$$
 
-$$ \left[
+$$ 
+\left[
 \begin{array}{cc|c}
   1&2&3\\
   4&5&6
 \end{array}
-\right] $$
+\right] 
+$$
 
 
 <span class='math-font'>
