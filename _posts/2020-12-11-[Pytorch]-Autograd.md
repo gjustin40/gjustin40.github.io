@@ -27,10 +27,11 @@ use_math: true
 <br>
 미분값은 다음과 같이 계산한다.
 <span class='math-font'>
-$
+$$
 \frac{df(x)}{dx} = \lim_{h \rightarrow 0}\frac{f(x+h) - f(x)}{h}
-$
+$$
 </span>
+
 
 
 
