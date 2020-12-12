@@ -33,12 +33,6 @@ $$\frac{df(x)}{dx} = \lim_{h \rightarrow 0}\frac{f(x+h) - f(x)}{h}$$
 
 따라서 우리는 위의 식을 이용해 기울기를 구하고, 매개변수들을 조금씩 변화시키면서 손실함수의 값이 최소가 되는 지점을 찾아야 한다. 여러가지 방법이 있지만 그 방법에 대해서는 나중에 다룰 예정이고, 이번 포스트에서는 미분값을 쉽게 구하는 방법에 대해 얘기할 것이다.
 
-### 오차역전파법
-<br>
-
-그렇다면 그 수많은 매개변수들의 영향력의 척도, 손실함수에 대한 각 매개변수들의 기울기는 어떻게 구해야할까? <br>
-그 방법으로 
-
 # AutoGrad
 
 <hr>
@@ -51,10 +45,14 @@ Pytorch에서는 이러한 '미분'값을 쉽고 빠르게 구할 수 있도록 
 - 계산이 완료되면 .backward()를 호출하여 변화도(미분)를 자동으로 계산할 수 있다.
 - loss값에 대한 미분이기 때문에 자동미분을 계산하기 전에는 1개의 값으로 나와야한다.(Scalar)
 
-<img class='center-image' src="/public/img/pytorch/eq1.png" width="400"/>
-<img class='center-image' src="../public/img/pytorch/eq1.png" width="400"/>
-
-<br>
+$$
+\left\{
+\begin{array}{ll}
+y = x+1 \\ 
+z = y^2\\
+\end{array} 
+\right.
+$$
 
 위의 식을 예로 코드를 작성해보자.
 
