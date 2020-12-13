@@ -74,6 +74,71 @@ y = 7*x + 5 + torch.normal(0,2,(100,1)) # 노이즈 첨가
 
 <img  src="../public/img/pytorch/regression_result.jpg" width="400" style='margin: 0px auto;'/>
 
+<br>
+
+데이터를 생성했으니 이제 데이터를 학습할 모델을 정의해보자. Pytorch에서는 선형회귀모델을 정의할 수 있는 함수를 제공하는데, ```nn.Linear()```을 이용하여 간단하게 모델을 생성할 수 있다.
+
+<br>
+
+```python
+import torch
+import torch.nn as nn
+
+class MyLinear(nn.Module): # Pytorch 모듈 중 nn 상속받기(nn에 있는 기능 사용 가능)
+    def __init__(self, input_size, output_size): # 초기화 함수
+        super(MyLinear, self).__init__()
+        self.linear = nn.Linear(input_size, output_size, bias=True) # nn모듈에 있는 Linear함수 사용하기
+    
+    def forward(self, x):
+        y = self.linear(x) # x 연산하기
+        
+        return y
+
+model = MyLinear(1,1)
+```
+
+<br>
+
+위 코드에 있는 정보들을 정리하면 다음과 같다.
+- ```nn.Module``` : Pytorch에서 모델을 정의할 때 여러 유틸을 제공
+- ```super()``` : 아버지 클래스인 ```nn.Module```의 ```__init__()```함수를 호출한다는 뜻(덮어쓰기)
+- ```nn.Linear()``` : 입,출력 크기에 맞는 선형회귀모델을 만들어주는 함수
+- ```bias=True``` : 편향값을 설정(여기서는 $\theta_0$값을 의미)
+
+<br>
+
+모델을 정의했으니 잘 동작하는지 확인해보자. 추가로 기존 데이터와 생성된 모델로 예측한 데이터가 얼마나 이질적인지도 확인해보자!
+
+<br>
+
+```python
+with torch.no_grad(): # Autograd 끄기
+    model = MyLinear(1,1)
+    out = model(x)
+
+>>>print(out[:10])
+# tensor([[-0.3884],
+#         [ 0.1694],
+#         [-0.0855],
+#         [ 0.8922],
+#         [-0.5119],
+#         [-0.1453],
+#         [ 0.6156],
+#         [-0.0888],
+#         [-0.2215],
+#         [-0.2758]])
+```
+
+<br>
+
+위 코드에서 진행한 계산은 단순히 확인용이기 때문에 ```torch.no_grad()```을 통해 자동미분을 off한 상태로 실행을 했다. 실제와 예측 데이터를 비교하면 다음과 같다.
+
+<br>
+
+<img  src="../public/img/pytorch/regression_result2.jpg" width="400" style='margin: 0px auto;'/>
+
+
+
 
 
 
