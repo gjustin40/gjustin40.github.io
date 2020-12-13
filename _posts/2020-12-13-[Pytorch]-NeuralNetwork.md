@@ -47,6 +47,10 @@ $$
 
 <br>
 
+### 데이터 생성
+
+<br>
+
 단순선형회귀를 이용하기 때문에 독립변수$x$와 종속변수$y$가 각각 1개이며 예측해야 하는 값은 2개이다. 임의의 데이터를 생성하면 다음과 같다.
 
 <br>
@@ -72,7 +76,11 @@ y = 7*x + 5 + torch.normal(0,2,(100,1)) # 노이즈 첨가
 
 임의의 데이터를 생성할 때 이미 $\theta$값을 설정하였다. 하지만 선형회귀모델을 정의할 때 $\theta$값이 초기화되기 때문에 데이터에 맞는 $\theta$를 찾을 필요가 있다. 따라서 학습이 끝난 후에 예측된 $\theta$와 우리가 정했던 $\theta$가 일치하는 확인하면 될 것 같다. 다음과 같이 회귀선을 예측해야한다.
 
-<img  src="../public/img/pytorch/regression_result.jpg" width="400" style='margin: 0px auto;'/>
+<img  src="../public/img/pytorch/regression_result1.jpg" width="400" style='margin: 0px auto;'/>
+
+<br>
+
+### 모델 생성
 
 <br>
 
@@ -137,8 +145,71 @@ with torch.no_grad(): # Autograd 끄기
 
 <img  src="../public/img/pytorch/regression_result2.jpg" width="400" style='margin: 0px auto;'/>
 
+<br>
+
+현재 초기화 된 $\theta$값을 확인하면 다음과 같다.
+
+<br>
+
+```python
+for p in model.parameters():
+>>> print(p)
+# Parameter containing:
+# tensor([[-0.6244]], requires_grad=True)
+# Parameter containing:
+# tensor([0.0785], requires_grad=True)
+```
 
 
+<br>
+
+$$
+\hat{\theta_0} = 0.0785, \qquad \hat{\theta_1} = -0.06244
+$$
+
+<br>
+
+```nn.Linear()```은 매개변수를 연속균동분포인 ```kaiming_uniform_```을 사용하여 초기화한다. He initialization으로도 알려진 이 랜덤함수는 **“Delving deep into rectifiers: Surpassing human-level performance on ImageNet classification” - He, K.** 이라는 논문에서 소개되었다. 기회가 되면 다뤄보도록 하겠다.
+
+<br>
+
+데이터를 생성할 당시에 설정한 $\theta$는 각각 다음과 같다.
+
+<br>
+
+$$
+\theta_0 = 5, \qquad \theta_1 = 7
+$$
+
+<br>
+
+지금부터는 모델이 위와 같은 $\theta$값을 가질 수 있도록 학습을 실시해보자.
+
+# 학습(Training)
+<hr>
+
+신경망이 학습을 하기 위해서는 학습할 '모델'이 필요하고, 실제 값과 예측값의 오차를 구해줄 '오차함수'(=손실함수)와 오차를 이용해 매개변수를 갱신해줄 '최적화 알고리즘'이 필요하다. 각각을 정의하면 다음과 같다.(각각에 대해서도 나중에 다뤄볼 생각이다.)
+
+<br>
+
+```python
+import torch.optim as optim
+import torch.nn as nn
+loss_func = nn.MSELoss()
+optimizer = optim.SGD(model.parameters(), lr=0.001)
+```
+
+- ```MSELoss()``` : 회귀모델에서 가장 많이 사용되는 성능 측정 함수이다.(평균제곱오차)
+- 
+
+1. 파라미터 출력
+
+2. 학습 준비
+3. 손실함수, 최적화
+4. 학습 진행
+5. 결과 확인
+6. 실제값과 비교
+7. 마무리
 
 
 
