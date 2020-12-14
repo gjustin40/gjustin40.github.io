@@ -76,7 +76,6 @@ y = 7*x + 5 + torch.normal(0,2,(100,1)) # 노이즈 첨가
 
 임의의 데이터를 생성할 때 이미 $\theta$값을 설정하였다. 하지만 선형회귀모델을 정의할 때 $\theta$값이 초기화되기 때문에 데이터에 맞는 $\theta$를 찾을 필요가 있다. 따라서 학습이 끝난 후에 예측된 $\theta$와 우리가 정했던 $\theta$가 일치하는 확인하면 될 것 같다. 다음과 같이 회귀선을 예측해야한다.
 
-<img  src="../public/img/pytorch/regression_result1.jpg" width="400" style='margin: 0px auto;'/>
 <img  src="/public/img/pytorch/regression_result1.jpg" width="400" style='margin: 0px auto;'/>
 
 <br>
@@ -144,7 +143,6 @@ with torch.no_grad(): # Autograd 끄기
 
 <br>
 
-<img  src="../public/img/pytorch/regression_result2.jpg" width="400" style='margin: 0px auto;'/>
 <img  src="/public/img/pytorch/regression_result2.jpg" width="400" style='margin: 0px auto;'/>
 
 <br>
@@ -290,7 +288,7 @@ for e in range(EPOCH):
 
 오차값들이 EPOCH마다 줄어드는 것을 알 수 있다. 하지만 어느정도 줄어들었을 때 더이상 감소하지 않는데, 아마도 손실함수가 최소값 주위에 도달했기 때문인 것 같다. 하지만 여기서 오차값이 0이 되지는 않는데, 이것은 경사하강법으로 최소값을 구하는 방법이기 때문에 계속해서 기울기 방향으로 매개변수가 갱신되고 있는 것이다. (최소값 부분에서 왓다갔다)
 
-<img  src="../public/img/pytorch/mini.png" width="400" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/mini.png" width="400" style='margin: 0px auto;'/>
 
 위와 같은 현상이 발생하면 작은 `lr` 값을 이용해서 오차값을 좀 더 작게 감소시켜 오차값을 최소부분으로 이동할 수 있도록 해야한다.
 
@@ -298,7 +296,7 @@ for e in range(EPOCH):
 
 자 그럼 실제값과 예측값의 데이터를 비교해보자.
 
-<img  src="../public/img/pytorch/result.jpg" width="400" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/result.jpg" width="400" style='margin: 0px auto;'/>
 
 예측된 데이터를 보니 대부분이 회귀선 위에 있는 것을 알 수 있다. 즉, 최초 데이터에 대해 회귀선을 잘 구한 것 같다. 그렇다면 처음에 설정했던 매개변수와 동일한지 확인해보면 다음과 같다.
 
@@ -313,3 +311,15 @@ for p in model.parameters():
 # Parameter containing:
 # tensor([5.1844], requires_grad=True)
 ```
+
+<br>
+
+수치로 비교해보면 다음과 같다.
+
+$$
+\theta_0 = 5, \quad \theta_1 = 7 //\theta_0 = 5.1844, \quad \theta_4 = 6.4488
+$$
+
+<br>
+
+완전 일치하지는 않지만 그래도 노이즈가 포함된 데이터로 생각했을 때 비슷하게 예측한 것 같다. 앞 포스터에서는 '두 좌표를 이용한 방법'과 '정규방정식'을 이용하여 매개변수를 예측했는데, '경사하강법' 또한 하나의 방법이 될 수 있다는 것을 알았다. 이것만 보면 사실 '경사하강법'은 너무 복잡해 보이지만, 모델이 깊어지고 매개변수들이 많아지면 '경사하강법'으로 최적의 매개변수를 찾는 것이 가장 간단하고 빠르다는 것을 알 수 있다. 기회가 된다면 더 복잡한 모델을 이용하여 학습을 하는 프로젝트를 진행해보기로 하자.
