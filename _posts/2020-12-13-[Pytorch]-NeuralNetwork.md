@@ -45,15 +45,11 @@ $$
 y = \theta_0 + \theta_1x
 $$
 
-<br>
-
 ### 데이터 생성
 
 <br>
 
 단순선형회귀를 이용하기 때문에 독립변수$x$와 종속변수$y$가 각각 1개이며 예측해야 하는 값은 2개이다. 임의의 데이터를 생성하면 다음과 같다.
-
-<br>
 
 ```python
 x = torch.randn((100,1))
@@ -86,8 +82,6 @@ y = 7*x + 5 + torch.normal(0,2,(100,1)) # 노이즈 첨가
 
 데이터를 생성했으니 이제 데이터를 학습할 모델을 정의해보자. Pytorch에서는 선형회귀모델을 정의할 수 있는 함수를 제공하는데, ```nn.Linear()```을 이용하여 간단하게 모델을 생성할 수 있다.
 
-<br>
-
 ```python
 import torch
 import torch.nn as nn
@@ -117,8 +111,6 @@ model = MyLinear(1,1)
 
 모델을 정의했으니 잘 동작하는지 확인해보자. 추가로 기존 데이터와 생성된 모델로 예측한 데이터가 얼마나 이질적인지도 확인해보자!
 
-<br>
-
 ```python
 with torch.no_grad(): # Autograd 끄기
     model = MyLinear(1,1)
@@ -141,15 +133,11 @@ with torch.no_grad(): # Autograd 끄기
 
 위 코드에서 진행한 계산은 단순히 확인용이기 때문에 ```torch.no_grad()```을 통해 자동미분을 off한 상태로 실행을 했다. 실제와 예측 데이터를 비교하면 다음과 같다.
 
-<br>
-
 <img  src="/public/img/pytorch/regression_result2.jpg" width="400" style='margin: 0px auto;'/>
 
 <br>
 
 현재 초기화 된 $\theta$값을 확인하면 다음과 같다.
-
-<br>
 
 ```python
 for p in model.parameters():
@@ -190,8 +178,6 @@ $$
 
 신경망이 학습을 하기 위해서는 학습할 '모델'이 필요하고, 실제 값과 예측값의 오차를 구해줄 '오차함수'(=손실함수)와 오차를 이용해 매개변수를 갱신해줄 '최적화 알고리즘'이 필요하다. 각각을 정의하면 다음과 같다.(각각에 대해서도 나중에 다뤄볼 생각이다.)
 
-<br>
-
 ```python
 import torch.optim as optim
 import torch.nn as nn
@@ -218,8 +204,6 @@ BATCH_SIZE = 10
 <br>
 
 ### 학습 진행
-
-<br>
 
 ```python
 for e in range(EPOCH):
@@ -259,8 +243,6 @@ for e in range(EPOCH):
 
 학습이 잘 진행되고 있는지 매 EPOCH 마다 오차의 합을 출력했더니 다음과 같았다.
 
-<br>
-
 ```python
 # tensor(57.3058, grad_fn=<AddBackward0>)
 # tensor(41.2604, grad_fn=<AddBackward0>)
@@ -299,8 +281,6 @@ for e in range(EPOCH):
 <img  src="/public/img/pytorch/result.jpg" width="400" style='margin: 0px auto;'/>
 
 예측된 데이터를 보니 대부분이 회귀선 위에 있는 것을 알 수 있다. 즉, 최초 데이터에 대해 회귀선을 잘 구한 것 같다. 그렇다면 처음에 설정했던 매개변수와 동일한지 확인해보면 다음과 같다.
-
-<br>
 
 ```python
 # Parameters 확인하기
