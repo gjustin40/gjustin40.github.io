@@ -197,150 +197,119 @@ $$
 ```python
 import torch.optim as optim
 import torch.nn as nn
+
 loss_func = nn.MSELoss()
 optimizer = optim.SGD(model.parameters(), lr=0.001)
+
+EPOCH = 20
+BATCH_SIZE = 10
 ```
 
 - `MSELoss()` : 회귀모델에서 가장 많이 사용되는 성능 측정 지표(평균제곱오차)
 - `SGD()` : 최적화 알고리즘 중 하나로 확률적 경사하강법
 - `lr=0.001` : 학습률을 뜻하고 최적화 알고리즘이 얼마나 매개변수를 갱신할지를 나타내는 수치
+` 'BATCH_SIZE` : 한 번 학습을 할 때(오차값이 계산될 때) 사용하는 데이터 개수(= 연산이 이루어질 때 컴퓨터 메모리에 올리는 데이터 개수)
+- `EPOCH` : 전체 데이터를 학습하는 횟수
+
+> 100개의 데이터가 있으면 10개(BATCH_SIZE)씩 묶음으로 10번 학습(연산 및 오차값 계산)하는 과정을 1번(EPOCH) 반복 
 
 <br>
 
-이제 모델을 학습해서 MSEloss()의 값이 최소가 되도록 하는 $\theta$값을 찾아보자.
-
-
-
-1. 파라미터 출력
-
-2. 학습 준비
-3. 손실함수, 최적화
-4. 학습 진행
-5. 결과 확인
-6. 실제값과 비교
-7. 마무리
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+학습을 위한 모든 준비는 끝났다. 이제 모델을 학습해서 MSELoss()의 값이 최소가 되도록 하는 $\theta$값을 찾아보자.
 
 <br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br><br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br><br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br><br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br><br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br><br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br><br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br><br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br><br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br><br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br><br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br><br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br><br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br><br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br><br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br><br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br><br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+
+### 학습 진행
+
+<br>
+
+```python
+for e in range(EPOCH):
+    
+    epoch_loss = 0
+    batch = int(len(x) / BATCH_SIZE) # BATCH_SIZE로 묶었을 때 나오는 총 묶음의 개수 = 10
+    batch_start = 0 # 데이터를 1묶음씩 불러오기 위해 처음값 설정
+    
+    for i in range(batch): # 묶음의 개수만큼 반복
+        x_data = x[batch_start:batch_start+BATCH_SIZE] # BATCH_SIZE만큼 x 데이터 불러오기
+        y_data = y[batch_start:batch_start+BATCH_SIZE] # bATCH_SIZE만큼 y 데이터 불러오기
+        
+        optimizer.zero_grad() # Autograd가 계산 된 모든 것들을 0으로 초기화
+        output = model(x_data)
+        loss = loss_func(output, y_data) # 오차값 계산
+        loss.backward() # 계산 된 오차값으로 Autograd 실행(미분 값 계산)
+        optimizer.step() # 계산 된 미분값과 lr을 결합하여 매개변수 갱신
+        
+        epoch_loss += loss/10
+        
+        batch_start += BATCH_SIZE
+    print(epoch_loss) # EPOCH 마다 오차값 출력
+```
+<br>
+
+학습이 되는 과정은 다음과 같다.
+
+1. batch 크기만큼 데이터를 불러오기
+2. Autograd가 적용 된 모든 파라미터 0으로 초기화
+3. model을 통해 예측 실시
+4. 예측된 결과와 정답을 비교하여 오차 계산
+5. 계산 된 오차로 미분값 계산(Autograd 실행)
+6. 미분값과 lr을 결합하여 매개변수 갱신
+7. EPOCH 만큼 반복
+
+<br>
+
+학습이 잘 진행되고 있는지 매 EPOCH 마다 오차의 합을 출력했더니 다음과 같았다.
+
+<br>
+
+```python
+# tensor(57.3058, grad_fn=<AddBackward0>)
+# tensor(41.2604, grad_fn=<AddBackward0>)
+# tensor(30.0514, grad_fn=<AddBackward0>)
+# tensor(22.1966, grad_fn=<AddBackward0>)
+# tensor(16.6747, grad_fn=<AddBackward0>)
+# tensor(12.7807, grad_fn=<AddBackward0>)
+# tensor(10.0258, grad_fn=<AddBackward0>)
+# tensor(8.0708, grad_fn=<AddBackward0>)
+# tensor(6.6791, grad_fn=<AddBackward0>)
+# tensor(5.6855, grad_fn=<AddBackward0>)
+# tensor(4.9739, grad_fn=<AddBackward0>)
+# tensor(4.4629, grad_fn=<AddBackward0>)
+# tensor(4.0950, grad_fn=<AddBackward0>)
+# tensor(3.8294, grad_fn=<AddBackward0>)
+# tensor(3.6372, grad_fn=<AddBackward0>)
+# tensor(3.4978, grad_fn=<AddBackward0>)
+# tensor(3.3965, grad_fn=<AddBackward0>)
+# tensor(3.3227, grad_fn=<AddBackward0>)
+# tensor(3.2689, grad_fn=<AddBackward0>)
+# tensor(3.2296, grad_fn=<AddBackward0>)
+```
+
+<br>
+
+오차값들이 EPOCH마다 줄어드는 것을 알 수 있다. 하지만 어느정도 줄어들었을 때 더이상 감소하지 않는데, 아마도 손실함수가 최소값 주위에 도달했기 때문인 것 같다. 하지만 여기서 오차값이 0이 되지는 않는데, 이것은 경사하강법으로 최소값을 구하는 방법이기 때문에 계속해서 기울기 방향으로 매개변수가 갱신되고 있는 것이다. (최소값 부분에서 왓다갔다)
+
+<img  src="../public/img/pytorch/mini.png" width="400" style='margin: 0px auto;'/>
+
+위와 같은 현상이 발생하면 작은 `lr` 값을 이용해서 오차값을 좀 더 작게 감소시켜 오차값을 최소부분으로 이동할 수 있도록 해야한다.
+
+<br>
+
+자 그럼 실제값과 예측값의 데이터를 비교해보자.
+
+<img  src="../public/img/pytorch/result.jpg" width="400" style='margin: 0px auto;'/>
+
+예측된 데이터를 보니 대부분이 회귀선 위에 있는 것을 알 수 있다. 즉, 최초 데이터에 대해 회귀선을 잘 구한 것 같다. 그렇다면 처음에 설정했던 매개변수와 동일한지 확인해보면 다음과 같다.
+
+<br>
+
+```python
+# Parameters 확인하기
+for p in model.parameters():
+>>> print(p)
+# Parameter containing:
+# tensor([[6.4488]], requires_grad=True)
+# Parameter containing:
+# tensor([5.1844], requires_grad=True)
+```
