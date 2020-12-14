@@ -77,6 +77,7 @@ y = 7*x + 5 + torch.normal(0,2,(100,1)) # 노이즈 첨가
 임의의 데이터를 생성할 때 이미 $\theta$값을 설정하였다. 하지만 선형회귀모델을 정의할 때 $\theta$값이 초기화되기 때문에 데이터에 맞는 $\theta$를 찾을 필요가 있다. 따라서 학습이 끝난 후에 예측된 $\theta$와 우리가 정했던 $\theta$가 일치하는 확인하면 될 것 같다. 다음과 같이 회귀선을 예측해야한다.
 
 <img  src="../public/img/pytorch/regression_result1.jpg" width="400" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/regression_result1.jpg" width="400" style='margin: 0px auto;'/>
 
 <br>
 
@@ -144,6 +145,7 @@ with torch.no_grad(): # Autograd 끄기
 <br>
 
 <img  src="../public/img/pytorch/regression_result2.jpg" width="400" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/regression_result2.jpg" width="400" style='margin: 0px auto;'/>
 
 <br>
 
@@ -199,9 +201,9 @@ loss_func = nn.MSELoss()
 optimizer = optim.SGD(model.parameters(), lr=0.001)
 ```
 
-- ```MSELoss()``` : 회귀모델에서 가장 많이 사용되는 성능 측정 지표(평균제곱오차)
-- ```SGD()``` : 최적화 알고리즘 중 하나로 확률적 경사하강법
-- ```lr=0.001``` : 학습률을 뜻하고 최적화 알고리즘이 얼마나 매개변수를 갱신할지를 나타내는 수치
+- `MSELoss()` : 회귀모델에서 가장 많이 사용되는 성능 측정 지표(평균제곱오차)
+- `SGD()` : 최적화 알고리즘 중 하나로 확률적 경사하강법
+- `lr=0.001` : 학습률을 뜻하고 최적화 알고리즘이 얼마나 매개변수를 갱신할지를 나타내는 수치
 
 <br>
 
