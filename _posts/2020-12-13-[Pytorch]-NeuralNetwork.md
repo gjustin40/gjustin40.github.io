@@ -297,7 +297,7 @@ for p in model.parameters():
 수치로 비교해보면 다음과 같다.
 
 $$
-\theta_0 = 5, \quad \theta_1 = 7 //\theta_0 = 5.1844, \quad \theta_4 = 6.4488
+\theta_0 = 5, \quad \theta_1 = 7 \rightarrow \theta_0 = 5.1844, \quad \theta_4 = 6.4488
 $$
 
 <br>
