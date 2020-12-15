@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Pytorch] - torch.nn.Linear()"
+title: "[Pytorch] - 경사하강법(Gradient Descent)"
 date: 2020-12-13 15:00:00
 category: Pytorch
 use_math: true
