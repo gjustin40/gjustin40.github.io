@@ -159,8 +159,8 @@ $$
 
 식을 잘 보면 $y_nlog_e\hat{y_n}$에서 $y_n$가 정답 레이블이다. 정답인 class(강아지, 고양이, 새 중 하나)를 제외하고는 모두 0이 되기 때문에 정답 class에 대한 예측값만 남아있게 되고, 그 값에 대한 오차만 계산을 한다. 다음 그림은 $log_e$의 그래프이다.
 
-<img  src="../public/img/pytorch/log_graph.png" width="300" style='margin: 0px auto;'/>
-<img  src="/public/img/pytorch/log_graph.png" width="300" style='margin: 0px auto;'/>
+<img  src="../public/img/pytorch/log_graph1.png" width="400" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/log_graph1.png" width="400" style='margin: 0px auto;'/>
 
 그 예측값이 1에 가까워질수록 오차값은 0으로 수렴하게 된다. 따라서 이 오차값을 이용해서 신경망이 학습을 하게 된다.
 
