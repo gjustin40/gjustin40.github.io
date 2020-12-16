@@ -40,7 +40,84 @@ $$
 # 손실 함수(Loss Function)
 <hr>
 
-특정 기계의 성능을 확인할 때 '얼마나 좋지?' 또는 '얼마나 정확하지?' 등 얼마나 잘하는지 평가를 하게 된다. 하지만 이름(손실)에서도 알 수 있듯이 신경망 학습에서는 얼마나 '못' 하는지, 얼마나 '안' 좋은지 등 우회적인 방법을 사용한다. 
+특정 기계의 성능을 확인할 때 '얼마나 좋지?' 또는 '얼마나 정확하지?' 등 얼마나 잘하는지 평가를 하게 된다. 하지만 이름(손실)에서도 알 수 있듯이 신경망 학습에서는 얼마나 '못' 하는지, 얼마나 '안' 좋은지 등 우회적인 방법을 사용한다. 그 이유는 무엇일까?
+
+<br>
+
+**미분**에서 그 해답을 찾을 수 있다. 신경망에 있는 한 가중치 매개변수 1개를 예로 들어보자. 그 가중치 매개변수의 손실 함수에 대한 **미분**은 <u>매개변수의 값을 변화시켰을 때 손실 함수의 값이 어떻게 변하나</u>를 의미한다. 미분값의 부호에 따라 다른데, 음수일 경우는 매개변수를 양의 방향으로 변화시키고, 양수일 경우에는 음의 방향으로 변화시킨다. 만약 미분값이 0으로 수렴한다면 더이상 학습하지 않고 끝나게 된다.
+
+<img  src="../public/img/pytorch/gradient-descent-graph.png" width="400" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/gradient-descent-graph.png" width="400" style='margin: 0px auto;'/>
+
+<br>
+
+그렇다면 다시 돌아와서, 만약 정확도를 지표로 이용하면 어떻게 될까?
+<br>
+
+예를 들어 100장의 훈련 데이터가 있고 신경망이 50장을 올바르게 인식을 했다면 정확도는 50%가 될 것이다. 하지만 이 상태에서 가중치 매개변수를 조금 변화시킨다고 해도 여젼히 50%에서 크게 변하지 않을 것이다. 또한 그 수치가 연속적이지 않고 50%, 60% 등 불연속적이라 대부부의 장소에서 미분값이 0이 된다.
+
+<br>
+
+손실함수가 무엇인지 알아보았는데, 그렇다면 손실 함수에는 어떤 것들이 있을까?
+
+<br>
+
+## 평균 제곱 오차(Mean squared Error)
+
+<br>
+
+$$
+MSE = \frac{1}{n}\sum_{i=1}^{n}(\hat{y} - y)^2
+$$
+
+예측한 값과 실제 값 사이의 차이를 제곱한 값을 오차로 하는 손실함수이다. 식만 봐도 한 눈에 이해가 될 정도로 매우 간단한 함수이고 계산도 매우 쉽기 때문에 성능을 측정하는데 가장 많이 사용이 된다. 제곱을 하는 이유는 두 값의 차이가 음수가 나오면 합을 했을 때 오차가 줄어드는 문제가 발생하기 때문이다.
+
+### 코드 실습
+
+<br>
+
+Pytorch에서는 MSE함수를 이용할 수 있도록 `torch.nn.MSELoss()`을 제공한다.
+<br>
+
+```python
+import torch
+import torch.nn as nn
+
+print(torch.__version__)
+# 1.4.0
+
+target_y = torch.arange(1,10) # 정답
+input_x = target_y + torch.rand(9) # 예측값
+
+>> print(target_y)
+>> print(input_x)
+# tensor([1, 2, 3, 4, 5, 6, 7, 8, 9])
+# tensor([1.7516, 2.5348, 3.4643, 4.5566, 5.3562, 6.6055, 7.2129, 8.2204, 9.3870])
+
+MSE_loss = nn.MSELoss(reduction='mean') # default = 'mean'
+>>> MSE_loss(input_x, target_y)
+# tensor(0.2348)
+
+MSE_loss = nn.MSELoss(reduction='sum')
+>>> MSE_loss(input_x, target_y)
+# tensor(2.1134)
+
+MSE_loss = nn.MSELoss(reduction='none')
+>>> MSE_loss(input_x, target_y)
+# tensor([0.5649, 0.2861, 0.2156, 0.3098, 0.1269, 0.3666, 0.0453, 0.0486, 0.1497])
+```
+
+- `nn.MSELoss(reduction='')`
+    - `none` : 계산 된 모든 오차값 출력
+    - `mean` : 오차값 평균
+    - `sum` : 오차값 합치기
+- `input_x` : 예측된 값
+- `target_y` : 실제 값
+
+<br>
+
+## 교차 엔트로피 오차(Cross Entropy Error)
+
 
 <br>
 <br>
