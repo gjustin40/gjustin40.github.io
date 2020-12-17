@@ -25,10 +25,56 @@ use_math: true
 경사하강법을 설명할 수 있는 아주 좋은 예시가 있다.
 > 앞이 보이지 않는 어두운 밤에 산을 내려온다고 가정하자. 등산객은 사방으로 발을 더듬으면서 높이가 낮아지는 방향으로 나아가게 된다.
 
+<br>
+
+### 경사하강법 수식
 
 <br>
 
+미분값을 이용해 매개변수($\theta$)를 갱신하는데, 갱신하는 식은 다음과 같다.
 
+$$
+\theta_{n+1} = \theta_n - \eta\frac{\partial f(\theta_n)}{\partial \theta_n}
+$$
 
+- $\theta_n$ : 현재 매개변수의 값
+- $\theta_{n+1}$ : 다음 매개변수의 값
+- $f(\theta)$ : 손실함수(Loss Function)
+- $\eta$ : 학습률(Learning Rate)
 
+<br>
 
+위의 식과 아래의 사진을 참고하여 설명을 하면 다음과 같다.
+
+<img  src="../public/img/pytorch/gradient.png" width="400" style='margin: 0px auto;'/>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
