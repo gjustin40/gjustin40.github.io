@@ -80,7 +80,7 @@ y = 7*x + 5 + torch.normal(0,2,(100,1)) # 노이즈 첨가
 
 <br>
 
-데이터를 생성했으니 이제 데이터를 학습할 모델을 정의해보자. Pytorch에서는 선형회귀모델을 정의할 수 있는 함수를 제공하는데, ```nn.Linear()```을 이용하여 간단하게 모델을 생성할 수 있다.
+데이터를 생성했으니 이제 데이터를 학습할 모델을 정의해보자. Pytorch에서는 선형회귀모델을 정의할 수 있는 함수를 제공하는데, `nn.Linear()`을 이용하여 간단하게 모델을 생성할 수 있다.
 
 ```python
 import torch
@@ -102,10 +102,10 @@ model = MyLinear(1,1)
 <br>
 
 위 코드에 있는 정보들을 정리하면 다음과 같다.
-- ```nn.Module``` : Pytorch에서 모델을 정의할 때 여러 유틸을 제공
-- ```super()``` : 아버지 클래스인 ```nn.Module```의 ```__init__()```함수를 호출한다는 뜻(덮어쓰기)
-- ```nn.Linear()``` : 입,출력 크기에 맞는 선형회귀모델을 만들어주는 함수
-- ```bias=True``` : 편향값을 설정(여기서는 $\theta_0$값을 의미)
+- `nn.Module` : Pytorch에서 모델을 정의할 때 여러 유틸을 제공
+- `super()` : 아버지 클래스인 `nn.Module`의 `__init__()`함수를 호출한다는 뜻(덮어쓰기)
+- `nn.Linear()` : 입,출력 크기에 맞는 선형회귀모델을 만들어주는 함수
+- `bias=True` : 편향값을 설정(여기서는 $\theta_0$값을 의미)
 
 <br>
 
@@ -131,7 +131,7 @@ with torch.no_grad(): # Autograd 끄기
 
 <br>
 
-위 코드에서 진행한 계산은 단순히 확인용이기 때문에 ```torch.no_grad()```을 통해 자동미분을 off한 상태로 실행을 했다. 실제와 예측 데이터를 비교하면 다음과 같다.
+위 코드에서 진행한 계산은 단순히 확인용이기 때문에 `torch.no_grad()`을 통해 자동미분을 off한 상태로 실행을 했다. 실제와 예측 데이터를 비교하면 다음과 같다.
 
 <img  src="/public/img/pytorch/regression_result2.jpg" width="400" style='margin: 0px auto;'/>
 
@@ -157,7 +157,7 @@ $$
 
 <br>
 
-```nn.Linear()```은 매개변수를 연속균동분포인 ```kaiming_uniform_```을 사용하여 초기화한다. He initialization으로도 알려진 이 랜덤함수는 **“Delving deep into rectifiers: Surpassing human-level performance on ImageNet classification” - He, K.** 이라는 논문에서 소개되었다. 기회가 되면 다뤄보도록 하겠다.
+`nn.Linear()`은 매개변수를 연속균동분포인 `kaiming_uniform_`을 사용하여 초기화한다. He initialization으로도 알려진 이 랜덤함수는 **“Delving deep into rectifiers: Surpassing human-level performance on ImageNet classification” - He, K.** 이라는 논문에서 소개되었다. 기회가 되면 다뤄보도록 하겠다.
 
 <br>
 
@@ -301,5 +301,66 @@ $$
 $$
 
 <br>
+
+학습하는 과정의 전체 코드는 다음과 같다.
+
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+# Data 생성
+x = torch.randn((100,1))
+y = 7*x + 5 + torch.normal(0,2,(100,1)) # 노이즈 첨가
+
+# Model 정의
+
+class MyLinear(nn.Module): # Pytorch 모듈 중 nn 상속받기(nn에 있는 기능 사용 가능)
+    def __init__(self, input_size, output_size): # 초기화 함수
+        super(MyLinear, self).__init__()
+        self.linear = nn.Linear(input_size, output_size, bias=True) # nn모듈에 있는 Linear함수 사용하기
+    
+    def forward(self, x):
+        y = self.linear(x) # x 연산하기
+        
+        return y
+
+# 모델 생성
+model = MyLinear(1,1)
+
+# 손실함수 및 최적화함수 설정
+loss_func = nn.MSELoss()
+optimizer = optim.SGD(model.parameters(), lr=0.001)
+
+EPOCH = 20
+BATCH_SIZE = 10
+
+# 학습 진행
+for e in range(EPOCH):
+    
+    epoch_loss = 0
+    batch = int(len(x) / BATCH_SIZE) # BATCH_SIZE로 묶었을 때 나오는 총 묶음의 개수 = 10
+    batch_start = 0 # 데이터를 1묶음씩 불러오기 위해 처음값 설정
+    
+    for i in range(batch): # 묶음의 개수만큼 반복
+        x_data = x[batch_start:batch_start+BATCH_SIZE] # BATCH_SIZE만큼 x 데이터 불러오기
+        y_data = y[batch_start:batch_start+BATCH_SIZE] # bATCH_SIZE만큼 y 데이터 불러오기
+        
+        optimizer.zero_grad() # Autograd가 계산 된 모든 것들을 0으로 초기화
+        output = model(x_data)
+        loss = loss_func(output, y_data) # 오차값 계산
+        loss.backward() # 계산 된 오차값으로 Autograd 실행(미분 값 계산)
+        optimizer.step() # 계산 된 미분값과 lr을 결합하여 매개변수 갱신
+        
+        epoch_loss += loss/10
+        
+        batch_start += BATCH_SIZE
+    print(epoch_loss) # EPOCH 마다 오차값 출력
+
+# 파라미터 확인
+for p in model.parameters():
+>>> print(p)
+```
+
 
 완전 일치하지는 않지만 그래도 노이즈가 포함된 데이터로 생각했을 때 비슷하게 예측한 것 같다. 앞 포스터에서는 '두 좌표를 이용한 방법'과 '정규방정식'을 이용하여 매개변수를 예측했는데, '경사하강법' 또한 하나의 방법이 될 수 있다는 것을 알았다. 이것만 보면 사실 '경사하강법'은 너무 복잡해 보이지만, 모델이 깊어지고 매개변수들이 많아지면 '경사하강법'으로 최적의 매개변수를 찾는 것이 가장 간단하고 빠르다는 것을 알 수 있다. 기회가 된다면 더 복잡한 모델을 이용하여 학습을 하는 프로젝트를 진행해보기로 하자.
