@@ -43,7 +43,17 @@ import torchvision.transforms as transforms
 
 trainset = torchvision.datasets.CIFAR10(root='./data', train=True,
                                         download=True, transform=transforms)
+testset = torchvision.datasets.CIFAR10(root='./data', train=False,
+                                        download=False, transform=transforms)
 ```
+
+`torchvision.datasets`에 있는 데이터 중 `CIFAR10`을 정의했다.
+- `root` : 데이터의 위치(./data = 현재 디렉토리 안에 data폴더)
+- `train` : CIFAR10 데이터셋 내부적으로 train용과 test용으로 나눠져있다. 따라서 True로 설정 시 train용, False로 설정 시 test용 데이터셋을 정의한다.
+- `downlaod` : `root`에 데이터가 없으면 자동으로 다운로드를 한다.
+- `transform` : 데이터를 전처리하거나 부풀리기 등의 기능을 추가
+
+
 
 <br>
 <br>
