@@ -41,6 +41,12 @@ Pytorch에서는 이러한 데이터셋을 쉽게 불러올 수 있도록 하는
 import torchvision
 import torchvision.transforms as transforms
 
+transform = transforms.Compose(
+[
+    transforms.ToTensor(), # Tensor로 변환하기
+    transforms.Normalize([0], [1]) # 정규화(평균(m) = 0, 표준편차(std) = 1)
+])
+
 trainset = torchvision.datasets.CIFAR10(root='./data', train=True,
                                         download=True, transform=transforms)
 testset = torchvision.datasets.CIFAR10(root='./data', train=False,
@@ -53,6 +59,43 @@ testset = torchvision.datasets.CIFAR10(root='./data', train=False,
 - `downlaod` : `root`에 데이터가 없으면 자동으로 다운로드를 한다.
 - `transform` : 데이터를 전처리하거나 부풀리기 등의 기능을 추가
 
+데이터를 확인하면 다음과 같다.(각각 5만개, 1만개)
+
+```python
+>>> print(trainset)
+# Dataset CIFAR10
+#     Number of datapoints: 50000
+#     Root location: ./data
+#     Split: Train
+#     StandardTransform
+# Transform: Compose(
+#                ToTensor()
+#                Normalize(mean=[0], std=[1])
+#            )
+
+>>> print(testset)
+# Dataset CIFAR10
+#     Number of datapoints: 10000
+#     Root location: ./data
+#     Split: Test
+#     StandardTransform
+# Transform: Compose(
+#                ToTensor()
+#                Normalize(mean=[0], std=[1])
+#            )
+```
+
+### 데이터 불러오기(DataLoader)
+<br>
+
+데이터 정의를 완료했으면, 이제 데이터를 학습에 용이하게 불러와야한다. 이 방법 또한 Pytorch에서 편리한 모듈을 제공하고 있다. DataLoader를 사용하면 매우 편리하게 데이터를 불러올 수 있다.
+
+```python
+import torch
+
+trainloader = torch.utils.data.DataLoader(dataset=trainset, batch_size=32, shuffle=True)
+testloader = torch.utils.data.DataLoader(dataset=testset, batch_size=16, suffle=False)
+```
 
 
 <br>
