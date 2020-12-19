@@ -186,6 +186,172 @@ show(images)
 <img  src="../public/img/pytorch/show.jpg" width="400" style='margin: 0px auto;'/>
 <img  src="/public/img/pytorch/show.jpg" width="400" style='margin: 0px auto;'/>
 
+### 모델 정의
+<br>
+
+데이터를 준비했으면 다음은 모델을 정의해야 한다. 이미 검증된 많은 모델들이 있지만 공부를 위해 임의로 정의를 하겠습니다.
+
+```python
+import torch.nn as nn
+import torch.nn.functional as F
+
+class Net(nn.Module):
+    
+    def __init__(self):
+        super(Net, self).__init__()
+        self.conv1 = nn.Conv2d(in_channels=3, out_channels=10, kernel_size=(5, 5)) # 
+        self.conv2 = nn.Conv2d(in_channels=10, out_channels=20, kernel_size=(5, 5))
+        self.conv3 = nn.Conv2d(20, 20, 5)
+        self.conv4 = nn.Conv2d(20, 10, 5)
+        
+        self.pool = nn.MaxPool2d(2,2)
+        
+        self.fc1 = nn.Linear(10 * 8 * 8, 800)
+        self.fc2 = nn.Linear(800, 400)
+        self.fc3 = nn.Linear(400, 100)
+        self.fc4 = nn.Linear(100, 10)
+        
+    def forward(self, x): # 32 32
+        x = F.relu(self.conv1(x)) # 28 28
+        x = F.relu(self.conv2(x)) # 24 24
+        x = F.relu(self.conv3(x)) # 20 20
+        x = self.pool(F.relu(self.conv4(x))) # 8 8
+        x = x.view(-1, 10 * 8 * 8)
+        x = F.relu(self.fc1(x))
+        x = F.relu(self.fc2(x))
+        x = F.relu(self.fc3(x))
+        x = self.fc4(x)
+        
+        return x   
+```
+
+- `nn.Conv2d(in_channels, out_channels, kernel_size)` : CNN Layer 함수이다. 처음 3개의 channel(R,G,B)로 시작해서 원하는 채널 개수만큼 연산을 한다.
+- `nn.MaxPool2d(kernel_size)` : kernel_size 내에서 최대값을 출력하는 layer이다. 
+- `nn.Linear(in_size, out_size)` : Fully-connected layer이다.
+- `F.relu` : ReLU 활성화 함수이다.
+- `view()` : Tensor의 size을 바꿔주는 함수(flatten)
+
+정의한 모델의 모양은 다음과 같다.
+
+<img  src="../public/img/pytorch/model1.jpg" width="" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/model1.jpg" width="" style='margin: 0px auto;'/>
+
+### 모델 확인
+<br>
+
+정의한 모델이 잘 작동되는지 테스트용으로 실행을 해보자.
+
+```python
+model = Net()
+model.eval()
+model.to(device)
+
+with torch.no_grad():
+    images, labels = next(iter(trainloader))
+    images, labels = images.to(device), labels.to(device)
+    
+    example = model(images)
+    
+    print(example.size())
+    print('Test : ', example)
+```
+- `eval()` : 테스트용으로 설정하여 **dropout**이 비활성화되고 배치정규화가 학습할 때 지정했던 파라미터를 이용한다.
+- `torch.no_grad()` : Autograd()모드를 비활성화하여 메모리 사용을 줄이고 계산속도를 증가시킨다.
+
+단지 확인용으로 실행하기 때문에 `eval()`과 `torch.no_grad()`를 설정했다.
+
+
+### GPU 사용 여부 확인
+<br>
+
+GPU를 인공신경망 학습에 사용하게 되면서 학습속도가 매우 빨라졌다. Pytorch에서도 GPU를 사용할 수 있도록 하는 모듈을 제공하는데, `cuda()`를 이용하면 쉽게 GPU연산으로 변환할 수 있다.
+
+```python
+if torch.cuda.is_available():
+    device = torch.device('cuda')
+else:
+    device = torch.device('cpu')
+
+>>>print(device)
+# cuda
+
+# 사용하는 방법
+image.to(device), model.to(device)
+```
+
+현재 필자의 컴퓨터에는 GPU가 있기 때문에 `device` 가 `cuda`로 설정되었다. 나중에 연산에 참여하는 변수나 모델들을 `.to()`를 통해 GPU에 올릴 수 있다.
+
+### 손실함수(Loss Function) 및 최적함 함수(Optimizer) 정의
+<br>
+
+분류문제에서 주로 사용하는 손실함수인 **Cross Entropy Loss**와 가장 보편적으로 많이 사용되는 최적화 함수인 **Stochastic Gradient Descent**를 이용하자.
+
+```python
+loss_func = nn.CrossEntropyLoss()
+optimizer = optim.SGD(model.parameters(), lr = 0.01)
+
+>>> print(loss_func, optimizer)
+# CrossEntropyLoss() SGD (
+# Parameter Group 0
+#     dampening: 0
+#     initial_lr: 0.05
+#     lr: 0.05
+#     momentum: 0
+#     nesterov: False
+#     weight_decay: 0
+# )
+```
+
+- `lr` : 학습률은 기본적으로 0.01로 설정하자.
+
+### 하이퍼 파라미터(Hypter Parameter) 설정
+<br>
+
+이 부분에서는 학습에 필요한 여러 파라미터들을 정의한다. 사람이 직접 설정해줘야 하기 때문에 여러 실험을 통해 찾아낼 필요가 있다. 하지만 이 포스터는 연습을 위한 것이기 때문에 임의의 숫자로 설정하겠다.
+
+```python
+TRAIN_BATCH_SIZE = 16
+TEST_BATCH_SIZE = 8
+EPOCH = 10
+```
+
+`Learning Rate`도 하이퍼 파라미터에 포함되지만, 위에 최적화 함수를 정의하는 과정에서 이미 대입을 했기 때문에 생갹하기로 하겠다.
+
+### 학습(Training) 
+<br>
+
+위에서 정의했던 데이터, 모델, 손실 및 최적화 함수, 하이퍼 파라미터 등을 결합하여 학습을 진행하겠다. 
+
+```python
+import time
+
+# Train
+
+model.train()
+for e in range(1, EPOCH+1):
+    start_time = time.time()
+    running_loss = 0
+        
+    for i, data in enumerate(trainloader):
+        images, labels = data
+        images, labels = images.to(device), labels.to(device)
+        
+        optimizer.zero_grad()
+        outputs = model(images)
+        loss = loss_func(outputs, labels)
+        loss.backward()
+        optimizer.step()
+
+        running_loss += loss
+        now = time.time()
+
+        print('\r[%d/%d]-----[%d/%d] LOSS : %.3f------ Time : %d ------- Current lr : %f' 
+              %(e, EPOCH, i+1, 60000/batch_size, running_loss, now - start_time, learning_rate), end = '')         
+    print('\n')
+```
+
+- `train()` : 모델을 학습 모드로 변경한다.(Dropout, BN 등 활성화)
+- 
 
 <br>
 <br>
