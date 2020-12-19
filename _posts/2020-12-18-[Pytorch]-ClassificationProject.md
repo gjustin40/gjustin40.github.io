@@ -28,7 +28,8 @@ use_math: true
 
 이번 프로젝트에서 사용할 데이터는 CIFAR-10 Datasets이다. 32x32 크기의 이미지가 약 6만개 정도 포함되어 있는 데이터셋이며, 각 이미지는 10개의 클래스 중 하나로 라벨링이 되어 있다. 머신러닝을 연구할 때 가장 많이 사용되는 데이터셋 중 하나이다.
 
-<img  src="/public/img/pytorch/cifar10.jpg" width="400" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/cifar10.JPG" width="400" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/show.jpg" width="400" style='margin: 0px auto;'/>
 
 6만개의 이미지 중 5만개는 학습(Train)에 이용하고 나머지 1만개는 평가(Test)에 사용하도록 하겠다. 그렇다면 이 데이터를 어떻게 불러올까?
 
