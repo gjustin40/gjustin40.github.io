@@ -345,66 +345,91 @@ for e in range(1, EPOCH+1):
         running_loss += loss
         now = time.time()
 
-        print('\r[%d/%d]-----[%d/%d] LOSS : %.3f------ Time : %d ------- Current lr : %f' 
-              %(e, EPOCH, i+1, 60000/batch_size, running_loss, now - start_time, learning_rate), end = '')         
+        print('\r[%d/%d]-----[%d/%d] LOSS : %.3f------ Time : %d ' 
+              %(e, EPOCH, i+1, 60000/batch_size, running_loss, now - start_time), end = '')         
     print('\n')
+# [1/10]-----[3125/3125] LOSS : 4602.747------ Time : 12
+# [2/10]-----[3125/3125] LOSS : 4342.556------ Time : 12
+# [3/10]-----[3125/3125] LOSS : 4199.608------ Time : 12
+# [4/10]-----[3125/3125] LOSS : 4085.875------ Time : 12
+# [5/10]-----[3125/3125] LOSS : 3990.505------ Time : 12
+# [6/10]-----[3125/3125] LOSS : 3912.424------ Time : 12
+# [7/10]-----[3125/3125] LOSS : 3834.343------ Time : 12
+# [8/10]-----[3125/3125] LOSS : 3763.016------ Time : 12
+# [9/10]-----[3125/3125] LOSS : 3684.760------ Time : 12
+# [10/10]-----[3125/3125] LOSS : 3619.109------ Time : 12 
 ```
 
 - `train()` : 모델을 학습 모드로 변경한다.(Dropout, BN 등 활성화)
-- 
+- `zero_grad()` : `Autograd()`로 계산 된 미분값 초기화
+- `backward()` : 오차역전파 실시
+- `step()` : 개매변수(가중치) 갱신
+
+10 Epoch만 진행해서 아직 Loss가 많이 감소하지 않았지만, 계속 진행하면 더 떨어질 것으로 예상된다.
+
+### 모델 평가(Testing)
+<br>
+
+trainset을 이용해서 학습을 완료했다면, testset을 이용해 모델의 성능을 평가해야한다. 평가방법은 여러가지가 있지만, 이번에는 아주 간단하게 '정확도'로 평가해보려고 한다. 전체 testset 중에 모델이 알맞게 예측한 이미지의 수를 측정하면 된다.
+
+```python
+correct = 0
+test_loss = 0
+model.eval()
+
+with torch.no_grad():
+    for data in testloader:
+        val_images, val_labels = data
+        val_images, val_labels = val_images.to(device), val_labels.to(device)
+        
+        val_outputs = model(val_images)
+        pred = val_outputs.argmax(dim=1, keepdim=True)
+        correct += pred.eq(val_labels.view_as(pred)).sum().item()
+        
+        
+>> print('Accuracy of the network on the 10000 test images : %.3f %%' 
+      %(100 * correct / len(testloader.dataset)))
+# Accuracy of the network on the 10000 test images : 46.370 %
+```
+
+- `no_grad()` : Autograd()기능을 비활성하여 연산속도를 증가시키고 메모리 사용을 감소
+- `argmax()` : 10개의 출력값 중 제일 높은 값(=해당 클래스일 확률)의 index를 출력한다.
+- `eq(tensor)` : tensor의 요소들과 일치하면 해당 index의 값을 1로 반환
+
+위 결과에서는 고작 46%가 나왔지만, epoch을 더 늘리면 정확도가 더 올라갈 것으로 예상이 된다.
+
+
+### 시작부터 Loss가 감소하지 않을 때 해결방안
+<br>
+
+```python
+# [1/10]-----[6250/7500] LOSS : 14400.677------ Time : 20
+# [2/10]-----[6250/7500] LOSS : 14400.625------ Time : 20
+# [3/10]-----[6250/7500] LOSS : 14401.487------ Time : 21
+# [4/10]-----[6250/7500] LOSS : 14399.734------ Time : 20
+# [5/10]-----[6250/7500] LOSS : 14400.587------ Time : 20
+# [6/10]-----[6250/7500] LOSS : 14399.898------ Time : 20
+# [7/10]-----[6250/7500] LOSS : 14400.886------ Time : 20
+# [8/10]-----[6250/7500] LOSS : 14401.681------ Time : 20
+# [9/10]-----[6250/7500] LOSS : 14400.815------ Time : 20
+# [10/10]-----[6250/7500] LOSS : 14401.087------ Time : 20
+```
+
+가끔 학습을 진행할 때 Epoch이 진행이 되도 Loss가 감소하지 않는 상황이 발생한다. 물론 경사하강법의 특징에 의해 `lr`에 값에 따라 발산이 되어 진자운동처럼 손실함수값이 진동할 수 있지만, 대부분은 코드를 실행할 때 잘못된 순서로 인해 문제가 발생한다. 따라서 몇 개의 요소를 바꿔보면 해결이 되는 경우가 많다. 물론 이 방법은 어디까지나 학습이 아예 안 되는 것처럼 느껴질 때 해결방안이다. 
+(Loss가 잘 감소하고 있다가 어느 순간에 멈췄을 때는 lr값을 바꾸거나 모델 구조를 바꾸는 등 더 기술?적인 방법으로 해결해야 한다.)
+
+> 1번부터 시도해보고 변화가 없다면 다음 번호로 넘어가자.
+
+1. 학습하는 코드에 .loss()와 .step()이 포함되어 있는지 확인(loss > step 순서 확인)
+2. 모델을 정의하고 불러온 후에 optimizer를 불러왔는지 확인
+(`model = MyModel()`을 실시한 후에 `SGD()`를 정의했는지 확인)
+3. optimizer에서 model.parameters()를 호출했는지 확인
+4. transform해서 Normalize 값을 0~1사이로 했는지 확인(굳이 0과 1사이일 필요는 없지만 `lr`도 잘 따져줘야함)
+1. `lr`값을 0.1 ~ 0.001 사이의 값으로 변경한 후에 시도
 
 <br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br><br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br><br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br><br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br><br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br><br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br><br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br><br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br><br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+
+지금까지 CIFAR10 데이터셋을 이용해서 학습을 하는 과정에 대해 알아보았다. 위에서 다룬 내용은 학습을 처음 시도하는 사람들이 할 수 있는 가장 간단한 예시이다. **코드를 풀버젼으로 원하면 [여기](https://github.com/gjustin40/Pytorch-Cookbook/blob/master/Beginner/Pytorch5_CNN_Classifier(CIFAR10%20dataset).ipynb)에서 참고할 수 있다.** 사용하는 데이터에 따라서 모델도 바꿔줘야하고, 시간에 따라 lr값도 유동적으로 변경하는 scheduler 등의 테크닉도 이용해야한다. 앞으로 여러 테크닉들에게 대해 다룰 예정이다. 
+
+
+### **읽어주셔서 감사합니다.(댓글과 수정사항은 언제나 환영입니다!)**
