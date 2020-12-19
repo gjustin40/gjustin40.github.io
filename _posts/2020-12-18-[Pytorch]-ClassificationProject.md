@@ -22,13 +22,12 @@ use_math: true
 <br>
 
 # 데이터 정의 및 불러오기(CIFAR-10)
-<br>
+<hr>
 
 ### 데이터
 
 이번 프로젝트에서 사용할 데이터는 CIFAR-10 Datasets이다. 32x32 크기의 이미지가 약 6만개 정도 포함되어 있는 데이터셋이며, 각 이미지는 10개의 클래스 중 하나로 라벨링이 되어 있다. 머신러닝을 연구할 때 가장 많이 사용되는 데이터셋 중 하나이다.
 
-<img  src="../public/img/pytorch/cifar10.jpg" width="400" style='margin: 0px auto;'/>
 <img  src="/public/img/pytorch/cifar10.jpg" width="400" style='margin: 0px auto;'/>
 
 6만개의 이미지 중 5만개는 학습(Train)에 이용하고 나머지 1만개는 평가(Test)에 사용하도록 하겠다. 그렇다면 이 데이터를 어떻게 불러올까?
@@ -183,7 +182,6 @@ show(images)
 
 위 코드를 실행하면 아래 사진과 같이 출력이 된다.
 
-<img  src="../public/img/pytorch/show.jpg" width="400" style='margin: 0px auto;'/>
 <img  src="/public/img/pytorch/show.jpg" width="400" style='margin: 0px auto;'/>
 
 ### 모델 정의
@@ -233,7 +231,6 @@ class Net(nn.Module):
 
 정의한 모델의 모양은 다음과 같다.
 
-<img  src="../public/img/pytorch/model1.jpg" width="" style='margin: 0px auto;'/>
 <img  src="/public/img/pytorch/model1.jpg" width="" style='margin: 0px auto;'/>
 
 ### 모델 확인
