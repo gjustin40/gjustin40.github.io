@@ -1,12 +1,13 @@
 ---
 layout: post
-title: "[Pytorch] - CIFAR10 데이터를 이용한 Classification(분류) 프로젝트"
+title: "[Pytorch] - CIFAR10 데이터를 이용한 Classification(분류)"
 date: 2020-12-18 19:00:00
 category: Pytorch
 use_math: true
 ---
 
-인공신경망에 대한 전반적인 내용은 앞 글에서 충분히 다루었다고 생각한다. 따라서 이번 글에서는 실제 데이터를 이용해 분류(Classification)를 하는 프로젝트를 진행해보기로 하자.(배움을 위해 모델은 직접 정의한 후 진행하기로 하자.)
+인공신경망에 대한 전반적인 내용은 앞 글에서 충분히 다루었다고 생각한다. 따라서 이번 글에서는 실제 데이터를 이용해 분류(Classification)를 하는 프로젝트를 진행해보기로 하자.
+(배움을 위해 모델은 직접 정의한 후 진행하기로 하자.)
 
 <br>
 
@@ -29,12 +30,12 @@ use_math: true
 이번 프로젝트에서 사용할 데이터는 CIFAR-10 Datasets이다. 32x32 크기의 이미지가 약 6만개 정도 포함되어 있는 데이터셋이며, 각 이미지는 10개의 클래스 중 하나로 라벨링이 되어 있다. 머신러닝을 연구할 때 가장 많이 사용되는 데이터셋 중 하나이다.
 
 <img  src="/public/img/pytorch/cifar10.JPG" width="400" style='margin: 0px auto;'/>
-<img  src="/public/img/pytorch/show.jpg" width="400" style='margin: 0px auto;'/>
 
 6만개의 이미지 중 5만개는 학습(Train)에 이용하고 나머지 1만개는 평가(Test)에 사용하도록 하겠다. 그렇다면 이 데이터를 어떻게 불러올까?
 
-### 데이터 정의
 <br>
+
+### 데이터 정의
 
 Pytorch에서는 이러한 데이터셋을 쉽게 불러올 수 있도록 하는 라이브러리인 torchvision을 제공한다. 이 라이브러리는 여러 딥러닝 분야 중 Vision분야를 다룰 때 매우 유용하게 사용되고 있다. 데이터를 불러오는 코드는 다음과 같다.
 
@@ -86,6 +87,7 @@ testset = torchvision.datasets.CIFAR10(root='./data', train=False,
 #            )
 ```
 
+<br>
 ### 데이터 불러오기(DataLoader)
 <br>
 
@@ -161,9 +163,13 @@ testloader = torch.utils.data.DataLoader(dataset=testset, batch_size=16, suffle=
 
 `iter()`함수를 통해 trianloader의 내장함수인 `__iter__()`을 실행시켜  iterator로 만들어주고, `next()`함수를 이용해 `__next__()`을 실행시켜 첫 데이터를 가져온 것이다. trainloader는 2개로 나눠지는데, 첫 번째는 이미지의 array이고 두 번째는 각 이미지에 대한 class label이다. size을 보면 [64, 3, 32, 32]인 것을 알 수 있는데, 각 자리는 다음과 같다.
 
+<br>
+
 $$
 [64, 3, 32, 32] = [Batch, channels, height, width]
 $$
+
+<br>
 
 실제로 이미지가 어떻게 생겼는지 출력하면 다음과 같다.
 
@@ -230,9 +236,11 @@ class Net(nn.Module):
 - `F.relu` : ReLU 활성화 함수이다.
 - `view()` : Tensor의 size을 바꿔주는 함수(flatten)
 
+<br>
+
 정의한 모델의 모양은 다음과 같다.
 
-<img  src="/public/img/pytorch/model1.jpg" width="" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/model1.JPG" width="" style='margin: 0px auto;'/>
 
 ### 모델 확인
 <br>
@@ -253,11 +261,12 @@ with torch.no_grad():
     print(example.size())
     print('Test : ', example)
 ```
-- `eval()` : 테스트용으로 설정하여 **dropout**이 비활성화되고 배치정규화가 학습할 때 지정했던 파라미터를 이용한다.
-- `torch.no_grad()` : Autograd()모드를 비활성화하여 메모리 사용을 줄이고 계산속도를 증가시킨다.
+- `eval()` : 테스트용으로 설정하여 **dropout**이 비활성화되고 **배치정규화(BN)**가 학습할 때 지정했던 파라미터를 이용한다.
+- `torch.no_grad()` : Autograd()모드를 비활성화하여 메모리 사용을 줄이고 연산속도를 증가시킨다.
 
-단지 확인용으로 실행하기 때문에 `eval()`과 `torch.no_grad()`를 설정했다.
+단지 확인용으로 실행하는 코드이기에 `eval()`과 `torch.no_grad()`를 설정했다.
 
+<br>
 
 ### GPU 사용 여부 확인
 <br>
@@ -277,7 +286,11 @@ else:
 image.to(device), model.to(device)
 ```
 
+<br>
+
 현재 필자의 컴퓨터에는 GPU가 있기 때문에 `device` 가 `cuda`로 설정되었다. 나중에 연산에 참여하는 변수나 모델들을 `.to()`를 통해 GPU에 올릴 수 있다.
+
+<br>
 
 ### 손실함수(Loss Function) 및 최적함 함수(Optimizer) 정의
 <br>
@@ -302,6 +315,8 @@ optimizer = optim.SGD(model.parameters(), lr = 0.01)
 
 - `lr` : 학습률은 기본적으로 0.01로 설정하자.
 
+<br>
+
 ### 하이퍼 파라미터(Hypter Parameter) 설정
 <br>
 
@@ -314,6 +329,8 @@ EPOCH = 10
 ```
 
 `Learning Rate`도 하이퍼 파라미터에 포함되지만, 위에 최적화 함수를 정의하는 과정에서 이미 대입을 했기 때문에 생갹하기로 하겠다.
+
+<br>
 
 ### 학습(Training) 
 <br>
@@ -365,6 +382,8 @@ for e in range(1, EPOCH+1):
 
 10 Epoch만 진행해서 아직 Loss가 많이 감소하지 않았지만, 계속 진행하면 더 떨어질 것으로 예상된다.
 
+<br>
+
 ### 모델 평가(Testing)
 <br>
 
@@ -396,9 +415,9 @@ with torch.no_grad():
 
 위 결과에서는 고작 46%가 나왔지만, epoch을 더 늘리면 정확도가 더 올라갈 것으로 예상이 된다.
 
+<br>
 
 ### 시작부터 Loss가 감소하지 않을 때 해결방안
-<br>
 
 ```python
 # [1/10]-----[6250/7500] LOSS : 14400.677------ Time : 20
@@ -415,6 +434,7 @@ with torch.no_grad():
 
 가끔 학습을 진행할 때 Epoch이 진행이 되도 Loss가 감소하지 않는 상황이 발생한다. 물론 경사하강법의 특징에 의해 `lr`에 값에 따라 발산이 되어 진자운동처럼 손실함수값이 진동할 수 있지만, 대부분은 코드를 실행할 때 잘못된 순서로 인해 문제가 발생한다. 따라서 몇 개의 요소를 바꿔보면 해결이 되는 경우가 많다. 물론 이 방법은 어디까지나 학습이 아예 안 되는 것처럼 느껴질 때 해결방안이다. 
 (Loss가 잘 감소하고 있다가 어느 순간에 멈췄을 때는 lr값을 바꾸거나 모델 구조를 바꾸는 등 더 기술?적인 방법으로 해결해야 한다.)
+<br>
 
 > 1번부터 시도해보고 변화가 없다면 다음 번호로 넘어가자.
 
@@ -427,7 +447,7 @@ with torch.no_grad():
 
 <br>
 
-지금까지 CIFAR10 데이터셋을 이용해서 학습을 하는 과정에 대해 알아보았다. 위에서 다룬 내용은 학습을 처음 시도하는 사람들이 할 수 있는 가장 간단한 예시이다. **코드를 풀버젼으로 원하면 [여기](https://github.com/gjustin40/Pytorch-Cookbook/blob/master/Beginner/Pytorch5_CNN_Classifier(CIFAR10%20dataset).ipynb)에서 참고할 수 있다.** 사용하는 데이터에 따라서 모델도 바꿔줘야하고, 시간에 따라 lr값도 유동적으로 변경하는 scheduler 등의 테크닉도 이용해야한다. 앞으로 여러 테크닉들에게 대해 다룰 예정이다. 
+지금까지 CIFAR10 데이터셋을 이용해서 학습을 하는 과정에 대해 알아보았다. 위에서 다룬 내용은 학습을 처음 시도하는 사람들이 할 수 있는 가장 간단한 예시이다. **코드를 풀버젼으로 원하면 [여기](https://github.com/gjustin40/Pytorch-Cookbook/blob/master/Beginner/Pytorch5_CNN_Classifier(CIFAR10%20dataset).ipynb)를 참고하면 된다.** 사용하는 데이터에 따라서 모델도 바꿔줘야하고, 시간에 따라 lr값도 유동적으로 변경하는 scheduler 등의 테크닉도 이용해야한다. 앞으로 여러 테크닉들에게 대해 다룰 예정이다. 
 
 
-### **읽어주셔서 감사합니다.(댓글과 수정사항은 언제나 환영입니다!)**
+## **읽어주셔서 감사합니다.(댓글과 수정사항은 언제나 환영입니다!)**
