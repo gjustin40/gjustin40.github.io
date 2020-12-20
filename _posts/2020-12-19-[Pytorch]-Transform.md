@@ -8,10 +8,13 @@ use_math: true
 
 먼저 `Torchvision`이란 이미지를 이용해 기계학습을 할 때 유용하게 사용할 수 있는 라이브러리이다. `Torchvision`은 연구목적으로 하는 다양한 데이터셋을 제공하고 이미지 뿐만 아니라 Video데이터도 제공한다. 특히 이미지를 다룰 때 필수이며 이번 포스터에서도 다뤄볼 내용은 Transform 기능을 제공한다. 데이터셋에 대해서는 다른 포스터에서 다루기로 하고 이번에는 `Transforms`기능을 다뤄보기로 하자.
 
+<br>
+
 # Torchvision.Transforms()
 <hr>
 
 `Torchvision`에서 포함되어 있는 모듈인 `Transforms()`는 이미지 데이터를 학습에 맞게 변환하거나 부풀리기(Augmentaion) 등의 기능을 제공한다. `Transforms()`은 PIL Image나 Tensor Image,  Batch Tensor Image 등을 입력값으로 받는다. 여기서 Tensor Image는 (Channels, Height, Width)의 shape을 가지고 Batch Tensor Image의 경우 (Batch, Channel, Height, Width)의 shape을 가진다. Batch Tensor Image에서는 모든 Batch에 대해 변환이 동일하게 적용된다. 
+
 <br>
 
 Transforms을 적용하는 방식은 다음과 같다.(여러개를 동시에 적용)
@@ -30,6 +33,8 @@ transform(input_image)
 ```
 
 - `Compose()` : 이 함수를 이용해 여러개의 변환을 한 번에 적용할 수 있다.
+
+<br>
 
 물론 각각 한 개씩도 적용할 수 있지만, 보통은 datasets을 불러올 떄 transforms을 사용하기 때문에 여러개의 변환들을 한 번에 적용하는 방법을 많이 사용한다.
 <br>
@@ -51,7 +56,9 @@ plt.figure(figsize = (10,8))
 plt.imshow(img)
 ```
 
-<img  src="/public/img/pytorch/justin.jpg" width="" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/transform/justin.jpg" width="" style='margin: 0px auto;'/>
+
+<br>
 
 # transforms() 의 종류
 <hr>
@@ -69,6 +76,7 @@ img1
 
 <img  src="/public/img/pytorch/transform/img1.jpg" width="" style='margin: 0px auto;'/>
 
+<br>
 
 ### 밝기 및 명암 바꿔주기
 ```python
@@ -79,6 +87,8 @@ img2
 - 특정 수치 범위내에서 랜덤으로 밝기 및 명암을 바꾼다.
 
 <img  src="/public/img/pytorch/transform/b.jpg" width="" style='margin: 0px auto;'/>
+
+<br>
 
 ### Image 5개 부위로 자르기
 ```python
@@ -94,6 +104,8 @@ for i,im in enumerate(transform.FiveCrop(size = (50,50))(img)):
 
 <img  src="/public/img/pytorch/transform/img3.jpg" width="" style='margin: 0px auto;'/>
 
+<br>
+
 ### Gray 스케일로 변환
 ```python
 img3 = transform.Grayscale(num_output_channels=1)(img)
@@ -104,6 +116,8 @@ img3
 - 만약 `num_output_channels=3`으로 설정하면 `r==g==b`인 이미지로 변환한다.(결과는 같다.)
 
 <img  src="/public/img/pytorch/transform/img2.jpg" width="" style='margin: 0px auto;'/>
+
+<br>
 
 ### 이미지 size 확장
 ```python
@@ -127,6 +141,8 @@ for i, m in enumerate(mode): # 설정한 크기로 5개의 사진으로 나눔
 
 <img  src="/public/img/pytorch/transform/ex.JPG" width="" style='margin: 0px auto;'/>
 
+<br>
+
 ### 이미지 회전
 ```python
 # 이미지 회전a
@@ -139,6 +155,7 @@ img5
 
 <img  src="/public/img/pytorch/transform/img5.jpg" width="" style='margin: 0px auto;'/>
 
+<br>
 
 ### 무작위하게 자르기
 ```python
@@ -151,6 +168,8 @@ img6
 
 <img  src="/public/img/pytorch/transform/img6.jpg" width="" style='margin: 0px auto;'/>
 
+<br>
+
 ### 확률에 따라 이미지를 gray scale로 변환
 ```python
 img7 = transform.RandomGrayscale(p=0.5)(img)
@@ -159,6 +178,8 @@ img7
 
 - p=확률값, 확률에 의해 이미지를 grayscale로 변환한다.
 - p=0.5 설정 시 50%확률로 이미지가 grayscale로 변환된다.
+
+<br>
 
 ### 확률에 의해 이미지 뒤집기
 ```python
@@ -169,6 +190,8 @@ img8
 - 단순히 좌우(Horizontal)로 뒤집기 때문에 얼굴인 경우 변환의 차이가 별로 없다.(살짝 어색한 정도)
 
 <img  src="/public/img/pytorch/transform/img8.jpg" width="" style='margin: 0px auto;'/>
+
+<br>
 
 ### 이지미 size 변경
 ```python
@@ -189,6 +212,8 @@ transform.Resize((100,100), interpolation=2)(img)
 
 - 어떤 보간법(Interpolation)을 사용하느냐에 따라 살짝 다르게 변환된다.
 
+<br>
+
 ### 무작위로 이미지 내의 부위 삭제
 ```python
 tensor = transform.ToTensor()(img)
@@ -201,8 +226,11 @@ plt.imshow(img9.permute(1,2,0))
 <img  src="/public/img/pytorch/transform/img9.jpg" width="" style='margin: 0px auto;'/>
 
 <br>
+<br>
 
 위에서 다룬 것들은 대부분 이미지를 변환하는데 사용되는 함수들이다. 즉, Augmetation을 할 때 주로 사용되는 함수들인 셈이다. 하지만 이것 외에도 이미지의 값(value)을 변경해주는 기능도 있다. 대표적으로 사용하는 2가지를 소개하면 다음과 같다.
+
+<br>
 
 ### Tensor 형식으로 변환
 
@@ -243,14 +271,17 @@ img10
 
 **`Torchvision`의 모듈인 `datasets`을 이용할 때는 이미지를 불러올 때 PIL 라이브러리를 이용하기 때문에 `ToTensor()`를 필수적으로 사용해야한다.**
 
+<br>
 
 ### 정규화(Normalization)
 
-정규화를 해주는 이유에 대해서는 다른 포스터에서 다루기로 하고, 어떻게 적용되는지에 대해서만 다루겠다.
+정규화를 해주는 이유는 다른 포스터에서 다루기로 하고, 어떻게 적용되는지에 대해서만 다루겠다.
 
 $$
 z[channel] = \frac{x[channel] - mean[channel]}{std[channel]}
 $$
+
+<br>
 
 ```python
 img11 = transform.Normalize(mean=(0,0,0), std=(2,2,2))(tensor)
@@ -283,9 +314,11 @@ img11
 - 이미지의 value들을 (mean, std)로 정규화해준다.
 - 모든 channel에 대해 각각 적용된다.
 
+<br>
+
 # 여러 변환들을 랜덤으로 적용
 <hr>
-여러가지의 변환들을 한 번에 정의를 하고 확률에 따라 각 기능들이 발현될 수 있도록 하는 기능도 제공한다.
+여러 변환들을 한 번에 정의를 하고 확률에 따라 각 기능들이 발현될 수 있도록 하는 기능도 제공한다.
 
 ### RandomApply()
 ```python
@@ -316,6 +349,8 @@ transforms = [
 
 - 정해진 옵션들 중 랜덤하게 1가지만 선택되어 적용된다.
 
+<br>
+
 # 프로젝트에 적용
 <hr>
 
@@ -338,10 +373,12 @@ transform = transforms.Compose(
 trainset = torchvision.datasets.MNIST(root = './data', train = True,
                                       download = True, transform=transform)
 ```
+<br>
 
 ### Compose를 사용할 때 문제점
 
 가끔 `transforms.Compose()`를 사용해 여러 transforms를 묶은 후에 적용을 하면 에러가 발생하는 경우가 있다. 대부분은 Compose 내에서 transforms들을 정의할 때 순서가 잘못되어 발생하는 문제이다.
+<br>
 (그리고 해당 오류는 dataloader를 통해 데이터를 불러올 때 발생한다.)
 <br>
 
@@ -429,6 +466,6 @@ transform = torch.nn.Sequential(
 
 <br>
 
-지금까지 `torchvision.transforms()`의 기능과 종류들에 대해 알아보았다. 처음에 언급한 것 처럼  데이터가 부족한 경우 transforms()을 이용해 데이터를 부풀리는 테크닉을 많이 이용한다. 또한 다양한 방법으로 이미지를 변환시켜 학습을 하면 같은 이미지가 아닌 모두 다른 이미지가 학습이 되기 때문에 과적합(Overfitting)도 방지할 수 있다. Pytorch를 이용해 기계학습을 할 때 유용하게 사용하면 좋을 것 같다. **위 코드들에 대해 풀버젼을 원하면 [여기](https://github.com/gjustin40/Pytorch-Cookbook/blob/master/Beginner/Pytorch4_3_Augmentation.ipynb)를 참고하면 된다.**
+지금까지 `torchvision.transforms()`의 기능과 종류들에 대해 알아보았다. 처음에 언급한 것 처럼  데이터가 부족한 경우 transforms()을 이용해 데이터를 부풀리는 테크닉을 많이 이용한다. 또한 다양한 방법으로 이미지를 변환시켜 학습을 하면 같은 이미지가 아닌 모두 다른 이미지가 학습이 되기 때문에 과적합(Overfitting) 도 방지할 수 있다. Pytorch를 이용해 기계학습을 할 때 유용하게 사용하면 좋을 것 같다. **위 코드들에 대해 풀버젼을 원하면 [여기](https://github.com/gjustin40/Pytorch-Cookbook/blob/master/Beginner/Pytorch4_3_Augmentation.ipynb)를 참고하면 된다.**
 
 ## **읽어주셔서 감사합니다.(댓글과 수정사항은 언제나 환영입니다!)**
