@@ -455,5 +455,4 @@ with torch.no_grad():
 
 지금까지 CIFAR10 데이터셋을 이용해서 학습을 하는 과정에 대해 알아보았다. 위에서 다룬 내용은 학습을 처음 시도하는 사람들이 할 수 있는 가장 간단한 예시이다. **코드를 풀버젼으로 원하면 [여기](https://github.com/gjustin40/Pytorch-Cookbook/blob/master/Beginner/Pytorch5_CNN_Classifier(CIFAR10%20dataset).ipynb)를 참고하면 된다.** 사용하는 데이터에 따라서 모델도 바꿔줘야하고, 시간에 따라 lr값도 유동적으로 변경하는 scheduler 등의 테크닉도 이용해야한다. 앞으로 여러 테크닉들에게 대해 다룰 예정이다. 
 
-
 ## **읽어주셔서 감사합니다.(댓글과 수정사항은 언제나 환영입니다!)**
