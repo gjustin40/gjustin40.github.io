@@ -195,35 +195,10 @@ for e in range(EPOCH):
         
         optimizer.step()      
 ```
-SGD와 비슷하지만 batch_size을 설정해야하는 부분에서 차이가 있다. 또한 error값을 계산할 때 batch_size 개수만큼의 error가 발생하지만, 손실함수를 정의하는 과정에서 모두 합치는 옵션이 기본값으로 설정되어 있어서 자동으로 sum()이 돼서 출력이 된다. 자세한 내용은 [여기](https://gjustin40.github.io/pytorch/2020/12/15/Pytorch-LossFunction.html)를 참고하면 된다.
+SGD와 비슷하지만 batch_size를 설정해야하는 부분에서 차이가 있다. 또한 error값을 계산할 때 batch_size 개수만큼의 error가 발생하지만, 손실함수를 정의하는 과정에서 모두 합치는 옵션이 기본값으로 설정되어 있어서 자동으로 sum()이 돼서 출력이 된다. 자세한 내용은 [여기](https://gjustin40.github.io/pytorch/2020/12/15/Pytorch-LossFunction.html)를 참고하면 된다.
 
 <br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+
+지금까지 경사하강법과 그 종류들에 대해 알아보았다. 사실 위에 언급한 알고리즘 말고도 모멘텀, adagrad, adam 등이 있다. 물론 지금은 모멘텀을 추가한 MSGD가 많이 사용되고 있지만, 대부분은 이번 포스터에서 언급한 알고리즘들이 많이 사용된다. 기회가 된다면 다른 최적화 함수들도 다뤄볼 예정이다.
+
+## **읽어주셔서 감사합니다.(댓글과 수정사항은 언제나 환영입니다!)**
