@@ -283,23 +283,38 @@ img11
 - 이미지의 value들을 (mean, std)로 정규화해준다.
 - 모든 channel에 대해 각각 적용된다.
 
-### 여러 변환들을 랜덤으로 적용
-
+# 여러 변환들을 랜덤으로 적용
+<hr>
 여러가지의 변환들을 한 번에 정의를 하고 확률에 따라 각 기능들이 발현될 수 있도록 하는 기능도 제공한다.
+
+### RandomApply()
 ```python
-# 여러 기능을 랜덤하게 적용하기(모두 적용이 된다.)
 transforms = [
     transform.ColorJitter(brightness=1),
     transform.RandomAffine(degrees=180),
     transform.CenterCrop(size=(50,50))
 ]
 
-transform.RandomApply(transforms, p=0.5)(img)
+>>> transform.RandomApply(transforms, p=0.5)(img)
 ```
 
-- 정해진 옵션에 따라 각 기능들이 적용된다.
+- 정해진 옵션에 따라 각 기능들이 **모두** 적용된다.
 - 확률(p)에 따라 적용된다.
 
+<br>
+
+### RandomChoice()
+```python
+transforms = [
+    transform.ColorJitter(brightness=1),
+    transform.RandomAffine(degrees=180),
+    transform.CenterCrop(size=(50,50))
+]
+
+>>> transform.RandomChoice(transforms)(img)
+```
+
+- 정해진 옵션들 중 랜덤하게 1가지만 선택되어 적용된다.
 <br>
 <br>
 <br>
