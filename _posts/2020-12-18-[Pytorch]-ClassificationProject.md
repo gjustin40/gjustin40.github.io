@@ -61,6 +61,8 @@ testset = torchvision.datasets.CIFAR10(root='./data', train=False,
 - `downlaod` : `root`에 데이터가 없으면 자동으로 다운로드를 한다.
 - `transform` : 데이터를 전처리하거나 부풀리기 등의 기능을 추가
 
+<br>
+
 데이터를 확인하면 다음과 같다.(각각 5만개, 1만개)
 
 ```python
@@ -187,6 +189,12 @@ images, labels = iter(trainloader).next()
 show(images)
 ```
 
+- `make_grid()` : 이미지를 사용자가 보기 쉽게 grid형태로 출력해준다.(입력값은 3채널이어야 함)
+- `padding` : grid형태로 만들 때 이미지 사이의 공간을 만든다.(그 공간을 0값으로 채운다)
+- `permute()` : Tensor의 shape을 재설정한다.((1,2,0) = 기존에 1행을 0행, 2행을 1행, 0행을 2행으로)
+
+<br>
+
 위 코드를 실행하면 아래 사진과 같이 출력이 된다.
 
 <img  src="/public/img/pytorch/show.jpg" width="400" style='margin: 0px auto;'/>
@@ -286,8 +294,6 @@ else:
 image.to(device), model.to(device)
 ```
 
-<br>
-
 현재 필자의 컴퓨터에는 GPU가 있기 때문에 `device` 가 `cuda`로 설정되었다. 나중에 연산에 참여하는 변수나 모델들을 `.to()`를 통해 GPU에 올릴 수 있다.
 
 <br>
@@ -385,7 +391,6 @@ for e in range(1, EPOCH+1):
 <br>
 
 ### 모델 평가(Testing)
-<br>
 
 trainset을 이용해서 학습을 완료했다면, testset을 이용해 모델의 성능을 평가해야한다. 평가방법은 여러가지가 있지만, 이번에는 아주 간단하게 '정확도'로 평가해보려고 한다. 전체 testset 중에 모델이 알맞게 예측한 이미지의 수를 측정하면 된다.
 
@@ -434,6 +439,7 @@ with torch.no_grad():
 
 가끔 학습을 진행할 때 Epoch이 진행이 되도 Loss가 감소하지 않는 상황이 발생한다. 물론 경사하강법의 특징에 의해 `lr`에 값에 따라 발산이 되어 진자운동처럼 손실함수값이 진동할 수 있지만, 대부분은 코드를 실행할 때 잘못된 순서로 인해 문제가 발생한다. 따라서 몇 개의 요소를 바꿔보면 해결이 되는 경우가 많다. 물론 이 방법은 어디까지나 학습이 아예 안 되는 것처럼 느껴질 때 해결방안이다. 
 (Loss가 잘 감소하고 있다가 어느 순간에 멈췄을 때는 lr값을 바꾸거나 모델 구조를 바꾸는 등 더 기술?적인 방법으로 해결해야 한다.)
+
 <br>
 
 > 1번부터 시도해보고 변화가 없다면 다음 번호로 넘어가자.
