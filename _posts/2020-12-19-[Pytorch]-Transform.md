@@ -8,13 +8,6 @@ use_math: true
 
 먼저 `Torchvision`이란 이미지를 이용해 기계학습을 할 때 유용하게 사용할 수 있는 라이브러리이다. `Torchvision`은 연구목적으로 하는 다양한 데이터셋을 제공하고 이미지 뿐만 아니라 Video데이터도 제공한다. 특히 이미지를 다룰 때 필수이며 이번 포스터에서도 다뤄볼 내용은 Transform 기능을 제공한다. 데이터셋에 대해서는 다른 포스터에서 다루기로 하고 이번에는 `Transforms`기능을 다뤄보기로 하자.
 
-
-1. transforms이 무엇인지
-2. 어떤 기능들이 있는지(변환과 부풀리기 2 종류 나눠서)
-3. 실제로 프로젝트에 적용하는 방법
-4. compose와 subscribale이 가능한 상태 설명
-6. 
-
 # Torchvision.Transforms()
 <hr>
 
@@ -39,6 +32,13 @@ transform(input_image)
 - `Compose()` : 이 함수를 이용해 여러개의 변환을 한 번에 적용할 수 있다.
 
 물론 각각 한 개씩도 적용할 수 있지만, 보통은 datasets을 불러올 떄 transforms을 사용하기 때문에 여러개의 변환들을 한 번에 적용하는 방법을 많이 사용한다.
+<br>
+
+- 데이터가 부족할 때 데이터를 부풀리는 테크닉인 Augmentation에 활용할 수 있다.
+- 이미지의 노이즈들을 제거할 수 있다.
+- 정규화나 Tensor로 변환할 때 유용하게 사용된다.
+- 한 개의 이미지에서 다른 모양의 이미지를 생성하기 때문에 과적합(Overfitting)을 방지할 수 있다.
+
 <br>
 
 지금부터 transforms으로 할 수 있는 기능들에 대해 나열할텐데, 예시에 사용될 사진은 다음과 같습니다.
@@ -387,66 +387,48 @@ ValueError: This interpolation mode is unsupported with Tensor input
 
 대부분의 transforms들은 입력값으로 PIL Image의 type을 받는다. 하지만 코드에서 `ToTensor()`를 먼저 작성한 후에 다음 transforms들을 나열하면 위와 비슷한 오류가 발생하게 된다. 따라서 `ToTensor()`의 경우 다른 transforms들을 작성한 후에 마지막에 적어주는 것이 좋다.
 
-하지만 웃기게도 `Normalize()`의 경우 `ToTensor()` 다음에 적용을 해야 오류가 발생하지 않는다.(지 멋대로구마잉~)
+하지만 `Normalize()`의 경우 `ToTensor()` 다음에 적용을 해야 오류가 발생하지 않는다.(지 멋대로구마잉~)
 
+<br>
+
+# Transforms을 Scriptable하게 만들기
+<hr>
+
+소소한 팁으로 여러 개의 변환들로 묶인 transforms에서 필요한 기능들만 쏙쏙 indexing할 수 있는 방법이 있다. 이것을 Scriptable이라고 하는데, 보통 list가 각 요소들을 반환할 수 있는 것 처럼 Pytorch도 이러한 기능을 제공한다.
+
+```python
+import torch.nn as nn
+import torchvision.transforms as transforms
+
+transform = torch.nn.Sequential(
+    transforms.CenterCrop(10),
+    transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
+    transforms.RandomErasing(p=0.8, scale=(0.02, 0.33), ratio=(0.3, 3.3), value=0),
+    transforms.RandomHorizontalFlip(p=0.9),
+    transforms.ColorJitter(brightness=1),
+    transforms.RandomAffine(degrees=180),
+    transforms.CenterCrop(size=(50,50))
+)
+
+>>> print(transform)
+# Sequential(
+#   (0): CenterCrop(size=(10, 10))
+#   (1): Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225))
+#   (2): RandomErasing()
+#   (3): RandomHorizontalFlip(p=0.9)
+#   (4): ColorJitter(brightness=[0.0, 2.0], contrast=None, saturation=None, hue=None)
+#   (5): RandomAffine(degrees=[-180.0, 180.0])
+#   (6): CenterCrop(size=(50, 50))
+# )
+
+>>> print(transform[4])
+# ColorJitter(brightness=[0.0, 2.0], contrast=None, saturation=None, hue=None)
+```
+
+- `nn.Sequential()`을 이용하면 각 transforms들을 index로 불러올 수 있다.
 
 <br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+
+지금까지 `torchvision.transforms()`의 기능과 종류들에 대해 알아보았다. 처음에 언급한 것 처럼  데이터가 부족한 경우 transforms()을 이용해 데이터를 부풀리는 테크닉을 많이 이용한다. 또한 다양한 방법으로 이미지를 변환시켜 학습을 하면 같은 이미지가 아닌 모두 다른 이미지가 학습이 되기 때문에 과적합(Overfitting)도 방지할 수 있다. Pytorch를 이용해 기계학습을 할 때 유용하게 사용하면 좋을 것 같다.
+
+## **읽어주셔서 감사합니다.(댓글과 수정사항은 언제나 환영입니다!)**
