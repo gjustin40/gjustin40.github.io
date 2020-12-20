@@ -88,6 +88,32 @@ $$
 
 <br>
 
+GD의 코드는 다음과 같다.(앞, 뒤 모두 생략하고 학습하는 부분만 작성하겠다.)
+
+```python
+# 데이터 정의
+# 모델 정의
+# 손실 및 최적화 함수 정의
+
+for e in range(EPOCH):
+    
+    train_loss = 0
+    for data in dataloader: # batch_size=1인 dataloader
+        image, label = data # image = 1개
+        
+        output = model(image)
+        loss = loss_func(output, label)
+        
+        train_loss = train_loss + loss
+        ### error 계산 완료
+
+    optimizer.zero_grad()    
+    train_loss.backward()
+    optimizer.step()   
+```
+
+<br>
+
 ### 확률적 경사하강법(Stochastic Gradient Descent)
 
 이름 그대로 **확률적으로 가중치를 갱신하는 방법이다.** 학습 데이터 중 무작위로 1개의 데이터를 선택한 후에 error와 기울기를 구하고 가중치를 갱신한다. 즉, 1 iter 당 1개의 데이터에 error와 기울기를 구하고 가중치를 업데이트르 진행한다. 1 Epoch 당 1개의 데이터를 보는 것이다.
@@ -103,6 +129,29 @@ $$
 
 <img  src="/public/img/pytorch/SGD-GD.png" width="" style='margin: 0px auto;'/>
 <img  src="../public/img/pytorch/SGD-GD.png" width="" style='margin: 0px auto;'/>
+
+SGD의 코드는 다음과 같다.
+
+```python
+# 데이터 정의
+# 모델 정의
+# 손실 및 최적화 함수 정의
+
+for e in range(EPOCH):
+    
+    for data in dataloader: # batch_size=1인 dataloader
+        image, label = data # image = 1개
+        
+        optimizer.zero_grad()
+        
+        output = model(image)
+        loss = loss_func(output, label)
+        loss.backward()
+        
+        optimizer.step()      
+```
+
+<br>
 
 ### 미니 배치 경사하강법(mini-batch Gradient Descent)
 
@@ -122,6 +171,31 @@ $$
 
 <img  src="../public/img/pytorch/SGD-MSGD.png" width="" style='margin: 0px auto;'/>
 <img  src="/public/img/pytorch/SGD-MSGD.png" width="400" style='margin: 0px auto;'/>
+
+MSGD의 코드는 다음과 같다.
+
+```python
+# 데이터 정의
+# 모델 정의
+# 손실 및 최적화 함수 정의
+
+BATCH_SIZE = 10
+dataloader = dataloader(batch_size = BATCH_SIZE)
+
+for e in range(EPOCH):
+    
+    for data in dataloader: # batch_size=10인 dataloader
+        image, label = data # image = 10개
+        
+        optimizer.zero_grad()
+        
+        output = model(image)
+        loss = loss_func(output, label)
+        loss.backward()
+        
+        optimizer.step()      
+```
+SGD와 비슷하지만 batch_size을 설정해야하는 부분에서 차이가 있다. 또한 error값을 계산할 때 batch_size 개수만큼의 error가 발생하지만, 손실함수를 정의하는 과정에서 모두 합치는 옵션이 기본값으로 설정되어 있어서 자동으로 sum()이 돼서 출력이 된다. 자세한 내용은 [여기](https://gjustin40.github.io/pytorch/2020/12/15/Pytorch-LossFunction.html)를 참고하면 된다.
 
 <br>
 <br>
