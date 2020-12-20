@@ -429,6 +429,6 @@ transform = torch.nn.Sequential(
 
 <br>
 
-지금까지 `torchvision.transforms()`의 기능과 종류들에 대해 알아보았다. 처음에 언급한 것 처럼  데이터가 부족한 경우 transforms()을 이용해 데이터를 부풀리는 테크닉을 많이 이용한다. 또한 다양한 방법으로 이미지를 변환시켜 학습을 하면 같은 이미지가 아닌 모두 다른 이미지가 학습이 되기 때문에 과적합(Overfitting)도 방지할 수 있다. Pytorch를 이용해 기계학습을 할 때 유용하게 사용하면 좋을 것 같다.
+지금까지 `torchvision.transforms()`의 기능과 종류들에 대해 알아보았다. 처음에 언급한 것 처럼  데이터가 부족한 경우 transforms()을 이용해 데이터를 부풀리는 테크닉을 많이 이용한다. 또한 다양한 방법으로 이미지를 변환시켜 학습을 하면 같은 이미지가 아닌 모두 다른 이미지가 학습이 되기 때문에 과적합(Overfitting)도 방지할 수 있다. Pytorch를 이용해 기계학습을 할 때 유용하게 사용하면 좋을 것 같다. **위 코드들에 대해 풀버젼을 원하면 [여기](https://github.com/gjustin40/Pytorch-Cookbook/blob/master/Beginner/Pytorch4_3_Augmentation.ipynb)를 참고하면 된다.**
 
 ## **읽어주셔서 감사합니다.(댓글과 수정사항은 언제나 환영입니다!)**
