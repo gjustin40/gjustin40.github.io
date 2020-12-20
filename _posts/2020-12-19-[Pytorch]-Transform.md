@@ -67,6 +67,9 @@ img1
 ```
 - size에 맞게 이미지의 중심을 자른다.
 
+<img  src="../public/img/pytorch/transform/img1.jpg" width="" style='margin: 0px auto;'/>
+
+
 ### 밝기 및 명암 바꿔주기
 ```python
 img2 = transform.ColorJitter(brightness=1, contrast=0, saturation=0, hue=0)(img) # 특정 수치 범위내에서 랜덤으로 바꿔준다
@@ -74,6 +77,8 @@ img2
 ```
 
 - 특정 수치 범위내에서 랜덤으로 밝기 및 명암을 바꾼다.
+
+<img  src="../public/img/pytorch/transform/b.jpg" width="" style='margin: 0px auto;'/>
 
 ### Image 5개 부위로 자르기
 ```python
@@ -87,6 +92,8 @@ for i,im in enumerate(transform.FiveCrop(size = (50,50))(img)):
 
 - 설정한 크기에 따라 5개의 사진으로 나눔
 
+<img  src="../public/img/pytorch/transform/img3.jpg" width="" style='margin: 0px auto;'/>
+
 ### Gray 스케일로 변환
 ```python
 img3 = transform.Grayscale(num_output_channels=1)(img)
@@ -95,6 +102,8 @@ img3
 
 - 채널이 1개 뿐인 gray scale로 변환
 - 만약 `num_output_channels=3`으로 설정하면 `r==g==b`인 이미지로 변환한다.(결과는 같다.)
+
+<img  src="../public/img/pytorch/transform/img2.jpg" width="" style='margin: 0px auto;'/>
 
 ### 이미지 size 확장
 ```python
@@ -116,6 +125,8 @@ for i, m in enumerate(mode): # 설정한 크기로 5개의 사진으로 나눔
 - `edge` : 마지막 edge들의 값들로 채운다.(fill 옵션이 필요 없음)
 - `reflect` : 거울처럼 반사된 모양으로 변환한다.
 
+<img  src="../public/img/pytorch/transform/ex.JPG" width="" style='margin: 0px auto;'/>
+
 ### 이미지 회전
 ```python
 # 이미지 회전a
@@ -126,6 +137,9 @@ img5
 - `degrees`의 각도만큼 회전, 회전 후에 남는 부분은 fillcolor로 채운다.
 - `fiilcolor` 옵션은 PIL의 버젼이 5.0 이상일 때만 작동
 
+<img  src="../public/img/pytorch/transform/img5.jpg" width="" style='margin: 0px auto;'/>
+
+
 ### 무작위하게 자르기
 ```python
 # 랜덤으로 자르기
@@ -134,6 +148,8 @@ img6
 ```
 
 - 해당 size만큼 무작위하게 이미지를 자른다.
+
+<img  src="../public/img/pytorch/transform/img6.jpg" width="" style='margin: 0px auto;'/>
 
 ### 확률에 따라 이미지를 gray scale로 변환
 ```python
@@ -151,6 +167,8 @@ img8 = transform.RandomHorizontalFlip(p=0.9)(img)
 img8
 ```
 - 단순히 좌우(Horizontal)로 뒤집기 때문에 얼굴인 경우 변환의 차이가 별로 없다.(살짝 어색한 정도)
+
+<img  src="../public/img/pytorch/transform/img8.jpg" width="" style='margin: 0px auto;'/>
 
 ### 이지미 size 변경
 ```python
@@ -174,11 +192,13 @@ transform.Resize((100,100), interpolation=2)(img)
 ### 무작위로 이미지 내의 부위 삭제
 ```python
 tensor = transform.ToTensor()(img)
-example = transform.RandomErasing(p=0.8, scale=(0.02, 0.33), ratio=(0.3, 3.3), value=0)(tensor)
-plt.imshow(example.permute(1,2,0))
+img9 = transform.RandomErasing(p=0.8, scale=(0.02, 0.33), ratio=(0.3, 3.3), value=0)(tensor)
+plt.imshow(img9.permute(1,2,0))
 ```
 - Tensor로 변환한 후 적용해준 이유는 `randomErasing()`이 적용될 때 input이 PIL Image이면 error가 발생한다.
 - 확률적으로 발생하는데 신기하게 PIL Image일 때 적용되면 error가 발생하는데, 적용이 안 되면 에러가 발생하지 않음
+
+<img  src="../public/img/pytorch/transform/img9.jpg" width="" style='margin: 0px auto;'/>
 
 <br>
 
@@ -190,8 +210,8 @@ Pytorch에는 자체적으로 이미지를 불러오는 메소드가 없다. 따
 
 ```python
 # Tensor 형식으로 바꿔주기
-img8 = transform.ToTensor()(img)
-img8
+img10 = transform.ToTensor()(img)
+img10
 # tensor([[[0.5843, 0.5843, 0.5843,  ..., 0.5882, 0.5882, 0.5882],
 #          [0.5843, 0.5843, 0.5843,  ..., 0.5922, 0.5922, 0.5922],
 #          [0.5882, 0.5882, 0.5882,  ..., 0.5922, 0.5922, 0.5922],
@@ -233,8 +253,8 @@ z[channel] = \frac{x[channel] - mean[channel]}{std[channel]}
 $$
 
 ```python
-img9 = transform.Normalize(mean=(0,0,0), std=(2,2,2))(tensor)
-img9
+img11 = transform.Normalize(mean=(0,0,0), std=(2,2,2))(tensor)
+img11
 # tensor([[[0.2922, 0.2922, 0.2922,  ..., 0.2941, 0.2941, 0.2941],
 #          [0.2922, 0.2922, 0.2922,  ..., 0.2961, 0.2961, 0.2961],
 #          [0.2941, 0.2941, 0.2941,  ..., 0.2961, 0.2961, 0.2961],
