@@ -315,6 +315,81 @@ transforms = [
 ```
 
 - 정해진 옵션들 중 랜덤하게 1가지만 선택되어 적용된다.
+
+# 프로젝트에 적용
+<hr>
+
+위에서 transforms의 종류에 대해 알아보았다. 그렇다면 실제로 이 기능들이 프로젝트에 어떻게 적용이 되는지에 대해 알아보도록 하겠다.
+<br>
+
+보통 프로젝트에서는 datasets모듈을 이용해 데이터를 불러올 때 transforms이 적용된다.
+```python
+import torchvision.transforms as transforms
+
+transform = transforms.Compose(
+[
+    transforms.RandomAffine(degrees=90, fillcolor=255),
+    transforms.Grayscale(num_output_channels=1),
+    transforms.CenterCrop(size = (100,100)),
+    transforms.ToTensor(),
+    transforms.Normalize([0], [1])
+])
+
+trainset = torchvision.datasets.MNIST(root = './data', train = True,
+                                      download = True, transform=transform)
+```
+
+### Compose를 사용할 때 문제점
+
+가끔 `transforms.Compose()`를 사용해 여러 transforms를 묶은 후에 적용을 하면 에러가 발생하는 경우가 있다. 대부분은 Compose 내에서 transforms들을 정의할 때 순서가 잘못되어 발생하는 문제이다.
+(그리고 해당 오류는 dataloader를 통해 데이터를 불러올 때 발생한다.)
+<br>
+
+```python
+# Dataset & DataLoader
+
+transform = transforms.Compose(
+[
+    transforms.ToTensor(), # 이 부분을 먼저 작성하면 오류가 발생
+    transforms.Normalize([0], [1]),
+    transforms.Resize((100,100), interpolation=1),
+])
+
+trainset = torchvision.datasets.CIFAR10(root = '../data', train = True,
+                                      download = True, transform=transform)
+trainloader = torch.utils.data.DataLoader(trainset, batch_size = 128,
+                                          shuffle = True, num_workers=1)
+iter(trainloader).next()
+```
+```python
+ValueError: Caught ValueError in DataLoader worker process 0.
+Original Traceback (most recent call last):
+  File "C:\ProgramData\Anaconda3\lib\site-packages\torch\utils\data\_utils\worker.py", line 198, in _worker_loop
+    data = fetcher.fetch(index)
+  File "C:\ProgramData\Anaconda3\lib\site-packages\torch\utils\data\_utils\fetch.py", line 44, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "C:\ProgramData\Anaconda3\lib\site-packages\torch\utils\data\_utils\fetch.py", line 44, in <listcomp>
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "C:\ProgramData\Anaconda3\lib\site-packages\torchvision\datasets\mnist.py", line 106, in __getitem__
+    img = self.transform(img)
+  File "C:\ProgramData\Anaconda3\lib\site-packages\torchvision\transforms\transforms.py", line 67, in __call__
+    img = t(img)
+  File "C:\ProgramData\Anaconda3\lib\site-packages\torch\nn\modules\module.py", line 727, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "C:\ProgramData\Anaconda3\lib\site-packages\torchvision\transforms\transforms.py", line 267, in forward
+    return F.resize(img, self.size, self.interpolation)
+  File "C:\ProgramData\Anaconda3\lib\site-packages\torchvision\transforms\functional.py", line 312, in resize
+    return F_t.resize(img, size=size, interpolation=interpolation)
+  File "C:\ProgramData\Anaconda3\lib\site-packages\torchvision\transforms\functional_tensor.py", line 798, in resize
+    raise ValueError("This interpolation mode is unsupported with Tensor input")
+ValueError: This interpolation mode is unsupported with Tensor input
+```
+
+대부분의 transforms들은 입력값으로 PIL Image의 type을 받는다. 하지만 코드에서 `ToTensor()`를 먼저 작성한 후에 다음 transforms들을 나열하면 위와 비슷한 오류가 발생하게 된다. 따라서 `ToTensor()`의 경우 다른 transforms들을 작성한 후에 마지막에 적어주는 것이 좋다.
+
+하지만 웃기게도 `Normalize()`의 경우 `ToTensor()` 다음에 적용을 해야 오류가 발생하지 않는다.(지 멋대로구마잉~)
+
+
 <br>
 <br>
 <br>
