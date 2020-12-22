@@ -69,9 +69,10 @@ Input의 channel수가 동일하게 Filter1의 channel도 3이다. 사진(3)에�
 
 dddddddddddddddddddddddddddddddddddddddd
 
+<center>
 <img  src="/public/img/pytorch/con_layer.png" width="" style='margin: 0px auto;'/>
 <figcaption> Image </figcaption>
-
+</center>
 <br>
 <br>
 <br>
