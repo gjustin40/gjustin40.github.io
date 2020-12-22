@@ -53,7 +53,7 @@ CNN은 크게 3단계로 구성되어 있다.
 
 <center><img  src="/public/img/pytorch/CNN_arc.JPG" width="" style='margin: 0px auto;'/></center>
 
-### 합성곱 계층(Convolution Layer)
+### 1. 합성곱 계층(Convolution Layer)
 이미지에 필터링 기법을 적용해 여러가지의 특징을 추출하는 층이다. 핕터가 이미지에 적용되는 것과 계산방식이 동일하다. 다민 위에서 언급한 필터는 1x3x3(Channel, Width, Height)이었지만 Convolution Layer는 입력값의 의해 Channel수가 결정된다. 위 사진처럼 입력값이 RGB채널을 가진 이미지라면 입력값의 크기는 3@64x64(=3x64x64)이 되고, 이에 따라 filter의 크기는 3 x H x W가 된다. 여기서 H와 W는 모델 설계자가 정하는 값이다.
 
 <br>
@@ -102,7 +102,7 @@ $$
 
 <br>
 
-### 풀링 계층(Pooling Layer)
+### 2. 풀링 계층(Pooling Layer)
 Pooling Layer란 이미지의 크기를 축소(sub-sampling)하거나 이미지 내에 있는 물체들의 '공간정보'를 유지시켜주는 필터이다. 입력값은 주로 Feature map이고, 각 feature map으로부터 유용한 정보를 추출한다.
 <br>
 
@@ -121,7 +121,7 @@ Pooling Layer의 특징은 다음과 같다.
 
 <br>
 
-### Fully-connected Layer(Dense Layer)
+### 3. Fully-connected Layer(Dense Layer)
 Filter에 의해 추출된 Feature map을 조합하고 분류하는 부분이다. Fully-connnected란 말 그대로 빽빽히 연결되어 있다는 뜻으로 Dense Layer라고도 불린다. 선형회귀를 할 때 사용했던 ``Linear``가 바로 Fully-connected layer이다. 
 
 <center>
