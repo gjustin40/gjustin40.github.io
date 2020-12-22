@@ -38,6 +38,8 @@ use_math: true
 
 <center><img  src="/public/img/pytorch/filter_kind.JPG" width="" style='margin: 0px auto;'/></center>
 
+<br>
+
 # 합성곱 신경망(Convolutional Neural Network, CNN)
 <hr>
 
@@ -90,6 +92,8 @@ Convolution Layer의 특징은 다음과 같다.
 ### Convolution Layer 학습
 기계학습은 스스로 학습하는 것을 말하는데, Convolution Layer에서 학습이란 filter의 값을 조정하는 것이다. 사진(4)에 나와있는 필터의 종류는 사람이 직접 만들어낸 필터이기 때문에 각 값들이 변하지 않는다. 하지만 Convolution Layer는 오차역전파를 통해 필터값을 학습한다.
 
+<br>
+
 $$
 \text{Filter(3 x 3)} = 
 \begin{pmatrix}
@@ -111,6 +115,8 @@ Pooling Layer란 이미지의 크기를 축소(sub-sampling)하거나 이미지 
 <figcaption> 사진8. Max-Pooling Filter </figcaption>
 </center>
 
+<br>
+
 가장 대표적인 예로 Max-Pooling이 있는데, 필터의 '값'이 존재하지는 않고 필터에 대응하고 있는 픽셀값들 중 최대값을 뽑아내는 필터이다. Max-Pooling은 물체나 사람의 얼굴을 탐지할 때 주위 픽셀값의 분포와 다르게 유난히 튀는 픽셀값이 있을 때 가장 큰 효과를 볼 수 있다.
 
 <br>
@@ -125,7 +131,7 @@ Pooling Layer의 특징은 다음과 같다.
 Filter에 의해 추출된 Feature map을 조합하고 분류하는 부분이다. Fully-connnected란 말 그대로 빽빽히 연결되어 있다는 뜻으로 Dense Layer라고도 불린다. 선형회귀를 할 때 사용했던 ``Linear``가 바로 Fully-connected layer이다. 
 
 <center>
-<img  src="/public/img/pytorch/dense_layer.jpg" width="" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/dense_layer.JPG" width="" style='margin: 0px auto;'/>
 <figcaption> 사진9. Fully-connected Layer </figcaption>
 </center>
 
