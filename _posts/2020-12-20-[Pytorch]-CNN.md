@@ -62,7 +62,7 @@ Input의 channel수가 동일하게 Filter1의 channel도 3이다. 사진(3)에�
 
 
 <figure><center>
-    <img  src="../public/img/pytorch/con_layer.png" width="" style='margin: 0px auto;'/>
+    <img  src="/public/img/pytorch/con_layer.png" width="" style='margin: 0px auto;'/>
     <figcaption> 사진6. Convolution Layer Calculation </figcaption>
     </center>
 </figure>
