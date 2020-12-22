@@ -186,7 +186,7 @@ Filter가 연산되는 모양을 보면, 처음 입력값과 출력값의 크기
 ### Convolution Layer
 <br>
 
-Pytorch에서는 `nn.Conv2d()`을 통해 2차원의 Convolution Layer을 사용할 수 있다.
+Pytorch에서는 `nn.Conv2d()`을 통해 2차원의 Convolution Layer를 제공한다.
 
 ```python
 import nn
@@ -239,46 +239,42 @@ feature_map0 = feature_map[0][0].detach()
 ```
 
 <center>
-<img  src="../public/img/pytorch/convol.jpg" width="" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/convol.jpg" width="" style='margin: 0px auto;'/>
 <figcaption> 사진12. Original vs feature Map </figcaption>
 </center>
 
 - `transform` : 이미지 [전처리(Tensor로 변환)](https://gjustin40.github.io/pytorch/2020/12/19/Pytorch-Transform.html)
 - `unsqueeze(x)` : x자리에 차원 1개를 추가한다.(3, 295, 295) -> (1, 3, 295, 295)
 - `detach()` : `Conv2d()` 연산이 이루어지면 자동으로 `Autograd()`이 실행되고 미분값이 계산되어 접근이 불가능한 상태가 되는데, 접근이 가능하도록 하는 함수
+
 <br>
+
+학습이 아직 안 되고 무작위로 초기화된 Convolution Layer로 feature map을 추출해봤다. 단순히 1개의 channel만 봐도 여러 특징들을 추출했다. 수많게의 feature map이 생기면 다양한 특징들이 추출될 것 같다.
+
 <br>
+
+### Max-Pooling
+Pytorch에서는 `nn.MaxPool2d()`을 통해 Max-Pooling Layer를 제공한다.
+```python
+import torch.nn as nn
+
+pool_layer = nn.MaxPool2d(2,2)
+>>> print(pool_layer)
+# MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+
+img_trans = transform(img)
+feature_map = pool_layer(img_trans)
+>>> print(feature_map.shape)
+# torch.Size([3, 147, 147])
+```
+
+<center>
+<img  src="/public/img/pytorch/max.jpg" width="" style='margin: 0px auto;'/>
+<figcaption> 사진12. Original vs feature Map(MaxPooling) </figcaption>
+</center>
+
 <br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+
+이번 포스터에서는 CNN의 개념과 구조, 특징에 대해 알아보았다. Computer Vision 분야에 있어서는 필수적으로 사용되는 알고리즘이기 때문에 많은 발전이 이루어지고 있다. CNN이 '공간정보'를 유지할 수 있어서 이미지에 많이 사용되지만, 자연어처리에서도 연산의 효율과 학습시간 단축을 위해 CNN을 사용하고 있다. 많이 보편화 된 만큼 자세히 알고 있으면 좋을 것 같다.
+
+## **읽어주셔서 감사합니다.(댓글과 수정사항은 언제나 환영입니다!)**
