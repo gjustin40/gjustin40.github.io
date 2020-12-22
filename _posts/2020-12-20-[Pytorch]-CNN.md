@@ -13,27 +13,37 @@ use_math: true
 
 사진을 찍고 편집을 해 본 경험은 누구나 다 있을 것이다. 얼굴에 잡티를 제거하거 좀 더 예쁘고 잘생기게 만들기 위해 턱을 깍고, 피부의 톤을 바꾸는 등이 있다. 사실은 이 작업들은 모두 **'필터(Filter)`**에 의해 작동이 된다. **필터링**이란 필터를 이용해 이미지를 이루고 있는 픽셀행렬에 여러가지 수식을 대입해 다른값으로 바꿔서 이미지를 변형하는 것을 말한다. 주로 잡티를 제거할 때 가장 많이 사용을 하는 필터인 블러(blur) 필터로 예를 들어보자.
 
-<img  src="/public/img/pytorch/blur.JPG" width="" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/blur.png" width="" style='margin: 0px auto;'/>
 
 위 사진은 **Blur Filter**를 사용한 결과이다. 이미지를 흐릿하게 만들어서 각중 노이즈를 제거하는 용도로 많이 사용된다. 이 필터를 사용자가 원하는 부위에 적용을 하면 잡티제거가 된다.
 <br>
 
 필터가 적용되는 방식은 다음과 같다.
 
+<br>
+
 <img  src="/public/img/pytorch/filtering_ill.JPG" width="" style='margin: 0px auto;'/>
 
 위 사진은 3x3핕터가 이미지에 적용되는 모습이다. 이미지 픽설 위치에 각각 대응하는 필터의 값을 곱한 후 모두 더한다. 3x3필터는 총 9개의 값으로 구성되어 있기 때문에 이미지 픽셀의 9개 구역에 각각 대응하여 곱한 후 더한다. 필터는 옆으로 움직이면서 위와 같은 계산을 반복한다.
 
+<br>
+
 <center><img  src="/public/img/pytorch/filtering.gif" width="" style='margin: 0px auto;'/></center>
+
+<br>
 
 필터링을 통해 한 이미지를 다양하게 변환할 수 있고 상황에 알맞는 필터를 사용해 여러가지 정보들을 추출할 수 있다. 필터의 종류는 다음과 같다.
 
-<center><img  src="/public/img/pytorch/filter_kind.jpg" width="" style='margin: 0px auto;'/></center>
+<br>
+
+<center><img  src="/public/img/pytorch/filter_kind.JPG" width="" style='margin: 0px auto;'/></center>
 
 # 합성곱 신경망(Convolutional Neural Network, CNN)
 <hr>
 
 위에서 언급한 필터링 기법을 인공신경망에 적용한 알고리즘이 바로 CNN이다. 1989년 LeCun에 의해 발표된 논문인 **"Backpropagation applied to handwritten zip code recognition"**에서 처음 소개되었고 이후에 2003년 Behnke이 작성한 **"Hierarchical Neural Networks for Image Interpretation"**을 통해 일반화되었다. CNN의 핵심은 이미지의 공간정보를 유지한다는 것이다. 즉, 이미지 내에 물체가 있다고 할 때 그 물체의 '모양'에 대한 정보를 추출할 수 있다는 뜻이다.
+
+<br>
 
 ### CNN의 구조
 CNN은 크게 3단계로 구성되어 있다. 
@@ -41,20 +51,27 @@ CNN은 크게 3단계로 구성되어 있다.
  - 이미지를 축소하거나 '공간정보'를 유지해주는 단계(Pooling Layer)
  - feature map 조합 및 분류하는 단계(Fully-connected Layer)
 
-<center><img  src="/public/img/pytorch/CNN_arc.jpg" width="" style='margin: 0px auto;'/></center>
+<center><img  src="/public/img/pytorch/CNN_arc.JPG" width="" style='margin: 0px auto;'/></center>
 
 ### 합성곱 계층(Convolution Layer)
 이미지에 필터링 기법을 적용해 여러가지의 특징을 추출하는 층이다. 핕터가 이미지에 적용되는 것과 계산방식이 동일하다. 다민 위에서 언급한 필터는 1x3x3(Channel, Width, Height)이었지만 Convolution Layer는 입력값의 의해 Channel수가 결정된다. 위 사진처럼 입력값이 RGB채널을 가진 이미지라면 입력값의 크기는 3@64x64(=3x64x64)이 되고, 이에 따라 filter의 크기는 3 x H x W가 된다. 여기서 H와 W는 모델 설계자가 정하는 값이다.
+
+<br>
 
 <center>
 <img  src="/public/img/pytorch/con_layer.png" width="" style='margin: 0px auto;'/>
 <figcaption> 사진6. Convolution Layer Calculation </figcaption>
 </center>
 
+<br>
+
 Input의 channel수가 동일하게 Filter1의 channel도 3이다. 사진(3)에서 표현되는 계산방식과 동일하지만, 3개의 채널이 동시에 계산이 된다. 이 부분이 필자도 처음에 이해가 잘 안 되는 부분이었지만, filter 1개가 3개의 channel을 가지고 있고, 결과가 1개의 channel로 나오기 위해서는 어떻게 계산이 되는지 생각해보면 이해하기 편하다.
+
 <br>
 
 Convolution Layer는 이미지의 특징을 추출하는 단계이다. 여러가지의 Filter를 이용하면 아래 그림과 같이 다양한 특징들을 추출할 수 있는데, 이와 같은 특징들을 **Feature Map**이라고 부른다. 인공신경망은 Feature map의 특징들을 이용해 학습을 한다.
+
+<br>
 
 <center>
 <img  src="/public/img/pytorch/con_result.png" width="" style='margin: 0px auto;'/>
@@ -67,6 +84,8 @@ Convolution Layer의 특징은 다음과 같다.
 - 이미지 픽셀의 '값' 그 자체에 집중하기 보다는 각 픽셀값 주위의 관계에 많은 영향을 받는다.
 - 따라서 이미지 내에 있는 물체의 '공간정보'에 대한 내용을 추출할 수 있다.
 - 필터가 스스로 학습하기 때문에 다양한 종류의 필터를 얻을 수 있다.
+
+<br>
 
 ### Convolution Layer 학습
 기계학습은 스스로 학습하는 것을 말하는데, Convolution Layer에서 학습이란 filter의 값을 조정하는 것이다. 사진(4)에 나와있는 필터의 종류는 사람이 직접 만들어낸 필터이기 때문에 각 값들이 변하지 않는다. 하지만 Convolution Layer는 오차역전파를 통해 필터값을 학습한다.
@@ -133,6 +152,8 @@ Filter가 이동할 때 몇 칸씩 이동할지 정해주는 값이다. 보통�
 <img  src="/public/img/pytorch/stride.png" width="" style='margin: 0px auto;'/>
 <figcaption> 사진10. Example of Stride </figcaption>
 </center>
+
+<br>
 
 ### Padding
 Filter가 연산되는 모양을 보면, 처음 입력값과 출력값의 크기가 달라진다. 필터가 적용되면 범위 안에 있는 픽셀값들의 합이 필터의 가운데 부분으로 합쳐진다. 필터가 이미지의 크기를 넘어서 갈 수 없기 때문에 가장자리 부분은 연산에 참여만 할 뿐, 그 부위에 필터를 적용할 수 없는 문제가 발생한다.
