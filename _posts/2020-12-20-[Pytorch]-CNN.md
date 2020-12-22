@@ -16,6 +16,7 @@ use_math: true
 <img  src="/public/img/pytorch/blur.png" width="" style='margin: 0px auto;'/>
 
 위 사진은 **Blur Filter**를 사용한 결과이다. 이미지를 흐릿하게 만들어서 각중 노이즈를 제거하는 용도로 많이 사용된다. 이 필터를 사용자가 원하는 부위에 적용을 하면 잡티제거가 된다.
+
 <br>
 
 필터가 적용되는 방식은 다음과 같다.
@@ -178,6 +179,73 @@ Filter가 연산되는 모양을 보면, 처음 입력값과 출력값의 크기
 <br>
 
 실제로 인공신경망 모델을 설계할 때 Stride와 Padding 요소를 잘 조합해 더 좋은 성능의 모델을 만들어낸다. 따라서 여러 실험을 통해 작절한 값을 정해주는 것도 매우 중요하다.
+
+# Pytorch 코드 실습
+<hr>
+
+### Convolution Layer
+<br>
+
+Pytorch에서는 `nn.Conv2d()`을 통해 2차원의 Convolution Layer을 사용할 수 있다.
+
+```python
+import nn
+
+con_layer = nn.Conv2d(in_channels = 1, out_channels = 20, kernel_size = 5, stride = 1, padding=1)
+>>> print(con_layer)
+# Conv2d(1, 20, kernel_size=(5, 5), stride=(1, 1))
+
+con_weight = con_layer.weight
+>>> print(con_weight.shape )
+# torch.Size([20, 1, 5, 5])
+# out_channel 20, filter_channel = 1, filter_size = 5x5
+```
+
+- `Conv2d()` : 2차원 Convolution Layer, 주로 입력하는 옵션은 코드에 있는 것과 같다.
+- `con_wieght`의 shape을 보면 (20, 1, 5, 5)인데, out_channel을 20으로 설정했기 때문에 필터의 채널의 개수도 20개이다.
+
+$$
+\text{Conv2d} = \left\{\begin{matrix}
+input = (N, C_{in}, H, W)\\
+output = (N, C_{out}, H, W)
+\end{matrix}\right.
+$$
+
+<br>
+
+임의의 이미지에 적용하면 다음과 같다.
+```python
+from PIL import Image
+import torch.nn as nn
+
+transform = transforms.Compose([
+    transforms.ToTensor()
+])
+
+img = Image.open('../data/example.jpg')
+img_trans = transform(img)
+img_input = img_trans.unsqueeze(0)
+>>> print(img_input.shape)
+# torch.Size([1, 3, 295, 295]) # batch, channel, Height, Width
+
+con_layer = nn.Conv2d(3, 10, 3, padding=1)
+feature_map = con_layer(img_input)
+>>> print(feature_map.shape)
+# torch.Size([1, 10, 291, 291]) # batch, channel, Height, Width
+
+feature_map0 = feature_map[0][0].detach()
+>>> print(feature_map0.shape)
+# torch.Size([295, 295])
+```
+
+<center>
+<img  src="../public/img/pytorch/convol.jpg" width="" style='margin: 0px auto;'/>
+<figcaption> 사진12. Original vs feature Map </figcaption>
+</center>
+
+- `transform` : 이미지 [전처리(Tensor로 변환)](https://gjustin40.github.io/pytorch/2020/12/19/Pytorch-Transform.html)
+- `unsqueeze(x)` : x자리에 차원 1개를 추가한다.(3, 295, 295) -> (1, 3, 295, 295)
+- `detach()` : `Conv2d()` 연산이 이루어지면 자동으로 `Autograd()`이 실행되고 미분값이 계산되어 접근이 불가능한 상태가 되는데, 접근이 가능하도록 하는 함수
 <br>
 <br>
 <br>
