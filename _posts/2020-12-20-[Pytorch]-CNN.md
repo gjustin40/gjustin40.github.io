@@ -54,16 +54,17 @@ CNN은 크게 3단계로 구성되어 있다.
 <center><img  src="../public/img/pytorch/con_layer.png" width="" style='margin: 0px auto;'/></center>
 <center><img  src="../public/img/pytorch/con_layer.png" width="" style='margin: 0px auto;'/></center>
 
-Input의 channel이 3이기 때문에 당연히 Filter1의 channel도 3이다. 
+Input의 channel수가 동일하게 Filter1의 channel도 3이다. 사진(3)에서 표현되는 계산방식과 동일하지만, 3개의 채널이 동시에 계산이 된다. 이 부분이 필자도 처음에 이해가 잘 안 되는 부분이었지만, filter 1개가 3개의 channel을 가지고 있고, 결과가 1개의 channel로 나오기 위해서는 어떻게 계산이 되는지 생각해보면 이해가 될 것이다.
 
 
 
 <p> <em>dfd </em> </p>
 
 
-<figure>
-    <img  src="/public/img/pytorch/con_layer.png" width="" style='margin: 0px auto;'/>
-    <figcaption> Image </figcaption>
+<figure><center>
+    <img  src="../public/img/pytorch/con_layer.png" width="" style='margin: 0px auto;'/>
+    <figcaption> 사진6. Convolution Layer Calculation </figcaption>
+    </center>
 </figure>
 
 dddddddddddddddddddddddddddddddddddddddd
