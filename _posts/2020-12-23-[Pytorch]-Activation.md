@@ -16,7 +16,7 @@ use_math: true
 <br>
 
 <center>
-<img  src="../public/img/pytorch/activation_intro.JPG" width="" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/activation_intro.JPG" width="" style='margin: 0px auto;'/>
 <figcaption> 사진1. 뉴런과 딥러닝 </figcaption>
 <figcaption> 출처 : https://cs231n.github.io/neural-networks-1/ </figcaption>
 </center>
@@ -63,7 +63,7 @@ $$
 비선형 활성화 함수 중 가장 간단한 함수이다. 어느 특정 입력값이 넘기 전까지 0 또는 다른 상수로 일정하다가 어느 값 이상이 되면 비연속적으로 증가하는 함수를 말한다.
 
 <center>
-<img  src="../public/img/pytorch/stair.jpg" width="" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/stair.jpg" width="" style='margin: 0px auto;'/>
 <figcaption> 사진2. 계단 함수 </figcaption>
 </center>
 
@@ -76,7 +76,7 @@ $$
 다음은 계단함수와 다르게 비교적 연속적인 비선형 함수인 시그모이드 함수이다.
 
 <center>
-<img  src="../public/img/pytorch/sig.jpg" width="" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/sig.jpg" width="" style='margin: 0px auto;'/>
 <figcaption> 사진3. 시그모이드(Sigmoid) 함수 </figcaption>
 </center>
 
@@ -99,7 +99,7 @@ $$
 <br>
 
 <center>
-<img  src="../public/img/pytorch/tanh.jpg" width="" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/tanh.jpg" width="" style='margin: 0px auto;'/>
 <figcaption> 사진4. 쌍곡탄젠트(Tanh) 함수 </figcaption>
 </center>
 
@@ -112,7 +112,7 @@ $$
 위에서 언급한 활성화 함수들의 가장 큰 문제점은 Gradient Vanishing 문제를 해결하기 위해 ReLU 함수가 제안되었다. 
 
 <center>
-<img  src="../public/img/pytorch/relu.jpg" width="" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/relu.jpg" width="" style='margin: 0px auto;'/>
 <figcaption> 사진5. ReLU 함수 </figcaption>
 </center>
 
@@ -222,126 +222,3 @@ model = MyModel()
 <br>
 
 ## **읽어주셔서 감사합니다.(댓글과 수정사항은 언제나 환영입니다!)**
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
