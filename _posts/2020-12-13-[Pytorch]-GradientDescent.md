@@ -81,7 +81,7 @@ $$
   - 모든 데이터에 대한 계산을 하기 때문에 많은 메모리가 필요하다.
   - 사실상 GPU의 강력한 기능을 사용하지 않기 때문에 매우 비효율이다.
 
-<img  src="/public/img/pytorch/GD.JPG" width="400" style='margin: 0px auto;'/>
+<center><img  src="/public/img/pytorch/GD.JPG" width="400" style='margin: 0px auto;'/></center>
 
 <br>
 
