@@ -18,7 +18,6 @@ use_math: true
 
 <br>
 
-<img  src="../public/img/pytorch/gradient-descent.png" width="400" style='margin: 0px auto;'/>
 <img  src="/public/img/pytorch/gradient-descent.png" width="400" style='margin: 0px auto;'/>
 
 **미분**은 '기울기'를 뜻한다. 손실함수를 정하고 손실함수가 최소가 되도록 하는 매개변수를 찾는 것이 학습의 목표인데, 손실함수의 미분값이 0 되는 부분을 찾으면 그 때의 매개변수가 손실함수를 최소로 하는 매개변수이다. 하지만 신경망은 식이 매우 복잡하고 미분계수를 계산하기 어려워서 손실함수의 미분값이 0이 되는 부분을 찾기에는 쉽지 않다. 그래서 '기울기'를 이용해서 경사가 낮은 방향으로 매개변수를 변화시켜 최소인 지점을 찾는 것이다.
@@ -51,7 +50,6 @@ $$
 
 위의 식과 아래의 사진을 참고하여 설명을 하면 다음과 같다.
 
-<img  src="../public/img/pytorch/gradient-new.png" width="400" style='margin: 0px auto;'/>
 <img  src="/public/img/pytorch/gradient-new.png" width="400" style='margin: 0px auto;'/>
 
 미분의 결과로는 양수 또는 음수의 기울기가 나올 수 있다. 기울기가 양수일 때, $\theta$값을 감소키기는 방향으로 가면 전체 손실함수의 값은 더 작아진다. 따라서 식에서와 같이 기존 매개변수에 학습률과 기울기를 곱한 값을 빼준다. 기울기가 음수일 때는 반대로 $\theta$값을 증가시키는 방향으로 가면 손실함수의 값이 작아진다. 이처럼 기울기를 이용해서 손실함수의 값이 작아지는 방향으로 매개변수를 갱신한다.
@@ -84,7 +82,6 @@ $$
   - 사실상 GPU의 강력한 기능을 사용하지 않기 때문에 매우 비효율이다.
 
 <img  src="/public/img/pytorch/GD.JPG" width="400" style='margin: 0px auto;'/>
-<img  src="../public/img/pytorch/GD.JPG" width="400" style='margin: 0px auto;'/>
 
 <br>
 
@@ -128,7 +125,6 @@ for e in range(EPOCH):
   - GD와 마찬가지로 데이터를 1개씩 처리하기 때문에 GPU의 강력한 기능을 사용할 수 없다.
 
 <img  src="/public/img/pytorch/SGD-GD.png" width="" style='margin: 0px auto;'/>
-<img  src="../public/img/pytorch/SGD-GD.png" width="" style='margin: 0px auto;'/>
 
 SGD의 코드는 다음과 같다.
 
@@ -169,7 +165,6 @@ for e in range(EPOCH):
   - SGD보다는 상대적으로 메모리 사용이 많다.
   - batch_size을 사용자가 직접 지정해줘야하는 번거로움?이 있다.
 
-<img  src="../public/img/pytorch/SGD-MSGD.png" width="" style='margin: 0px auto;'/>
 <img  src="/public/img/pytorch/SGD-MSGD.png" width="400" style='margin: 0px auto;'/>
 
 MSGD의 코드는 다음과 같다.
