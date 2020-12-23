@@ -142,6 +142,8 @@ sigmoid_func = nn.Sigmoid()
 
 >>> print(tensor)
 >>> print(sigmoid_func(tensor))
+# tensor([-0.8475,  0.2985])
+# tensor([0.2999, 0.5741])
 ```
 
 - `torch.randn(x)` : $N(0,1)$ 정규화 된 랜덤값을 출력한다.
@@ -153,7 +155,73 @@ tanh_func = nn.Tanh()
 
 >>> print(tensor)
 >>> print(tanh_func(tensor))
+# tensor([ 0.2847, -0.8942])
+# tensor([ 0.2772, -0.7135])
 ```
+
+### ReLU 함수
+```python
+tensor = torch.randn(4)
+relu_func = nn.ReLU()
+
+>>> print(tensor)
+>>> print(relu_func(tensor))
+# tensor([-0.7185,  2.8861, -0.1147, -0.5199])
+# tensor([0.0000, 2.8861, 0.0000, 0.0000])
+```
+
+실제로 딥러닝 모델을 정의할 때 활성화 함수는 다음과 같이 사용된다.
+
+```python
+# Make Model
+
+import torch.nn as nn
+import torch.nn.functional as F
+
+class MyModel(nn.Module):
+    
+    def __init__(self):
+        super(MyModel, self).__init__()
+        self.conv1 = nn.Conv2d(1, 10, 7, padding = 3)
+        self.conv2 = nn.Conv2d(10, 50, 7, padding = 3)
+        self.conv3 = nn.Conv2d(50, 120, 7, padding = 3)
+        self.conv4 = nn.Conv2d(120, 100, 5)
+        self.conv5 = nn.Conv2d(100, 20, 5)
+        self.conv6 = nn.Conv2d(20, 10, 5)
+        self.conv7 = nn.Conv2d(10, 10, 3)
+        self.pool = nn.MaxPool2d(2,2)
+        self.fc1 = nn.Linear(10 * 8 * 8, 120)
+        self.fc2 = nn.Linear(120, 360)
+        self.fc3 = nn.Linear(360, 50)
+        self.fc4 = nn.Linear(50, 10)
+        
+    def forward(self, x):
+        x = F.relu(self.conv1(x)) # 28 28
+        x = F.relu(self.conv2(x)) # 28 28
+        x = F.relu(self.conv3(x)) # 28 28
+        x = F.relu(self.conv4(x)) # 24 24
+        x = F.relu(self.conv5(x)) # 20 20
+        x = self.pool(F.relu(self.conv6(x))) # 8 8
+        x = x.view(-1, 10 * 8 * 8)
+        x = F.relu(self.fc1(x))
+        x = F.relu(self.fc2(x))
+        x = F.relu(self.fc3(x))
+        x = self.fc4(x)
+        
+        return x
+
+model = MyModel()
+```
+
+`forward()` 함수를 정의할 때 각 Convolution Layer와 Linear Layer의 결과가 ReLU 함수의 입력값으로 들어간 후에 출력이 된다. 거의 모든 Layer에 대해 활성화 함수(지금의 경우는 ReLU)를 적용한다. 비선형 함수인 활성화 함수들을 여러개 사용하면서 모델을 복잡하게 만들면 연산량이 많아지는 단점이 있지만 그만큼 복잡한 문제를 해결하는데에 더욱 유리하다.
+
+<br>
+
+지금까지 활성화 함수가 무엇이고 어떤 종류가 있는지에 대해 알아보았다. 사실 저 함수들은 꽤 오래 전부터 연구되었고 사용되어진 함수들이다. 지금은 더욱 많은 함수들이 각각의 문제들을 해결하기 위해 제안되고 있다. 이번 포스터에서는 활성화 함수의 '시초'라고 할 수 있는 간단한 함수들만 소개를 했다. 다른 포스터에서 좀 더 최신화되고 좋은 활성화 함수를 소개해보도록 하겠다.
+
+<br>
+
+## **읽어주셔서 감사합니다.(댓글과 수정사항은 언제나 환영입니다!)**
 
 <br>
 <br>
