@@ -136,6 +136,8 @@ Filter에 의해 추출된 Feature map을 조합하고 분류하는 부분이다
 <figcaption> 사진9. Fully-connected Layer </figcaption>
 </center>
 
+<br>
+
 Dense Layer의 구조를 잘 보면 input이 1차원인 것을 알 수 있다. 하지만 방금까지 우리가 다뤘던 feature map은 2차원 행렬이다. 따라서 이 부분에서는 feature map을 1차원으로 나열한 뒤 연산을 실시한다. feature map 부분에서 충분한 특징들을 추출한 후에 그 특징들을 Dense Layer에서 조합을 하고, 최종적으로 결과값을 출력하게 되는 것이다.
 
 <br>
