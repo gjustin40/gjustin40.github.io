@@ -165,7 +165,7 @@ for e in range(EPOCH):
   - SGD보다는 상대적으로 메모리 사용이 많다.
   - batch_size을 사용자가 직접 지정해줘야하는 번거로움?이 있다.
 
-<img  src="/public/img/pytorch/SGD-MSGD.png" width="400" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/SGD-MSGD.png" width="" style='margin: 0px auto;'/>
 
 MSGD의 코드는 다음과 같다.
 
