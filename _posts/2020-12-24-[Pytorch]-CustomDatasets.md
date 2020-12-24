@@ -132,6 +132,87 @@ data = DataLoader(mydata, batch_size=1)
 <br>
 
 필자가 주로 사용하는 데이터는 이미지이기 때문에 이미지를 불러오는 코드를 간단하게 작성하면 다음과 같다.
+```python
+dog1.jpg / dog2.jpg / dog3.jpg / cat1.jpg / cat2.jpg / cat3.jpg / .... # 이미지 데이터 파일명
+```
+```python
+import glob
+import torchvision.transforms as transforms
+import re
+
+from torch.utils.data import Dataset
+from PIL import Image
+
+
+class MyImageData(Dataset):
+    
+    def __init__(self, data_path, class_to_label, transform=None):
+        self.data_path = data_path
+        self.transform = transform
+        self.class_to_label = class_to_label
+        self.image_list = glob.glob(self.data_path + '/*.jpg')
+        
+    def __len__(self):
+        
+        return len(self.image_list)
+    
+    def __getitem__(self, idx):
+        
+        file_name = self.image_list[idx]
+        
+        img = Image.open(file_name)
+
+        class_name = re.findall('[a-zA-Z]+', file_name)[-2]
+        label = self.class_to_label[class_name]
+        label = torch.tensor(label)
+        
+        img = self.transform(img)
+
+        return img, label
+    
+    
+data_path = 'data/image'
+class_to_label = {'dog' : 1, 'cat' : 2}
+transform = transforms.ToTensor()
+
+mydataset = MyImageData(data_path, class_to_label, transform=transform)
+
+data = DataLoader(mydataset)
+
+>>> print(iter(data).next())
+# [tensor([[[[0.5843, 0.5843, 0.5843,  ..., 0.5882, 0.5882, 0.5882],
+#           [0.5843, 0.5843, 0.5843,  ..., 0.5922, 0.5922, 0.5922],
+#           [0.5882, 0.5882, 0.5882,  ..., 0.5922, 0.5922, 0.5922],
+#           ...,
+#           [0.1686, 0.1686, 0.1843,  ..., 0.0784, 0.0863, 0.0902],
+#           [0.1608, 0.1490, 0.1529,  ..., 0.0902, 0.0980, 0.1020],
+#           [0.1529, 0.1294, 0.1255,  ..., 0.1059, 0.1137, 0.1137]],
+
+#          [[0.6941, 0.6941, 0.6941,  ..., 0.6980, 0.6980, 0.6980],
+#           [0.6941, 0.6941, 0.6941,  ..., 0.7020, 0.7020, 0.7020],
+#           [0.6980, 0.6980, 0.6980,  ..., 0.7020, 0.7020, 0.7020],
+#           ...,
+#           [0.2549, 0.2510, 0.2706,  ..., 0.1451, 0.1529, 0.1569],
+#           [0.2471, 0.2314, 0.2431,  ..., 0.1569, 0.1647, 0.1686],
+#           [0.2392, 0.2157, 0.2157,  ..., 0.1725, 0.1804, 0.1804]],
+
+#          [[0.7882, 0.7882, 0.7882,  ..., 0.7843, 0.7843, 0.7843],
+#           [0.7882, 0.7882, 0.7882,  ..., 0.7882, 0.7882, 0.7882],
+#           [0.7922, 0.7922, 0.7922,  ..., 0.7882, 0.7882, 0.7882],
+#           ...,
+#           [0.4157, 0.4196, 0.4549,  ..., 0.2627, 0.2706, 0.2745],
+#           [0.4078, 0.4000, 0.4157,  ..., 0.2745, 0.2824, 0.2863],
+#           [0.3922, 0.3765, 0.3882,  ..., 0.2824, 0.2902, 0.2902]]]]), tensor([2])]
+```
+- `re` : 이미지 파일의 파일명에서 class의 이름을 추출하기 위해 사용한 라이브러리(정규표현식)
+- `re.findall()` : 정규표현식에 해당하는 문자열 모두 추출('[a-zA-Z]' == 영어단어)<br>
+- `glob.glob()` : 폴더 내에 파일명이 .jpg로 끝나는 데이터 모두 호출
+
+<br>
+
+사용자가 보유하고 있는 데이터들이 어떤 형식으로 구성되어있냐에 따라 코드는 다양하게 변경될 수 있다. 위 코드는 한 폴더 내에 여러 class의 이미지들이 섞여있을 때 사용한 코드이다.
+
+<br>
 
 ### 2. torchvision.datasets.ImageFolder
 
