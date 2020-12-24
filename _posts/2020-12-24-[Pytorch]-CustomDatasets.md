@@ -6,7 +6,7 @@ category: Pytorch
 use_math: true
 ---
 
-딥런닝을 하기 위해서는 데이터가 필수이다. Pytorch를 사용하는 개발자라면 연구목적으로 pytorch가 자체로 제공하는 dataset를 사용하지만, 현실적인 문제를 다룰 때는 직접 사용자가 수집한 데이터를 이용하는 경우가 더 많다. 다행히 pytorch에서 제공하는 데이터는 단순히 `torchvision` 라이브러리를 이용해 다운을 받고 이용하면 된다. 하지만 직접 수집한 데이터들은 어떻게 다뤄야할까? Custom한 datasets을 다루는 방법에 대해 알아보도록 하자.
+딥런닝을 하기 위해서는 데이터가 필수이다. Pytorch를 사용하는 개발자라면 연구목적으로 pytorch가 자체로 제공하는 dataset을 사용하지만, 현실적인 문제를 다룰 때는 직접 사용자가 수집한 데이터를 이용하는 경우가 더 많다. 다행히 pytorch에서 제공하는 데이터는 단순히 `torchvision` 라이브러리를 이용해 다운을 받고 이용하면 된다. 하지만 직접 수집한 데이터들은 어떻게 다뤄야할까? Custom한 datasets을 다루는 방법에 대해 알아보도록 하자.
 
 # Pytorch에서 제공하는 데이터
 
@@ -222,7 +222,7 @@ data = DataLoader(mydataset)
 
 <br>
 
-위에서 다뤘던 `Dataset`은 단순히 데이터들을 하나로 묶어주는 형식이었다. 하지만 각 이미지 데이터들이 파일명으로 레이블이 되어있는 상태일 때 사용하면 매우 유용한 함수가 있다.  `ImageFolder`을 이용하면 데이터와 레이블을 한 번에 만들 수 있다.
+위에서 다뤘던 `Dataset`은 단순히 데이터들을 하나로 묶어주는 형식이었다. 하지만 각 이미지 데이터들이 파일명으로 레이블이 되어있는 상태일 때 사용하면 매우 유용한 함수가 있다.  `ImageFolder`를 이용하면 데이터와 레이블을 한 번에 호출하는 dataset을 만들 수 있다.
 
 <br>
 
@@ -232,7 +232,7 @@ data = DataLoader(mydataset)
 
 <br>
 
-사진(1)과 같이 각 데이터들이 Label의 이름을 가진 파일로 나눠져있을 때 `ImageFolder`는 매우 강력한 힘을 발휘한다. 아래는 `ImageFolder`을 이용해 데이터셋을 정의하는 코드이다.
+사진(1)과 같이 각 데이터들이 Class의 이름을 가진 파일로 나눠져있을 때 `ImageFolder`는 매우 강력한 힘을 발휘한다. 아래는 `ImageFolder`을 이용해 데이터셋을 정의하는 코드이다.
 
 ```python
 import torchvision.transforms as transforms
@@ -276,7 +276,7 @@ data = DataLoader(datasets, batch_size=1)
 
 - Class를 따로 정의할 필요없이 바로 데이터셋이 정의된다.
 - `DataLoader`와 연계하여 바로 학습에 필요한 데이터를 호출할 수 있다.
-- 파일명이 각 레이블이 되고, 각 레이블은 0~n까지의 숫자로 자동 치환이 된다.(SoftMax을 사용할 수 있도록)
+- 파일명이 각 레이블이 되고, 각 레이블은 0~n까지의 숫자로 자동 치환이 된다.<br>(SoftMax을 사용할 수 있도록)
 - 채널이 1개인 이미지에 대해서는 자동으로 3개의 채널로 확장한 후에 호출이 된다.<br>
 (따라서 흑백 사진들은 1채널을 복사해서 3채널까지 자동으로 같은 값을 할당한다.)
 
@@ -296,7 +296,9 @@ data = DataLoader(datasets, batch_size=1)
 
 <br>
 
-필자는 영어공부를 할 때 모르는 단어를 밑줄로 쳐놓고 나중에 그 단어들만 다시 본다. 그래서 그 단어들만 추출하기 위해 Object Detection 분야 중 하나인 OCR(Optical Character Recognition) 프로젝트를 진행했었다. 입력값은 이미지 데이터가 되고, 예측해야 하는 건 아래 사진과 같이 bbox의 좌표값이다.(x1, y1, x2, y2)
+필자는 영어공부를 할 때 모르는 단어를 밑줄로 쳐놓고 나중에 그 단어들만 다시 본다. 그래서 그 단어들만 추출하기 위해 Object Detection 분야 중 하나인 OCR(Optical Character Recognition) 프로젝트를 진행했었다. 입력값은 이미지 데이터가 되고, 예측해야 하는 건 아래 사진과 같이 bbox의 좌표값이다.
+
+<br>
 
 <center>
 <img  src="/public/img/pytorch/data_label.jpg" width="" style='margin: 0px auto;'/>
