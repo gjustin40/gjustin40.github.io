@@ -128,6 +128,11 @@ data = DataLoader(mydata, batch_size=1)
 
 <br>
 
+### 이미지 데이터셋 정의
+<br>
+
+필자가 주로 사용하는 데이터는 이미지이기 때문에 이미지를 불러오는 코드를 간단하게 작성하면 다음과 같다.
+
 ### 2. torchvision.datasets.ImageFolder
 
 <br>
@@ -215,3 +220,53 @@ data = DataLoader(datasets, batch_size=1)
 <br>
 
 따라서 데이터셋을 만들 때 호출해야하는 요소는 **이미지**와 각 단어들에 대응하는 **bbox의 좌표값(4개)**이다. 아래는 데이터셋을 만드는 코드이다.
+```python
+from torch.uilts.data import Dataset
+import pandas as pd
+
+data_path = '../data/voca_detection/rename/'
+
+class voca_dataset(Dataset):
+    
+    def __init__(self, data_path, dataframe, train=True, transform=None):
+        self.data_path = data_path # 데이터의 경로
+        self.dataframe = dataframe # dataframe 데이터(bbox 좌표모음)
+        self.transform = transform # 미리 정의한 transform
+        self.image_ids = self.dataframe['image_id'].unique() # 각 이미지의 고유값(id 값)
+        self.train = train # 학습용일 때 사용
+
+    def __len__(self):
+        
+        return len(self.image_ids)
+    
+    def __getitem__(self, idx):        
+        image_id = self.image_ids[idx] # 이미지의 id값으로 1개씩 호출
+        
+        # 이미지 불러오기
+        img = Image.open(self.data_path + image_id + '.jpg')
+        
+        # 각 이미지에 있는 bbox 좌표값 호출
+        boxes = self.dataframe.loc[self.dataframe['image_id'] == image_id, ['x1', 'y1', 'x2', 'y2']]
+        boxes = torch.from_numpy(np.array(boxes)).type(torch.FloatTensor)
+        
+        # 각 bbox들은 분류가 필요 없기 때문에 label은 전부 1로 통일
+        labels = torch.ones((boxes.shape[0]), ).type(torch.int64)
+        
+        targets = {}
+        targets['boxes'] = boxes
+        targets['labels'] = labels
+        
+        # 학습용 transform을 적용
+        if self.train:
+            t = self.transform['train']
+            img = t(img)
+            
+        # 테스트용 transform을 적용
+        else:
+            img = self.transform['valid'](img)
+            
+        return img, targets
+```
+- `dataframe` : 데이터분석 라이브러리인 `pandas`에서 제공하는 표 형식의 데이터
+- 각 요소(bbox, label 등)에 따라 사용되는 데이터의 타입(int, float 등)이 다르다.
+
