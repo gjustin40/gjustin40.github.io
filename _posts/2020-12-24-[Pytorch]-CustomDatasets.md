@@ -42,18 +42,31 @@ Pytorch에서는 사용자가 직접 데이터를 정의할 수 있도록 하는
 from torch.utils.data import Dataset
 
 class MyDataset(Dataset): 
-  def __init__(self):
+    def __init__(self):
 
-  def __len__(self):
+    def __len__(self):
 
-  def __getitem__(self, idx): 
+    def __getitem__(self, idx): 
 ```
+
+<center><figcaption> 코드1. 프로토타입 </figcaption> </center>
+
 - `__init__(self)` : 데이터의 경로를 설정하거나 전처리하는 부분
 - `__len__(self)` : 데이터의 개수를 출력하는 부분
 - `__getitem__(self, idx)` : 데이터셋에서 데이터를 호출하는 부분
 
 <br>
 
+`__init__` 메소드에서는 보통 데이터를 다루는데 필요한 여러 요소들을 정의하고 데이터의 경로를 설정하거나 전처리를 한다. 주로 `__getitem__`에서 사용할 변수들을 정의하는 목적을 가지고 있다. `__getitem__`에는 데이터가 설계된 모델과 학습에 맞게 호출되도록 코드를 작성한다. 
 
+<br>
 
-Class 내에 여러가지 목적에 의해 함수가 나눠져있지만, 사실 `getitem`에서도 전처리가 가능하다.(그냥 함수라 전처리를 언제 하냐의 차이)
+### custom dataset 정의하기
+
+<br>
+
+선형 회귀(Linear Regression)에 사용할 데이터를 정의하는 코드를 간단히 작성해보면 다음과 같다.
+
+```python
+
+```
