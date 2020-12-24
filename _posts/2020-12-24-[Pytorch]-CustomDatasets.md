@@ -6,9 +6,9 @@ category: Pytorch
 use_math: true
 ---
 
-딥런닝을 하기 위해서는 데이터가 필수이다. Pytorch에서 자체로 제공하는 dataset도 있지만, 현실적인 문제를 다룰 때는 직접 사용자가 수집한 데이터를 이용하는 경우가 더 많다. Pytorch에서 제공하는 데이터는 단순히 `torchvision` 라이브러리를 이용해 download 받고 이용하면 된다. 하지만 직접 수집한 데이터들은 어떻게 다뤄야할까? Custom한 datasets을 다루는 방법에 대해 알아보도록 하자.
+딥런닝을 하기 위해서는 데이터가 필수이다. Pytorch를 사용하는 개발자라면 연구목적으로 pytorch가 자체로 제공하는 dataset를 사용하지만, 현실적인 문제를 다룰 때는 직접 사용자가 수집한 데이터를 이용하는 경우가 더 많다. 다행히 pytorch에서 제공하는 데이터는 단순히 `torchvision` 라이브러리를 이용해 다운을 받고 이용하면 된다. 하지만 직접 수집한 데이터들은 어떻게 다뤄야할까? Custom한 datasets을 다루는 방법에 대해 알아보도록 하자.
 
-# torchvision 내장 데이터셋 >> 수정이 필요함
+# Pytorch에서 제공하는 데이터
 
 <hr>
 
@@ -19,7 +19,11 @@ import torchvision
 
 trainset = torchvision.datasets.CIFAR10(root='./data', train=True,
                                         download=False)
-
+trainset = torchvision.datasets.MNIST(root='./data', train=True,
+                                        download=False)
+trainset = torchvision.datasets.FakeData(root='./data', train=True,
+                                        download=False)                                        
+####################################################################
 trainloader = torch.utils.data.DataLoader(trainset, batch_size=4,
                                         shuffle=True, num_workers=1)
 ```
@@ -29,7 +33,7 @@ trainloader = torch.utils.data.DataLoader(trainset, batch_size=4,
 
 <br>
 
-CIFAR10 데이터셋을 다운받고 `train=true`옵션을 통해 학습데이터를 불러온다. 사실 `datasets.CIFAR10`도 다운받은 파일을 `root`옵션을 통해 불러오는 방식이라, 실제로 데이터파일이 로컬에 설치가 되어있는 상태다. 이후에 데이터셋이 정의가 되면 `dataLoader()`을 이용해 실제 학습에 이용할 수 있도록 데이터를 호출한다. 위 코드에서 알 수 있듯이 뭔가 `datasets`의 코드를 바꾸면 우리가 직접 수집한 데이터를 정의할 수 있을 것 같다.
+CIFAR10 데이터셋을 다운받고 `train=true`옵션을 통해 학습데이터를 불러온다. 사실 `datasets.CIFAR10`도 다운받은 파일을 `root`옵션을 통해 불러오는 방식이라, 실제로 데이터파일이 로컬에 설치가 되어있는 상태다. 이후에 데이터셋이 정의가 되면 `dataLoader()`을 이용해 실제 학습에 이용할 수 있도록 데이터를 호출한다. 위 코드에서 알 수 있듯이 `datasets`의 코드를 바꾸면 우리가 직접 수집한 데이터를 정의할 수 있을 것 같다.
 
 # 사용자 정의 데이터셋(Custom Dataset)
 
