@@ -184,4 +184,34 @@ data = DataLoader(datasets, batch_size=1)
 #           [0.3490, 0.3333, 0.3294,  ..., 0.0510, 0.0745, 0.0824]]]]), tensor([0])]
 ```
 
+- Class를 따로 정의할 필요없이 바로 데이터셋이 정의된다.
+- `DataLoader`와 연계하여 바로 학습에 필요한 데이터를 호출할 수 있다.
+- 파일명이 각 레이블이 되고, 각 레이블은 0~n까지의 숫자로 자동 치환이 된다.(SoftMax을 사용할 수 있도록)
+- 채널이 1개인 이미지에 대해서는 자동으로 3개의 채널로 확장한 후에 호출이 된다.<br>
+(따라서 흑백 사진들은 1채널을 복사해서 3채널까지 자동으로 같은 값을 할당한다.)
+
 <br>
+
+# 실제 데이터를 이용한 실습
+<hr>
+
+실제로 필자가 Pytorch로 작은 딥러닝 프로젝트를 하기 위해 직접 데이터를 수집하고 `FasterRCNN` 모델을 이용해 학습을 한 경험이 있다. 따라서 이 데이터를 이용해서 `Dataset`을 어떻게 활용하는지에 대해 알아보겠다.([여기](https://github.com/gjustin40/DeepLearning-Project/blob/master/Voca_Detection_Project_with_FasterRCNN(Pytorch).ipynb)을 참고)
+
+<br>
+
+수집했던 데이터는 다음과 같다.(TOEIC 영어책)
+<center>
+<img  src="../public/img/pytorch/customdata.jpg" width="" style='margin: 0px auto;'/>
+<figcaption> 사진2. 수집한 데이터</figcaption> </center>
+
+<br>
+
+필자는 영어공부를 할 때 모르는 단어를 밑줄로 쳐놓고 나중에 그 단어들만 다시 본다. 그래서 그 단어들만 추출하는 OCR(Optical Character Recognition) 프로젝트를 진행했었다. 입력값은 이미지 데이터가 되고, 예측해야 하는 건 아래 사진과 같이 bbox의 좌표값이다.(x1, y1, x2, y2)
+
+<center>
+<img  src="../public/img/pytorch/data_label.JPG" width="" style='margin: 0px auto;'/>
+<figcaption> 사진2. 데이터와 bbox 레이블(표 == dataframe)</figcaption> </center>
+
+<br>
+
+따라서 데이터셋을 만들 때 호출해야하는 요소는 **이미지**와 각 단어들에 대응하는 **bbox의 좌표값(4개)**이다. 아래는 데이터셋을 만드는 코드이다.
