@@ -361,5 +361,9 @@ class voca_dataset(Dataset):
 
 <br>
 
+이번 포스터에서 사용된 코드의 풀버젼은 [여기](https://github.com/gjustin40/Pytorch-Cookbook/blob/master/Beginner/Pytorch4_2_DataLoader(Folder%2C%20Custom).ipynb)에서 볼 수 있다.
+
+<br>
+
 ## **읽어주셔서 감사합니다.(댓글과 수정사항은 언제나 환영입니다!)**
 
