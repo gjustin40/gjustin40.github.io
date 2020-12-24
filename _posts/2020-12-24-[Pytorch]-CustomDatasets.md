@@ -227,7 +227,7 @@ data = DataLoader(mydataset)
 <br>
 
 <center>
-<img  src="../public/img/pytorch/data_fruit.jpg" width="" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/data_fruit.jpg" width="" style='margin: 0px auto;'/>
 <figcaption> 사진1. Label된 파일</figcaption> </center>
 
 <br>
@@ -291,15 +291,15 @@ data = DataLoader(datasets, batch_size=1)
 
 수집했던 데이터는 다음과 같다.(TOEIC 영어책)
 <center>
-<img  src="../public/img/pytorch/customdata.jpg" width="" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/customdata.jpg" width="" style='margin: 0px auto;'/>
 <figcaption> 사진2. 수집한 데이터</figcaption> </center>
 
 <br>
 
-필자는 영어공부를 할 때 모르는 단어를 밑줄로 쳐놓고 나중에 그 단어들만 다시 본다. 그래서 그 단어들만 추출하는 OCR(Optical Character Recognition) 프로젝트를 진행했었다. 입력값은 이미지 데이터가 되고, 예측해야 하는 건 아래 사진과 같이 bbox의 좌표값이다.(x1, y1, x2, y2)
+필자는 영어공부를 할 때 모르는 단어를 밑줄로 쳐놓고 나중에 그 단어들만 다시 본다. 그래서 그 단어들만 추출하기 위해 Object Detection 분야 중 하나인 OCR(Optical Character Recognition) 프로젝트를 진행했었다. 입력값은 이미지 데이터가 되고, 예측해야 하는 건 아래 사진과 같이 bbox의 좌표값이다.(x1, y1, x2, y2)
 
 <center>
-<img  src="../public/img/pytorch/data_label.JPG" width="" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/data_label.JPG" width="" style='margin: 0px auto;'/>
 <figcaption> 사진2. 데이터와 bbox 레이블(표 == dataframe)</figcaption> </center>
 
 <br>
@@ -354,4 +354,12 @@ class voca_dataset(Dataset):
 ```
 - `dataframe` : 데이터분석 라이브러리인 `pandas`에서 제공하는 표 형식의 데이터
 - 각 요소(bbox, label 등)에 따라 사용되는 데이터의 타입(int, float 등)이 다르다.
+
+<br>
+
+지금까지 Custom 데이터셋을 정의하고 불러오는 방법에 대해 알아보았다. 본인이 보유하고 있는 데이터를 자유자재로 정의하고 불러오며 수정하는 작업은 딥러닝을 연구하는데 있어서 매우 필수적인 테크닉이다. 따라서 다양한 데이터들을 이용해 데이터셋을 customize하는 연습을 해야할 필요가 있다.
+
+<br>
+
+## **읽어주셔서 감사합니다.(댓글과 수정사항은 언제나 환영입니다!)**
 
