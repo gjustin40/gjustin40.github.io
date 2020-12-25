@@ -147,6 +147,32 @@ Dense Layer의 특징은 다음과 같다.
 - 이름 그대로 너무 뺵뺵해서 계산해야 하는 파라미터의 수가 매우 많다.
 - 2차원 행렬을 1차원으로 낮추기 때문에 막대한 정보의 손실이 발생한다.
 
+<br>
+
+### CNN이 강력한 이유
+<br>
+
+CNN 알고리즘이 ComputerVision 분야에서 매우 강력해진 이유는 위에서 언급한 '공간정보'의 유지 때문이다. CNN 알고리즘을 사용하기 전에는 입력값이 모두 Linear처럼 1행이었기 때문에 이미지를 분류하는 알고리즘을 만들 때도 아래와 같이 모든 픽셀값을 펼쳐서 연산을 실시했다.
+
+<center>
+<img  src="../public/img/pytorch/power_of_cnn.JPG" width="" style='margin: 0px auto;'/>
+<figcaption> 과거 이미지 Classification(출처 : https://gomguard.tistory.com/188?category=712467) </figcaption>
+</center>
+
+<br>
+
+결국 이미지가 갖는 공간적 요소가 모두 파괴되어 성능이 좋지 않았다. 하지만 CNN 알고리즘은 이러한 문제점을 해결하였고, 모델의 성능을 비약적으로 향상시켰다.
+
+<br>
+
+<center>
+<img  src="../public/img/pytorch/power_of_cnn2.JPG" width="" style='margin: 0px auto;'/>
+<figcaption> CNN 알고리즘 Classification(출처 : https://gomguard.tistory.com/188?category=712467) </figcaption>
+</center>
+
+
+
+
 # Stride과 Padding
 <hr>
 
