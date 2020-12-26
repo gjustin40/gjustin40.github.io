@@ -128,6 +128,8 @@ Max-Pooling Layer의 가장 큰 장점은 **Translation Invariance**의 효과�
 
 아래 사진은 Translation Invariance을 가장 잘 보여주는 예시이다.
 
+<br>
+
 <center>
 <img  src="/public/img/pytorch/benefit_maxpool.JPG" width="400" style='margin: 0px auto;'/>
 <figcaption> 사진4. MaxPooling Layer의 장점(Translation Invariance)</figcaption>
@@ -168,7 +170,7 @@ plt.savefig('avgpool_result.jpg', bbox_inches='tight')
 - `nn.AvgPool2d()` : Max Layer와 동일하게 각종 옵션을 통해 크기를 설정할 수 있다.
 
 <center>
-<img  src="/public/img/pytorch/avgpool_result.JPG" width="" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/avgpool_result.jpg" width="" style='margin: 0px auto;'/>
 <figcaption> 사진5. Original vs Avgpool </figcaption>
 </center>
 
@@ -235,11 +237,15 @@ global_avgpool = nn.AvgPool2d(kernel_size=conv_shape[2:])
 
 또한 또 다른 장점으로는 **GAP**를 사용하면 Model을 좀 더 'Interpretable`하게 만들 수 있다는 것이다. 인간이 보이게 좀 더 직관적으로 이해할 수 있도록 해주는 효과가 있다는 뜻이다. 
 
+<br>
+
 <center>
 <img  src="/public/img/pytorch/globalpooling_benefit.JPG" width="" style='margin: 0px auto;'/>
 <figcaption> 사진7. GAP의 장점 </figcaption>
 <figcaption> 출처 : https://strutive07.github.io/2019/04/21/Global-average-pooling.html</figcaption>
 </center>
+
+<br>
 
 Feature Map과 카테고리의 관계에 직접적으로 영향을 줘서 '공간정보'에 대한 손실을 최소화할 수 있다.
 
@@ -249,8 +255,6 @@ Feature Map과 카테고리의 관계에 직접적으로 영향을 줘서 '공�
 
 - 고정된 입력 size가 필요없다.(FC의 경우 고정된 input size가 필요하다.)
 - 결론적으로 파라미터의 수를 감소시키기 때문에 과적합도 방지한다.
-
-<br>
 
 ### Adaptive Pooling Layer
 <br>
@@ -287,14 +291,15 @@ plt.savefig('adaptive_pool.jpg', bbox_inches='tight')
 <br>
 
 <center>
-<img  src="/public/img/pytorch/adaptive_pool.JPG" width="" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/adaptive_pool.jpg" width="" style='margin: 0px auto;'/>
 <figcaption> 사진8. Adaptive Average Pooling Layer </figcaption>
 </center>
 
+<br>
+
 사용자가 원하는 ouput_size만 설정하면 되기 때문에 모델을 설계할 때 매우 유용하게 사용될 것 같다.
 
-# pooling Layer를 사용하는 이유
-<hr>
+<br>
 
 Layer들에 대해 설명을 하면서 각각의 장점에 대해 언급을 했다. 가장 큰 이유로는 이미지의 사이즈를 줄여 연산량을 줄이는 **DownSampling**을 하기 위해서이고, Convoultion Layer에서 추출한 정보들을 좀 더 강화하기 위해 사용하기도 한다. 따라서 Convolution Layer와 떨어질 수 없는 한 세트라고 생각해야한다.
 
