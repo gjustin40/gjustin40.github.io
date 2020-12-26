@@ -14,7 +14,7 @@ use_math: true
 CNN 알고리즘을 구성하는 필수적인 layer 중 하나인 Pooling Layer는 주로 Convolution Layer 연산을 거쳐 나온 Feature map이나 마지막 출력을 할 때 사용이 된다.
 
 <center>
-<img  src="../public/img/pytorch/pooling_layer.JPG" width="" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/pooling_layer.JPG" width="" style='margin: 0px auto;'/>
 <figcaption> 사진1. Pooling Layer in CNN </figcaption>
 </center>
 
@@ -23,7 +23,7 @@ CNN 알고리즘을 구성하는 필수적인 layer 중 하나인 Pooling Layer�
 Pooling Layer에서 사용하는 필터는 값이 따로 존재하지 않고 단지 '기능'을 수행한다. 즉, Matrix 연산을 사용하지 않고 이미지의 픽셀로부터 값을 뽑아내는 역할을 한다. 다른 Filter들과 동일하게 Size와 Stride을 설정할 수 있꼬 보통 Size는 2x2를 사용하고 Stride는 Size에 맞게 2로 설정한다.(stride를 1로 설정하여 overlapping을 할 때도 있다.)
 
 <center>
-<img  src="../public/img/pytorch/pooling_layer.png" width="400" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/pooling_layer.png" width="400" style='margin: 0px auto;'/>
 <figcaption> 사진2. Pooling Layer </figcaption>
 <figcaption> 출처 : https://towardsdatascience.com/a-comprehensive-guide-to-convolutional-neural-networks-the-eli5-way-3bd2b1164a53</figcaption>
 </center>
@@ -98,7 +98,7 @@ plt.savefig('maxpool_result.jpg', bbox_inches='tight')
 <br>
 
 <center>
-<img  src="../public/img/pytorch/maxpool_result.JPG" width="" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/maxpool_result.JPG" width="" style='margin: 0px auto;'/>
 <figcaption> 사진3. Original vs Maxpool </figcaption>
 </center>
 
@@ -115,7 +115,7 @@ Max-Pooling Layer의 가장 큰 장점은 **Translation Invariance**의 효과�
 아래 사진은 Translation Invariance을 가장 잘 보여주는 예시이다.
 
 <center>
-<img  src="../public/img/pytorch/benefit_maxpool.JPG" width="400" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/benefit_maxpool.JPG" width="400" style='margin: 0px auto;'/>
 <figcaption> 사진4. MaxPooling Layer의 장점(Translation Invariance)
 <figcaption> 출처 : https://www.quora.com/How-exactly-does-max-pooling-create-translation-invariance</figcaption>
 </center>
@@ -154,7 +154,7 @@ plt.savefig('avgpool_result.jpg', bbox_inches='tight')
 - `nn.AvgPool2d()` : Max Layer와 동일하게 각종 옵션을 통해 크기를 설정할 수 있다.
 
 <center>
-<img  src="../public/img/pytorch/avgpool_result.JPG" width="" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/avgpool_result.JPG" width="" style='margin: 0px auto;'/>
 <figcaption> 사진5. Original vs Avgpool </figcaption>
 </center>
 
@@ -171,7 +171,7 @@ plt.savefig('avgpool_result.jpg', bbox_inches='tight')
 **Global Average-Pooling**의 원리는 간단하다. 2x2, 3x3 등의 Filter를 이용하는 것이 아니라 Feature Map 전체에 대해 평균을 계산한다. 결국 Feature Map 1개당 1개의 벡터값이 나온다고 할 수 있다. 
 
 <center>
-<img  src="../public/img/pytorch/globalpooling.JPG" width="" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/globalpooling.JPG" width="" style='margin: 0px auto;'/>
 <figcaption> 사진6. Global Average Pooling Layer </figcaption>
 <figcaption> 출처 : https://alexisbcook.github.io/2017/global-average-pooling-layers-for-object-localization/</figcaption>
 </center>
@@ -218,7 +218,7 @@ global_avgpool = nn.AvgPool2d(kernel_size=conv_shape[2:])
 또한 또 다른 장점으로는 **GAP**를 사용하면 Model을 좀 더 'Interpretable`하게 만들 수 있다는 것이다. 인간이 보이게 좀 더 직관적으로 이해할 수 있도록 해주는 효과가 있다는 뜻이다. 
 
 <center>
-<img  src="../public/img/pytorch/globalpooling_benefit.JPG" width="" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/globalpooling_benefit.JPG" width="" style='margin: 0px auto;'/>
 <figcaption> 사진7. GAP의 장점 </figcaption>
 <figcaption> 출처 : https://strutive07.github.io/2019/04/21/Global-average-pooling.html</figcaption>
 </center>
@@ -269,7 +269,7 @@ plt.savefig('adaptive_pool.jpg', bbox_inches='tight')
 <br>
 
 <center>
-<img  src="../public/img/pytorch/adaptive_pool.JPG" width="" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/adaptive_pool.JPG" width="" style='margin: 0px auto;'/>
 <figcaption> 사진8. Adaptive Average Pooling Layer </figcaption>
 </center>
 
