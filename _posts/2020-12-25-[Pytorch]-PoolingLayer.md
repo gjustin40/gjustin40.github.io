@@ -1,12 +1,12 @@
 ---
 layout: post
-title: "[Pytorch] - 폴링 계층(Pooling Layer) 종류"
+title: "[Pytorch] - 폴링 계층(Pooling Layer)"
 date: 2020-12-25 19:00:00
 category: Pytorch
 use_math: true
 ---
 
-이번 포스터에서는 Convolution Layer을 거쳐서 나온 Feature maps을 Resizing 하여 새로운 Layer를 얻는 **폴링(Pooling)** 에 대해 알아보자.
+이번 포스터에서는 Convolution Layer을 거쳐서 나온 Feature maps을 Resizing 하여 새로운 Layer를 얻는 **폴링 계층(Pooling Layer)** 에 대해 알아보자.
 
 # 폴링 계층(Pooling Layer)
 <br>
@@ -15,18 +15,26 @@ CNN 알고리즘을 구성하는 필수적인 layer 중 하나인 Pooling Layer�
 
 <center>
 <img  src="../public/img/pytorch/pooling_layer.JPG" width="" style='margin: 0px auto;'/>
-<figcaption> 사진1. Pooling Layer </figcaption>
+<figcaption> 사진1. Pooling Layer in CNN </figcaption>
 </center>
 
 <br>
 
 Pooling Layer에서 사용하는 필터는 값이 따로 존재하지 않고 단지 '기능'을 수행한다. 즉, Matrix 연산을 사용하지 않고 이미지의 픽셀로부터 값을 뽑아내는 역할을 한다. 다른 Filter들과 동일하게 Size와 Stride을 설정할 수 있꼬 보통 Size는 2x2를 사용하고 Stride는 Size에 맞게 2로 설정한다.(stride를 1로 설정하여 overlapping을 할 때도 있다.)
 
+<center>
+<img  src="../public/img/pytorch/pooling_layer.png" width="400" style='margin: 0px auto;'/>
+<figcaption> 사진2. Pooling Layer </figcaption>
+<figcaption> 출처 : https://towardsdatascience.com/a-comprehensive-guide-to-convolutional-neural-networks-the-eli5-way-3bd2b1164a53</figcaption>
+</center>
+
 <br>
 
 ### Pooling Layer 특징
 Pooling Layer 특징은 다음과 같다.
 - Convolution Layer 다음에 사용이 된다.
+- 각 Feature Map에 대해 독립적으로 적용된다.<br>
+(feature map의 channel이 3이면, pooling Layer의 channel도 3이다.)
 - Feature Map의 Size를 줄인다.(DownSampling)
 - 전체적으로 파라미터의 수와 연산량을 줄인다.(Computation 효율 증가)
 - 작게나마 Overfitting에도 효과가 있다.(어느 정도 있다고는 한다....)
@@ -91,7 +99,7 @@ plt.savefig('maxpool_result.jpg', bbox_inches='tight')
 
 <center>
 <img  src="../public/img/pytorch/maxpool_result.JPG" width="" style='margin: 0px auto;'/>
-<figcaption> 사진2. Original vs Maxpool </figcaption>
+<figcaption> 사진3. Original vs Maxpool </figcaption>
 </center>
 
 <br>
@@ -108,7 +116,7 @@ Max-Pooling Layer의 가장 큰 장점은 **Translation Invariance**의 효과�
 
 <center>
 <img  src="../public/img/pytorch/benefit_maxpool.JPG" width="400" style='margin: 0px auto;'/>
-<figcaption> 사진3. MaxPooling Layer의 장점(Translation Invariance)
+<figcaption> 사진4. MaxPooling Layer의 장점(Translation Invariance)
 <figcaption> 출처 : https://www.quora.com/How-exactly-does-max-pooling-create-translation-invariance</figcaption>
 </center>
 
@@ -147,7 +155,7 @@ plt.savefig('avgpool_result.jpg', bbox_inches='tight')
 
 <center>
 <img  src="../public/img/pytorch/avgpool_result.JPG" width="" style='margin: 0px auto;'/>
-<figcaption> 사진3. Original vs Avgpool </figcaption>
+<figcaption> 사진5. Original vs Avgpool </figcaption>
 </center>
 
 사진을 보면 아주 미세하게 흐려진 것을 알 수 있다. Blur 효과가 적용되었다는 뜻인데, 보통 노이즈를 줄이는 효과가 있다.
@@ -164,9 +172,44 @@ plt.savefig('avgpool_result.jpg', bbox_inches='tight')
 
 <center>
 <img  src="../public/img/pytorch/globalpooling.JPG" width="" style='margin: 0px auto;'/>
-<figcaption> 사진4. Global Average Pooling Layer </figcaption>
+<figcaption> 사진6. Global Average Pooling Layer </figcaption>
 <figcaption> 출처 : https://alexisbcook.github.io/2017/global-average-pooling-layers-for-object-localization/</figcaption>
 </center>
+
+<br>
+
+아래는 Global Averge Pooling Layer를 구현한 코드이다. Pytorch에서 따로 제공하는 메소드는 없고 Average-pooling Layer의 메소드를 활용해서 구현한다.
+
+```python
+img = Image.open('../data/example.jpg')
+img_tensor = transforms.ToTensor()(img)
+
+input_image = img_tensor.unsqueeze(0)
+>>> print(input_image.shape)
+#torch.Size([1, 3, 295, 295])
+
+conv = nn.Conv2d(3,10,3)(input_image)
+conv_shape = conv.shape
+>>> print(conv_shape)
+# torch.Size([1, 10, 293, 293])
+
+global_avgpool = nn.AvgPool2d(kernel_size=conv_shape[2:])
+>>> print(global_avgpool(conv))
+# tensor([[[[ 0.2456]],
+#          [[ 0.1059]],
+#          [[ 0.2954]],
+#          [[ 0.2536]],
+#          [[-0.0453]],
+#          [[-0.0066]],
+#          [[-0.0869]],
+#          [[-0.2485]],
+#          [[ 0.3848]],
+#          [[-0.4621]]]], grad_fn=<AvgPool2DBackward>)
+```
+- `unsqueeze()` : Convolution Layer의 입력값은 (batch, channel, W, H)이기에 batch의 차원을 하나 더 추가할 필요가 있다.
+- `conv_shape[2:]` : Filter의 size를 입력되는 feature map의 size로 설정하면 Global Average pooling이 된다.
+- `stride` : 어차피 Filter의 size가 곧 Feature Map의 size이기에 움직일 필요가 없다.<br>
+(어떤 값이든 상관이 없다.)
 
 <br>
 
@@ -176,7 +219,7 @@ plt.savefig('avgpool_result.jpg', bbox_inches='tight')
 
 <center>
 <img  src="../public/img/pytorch/globalpooling_benefit.JPG" width="" style='margin: 0px auto;'/>
-<figcaption> 사진5. GAP의 장점 </figcaption>
+<figcaption> 사진7. GAP의 장점 </figcaption>
 <figcaption> 출처 : https://strutive07.github.io/2019/04/21/Global-average-pooling.html</figcaption>
 </center>
 
@@ -191,10 +234,54 @@ Feature Map과 카테고리의 관계에 직접적으로 영향을 줘서 '공�
 
 <br>
 
+### Adaptive Pooling Layer
+<br>
 
-# pooling Layer을 사용하는 이유
+Pytorch에서 pooling Layer를 검색하면 Adaptive Pooling Layer도 있다는 것을 알 수 있다. 이 Layer의 경우에는 다양한 입력값의 크기에 따라 변할 수 있는 pooling Layer를 말한다. 즉, 위에서 언급한 Max, Average Layer들은 Filter와 stride가 하이퍼 파라미터이기 때문에 사용자가 직접 설정을 해줘야한다. 만약 input size가 변하면 그럴때마다 Filter와 Stride를 변경해줘야 하는 번거로움이 있다. 
 
+<br>
 
-- adaptive pooling 오..... 출력값을 설정하면 값에 맞게 pooling의 size와 stride가 자동으로 설정된다.
+하지만 Adaptive Pooling Layer는 output size를 설정해줌으로써 어떤 input size가 들어와도 사용자가 정의한 ouput size에 맞게 Filter의 size와 stride를 자동으로 설정해준다.
+- `nn.AdaptiveMaxPool2d` : Max에 대한 Adaptive Pooling
+- `nn.AdaptiveAvgPool1d` : Average에 대한 Adaptive Pooling
 
+원하는 output size가 (10x10)이라고 가정하면 코드는 다음과 같다.
 
+```python
+adap_pool = nn.AdaptiveAvgPool2d(output_size=(10))
+
+plt.figure(figsize=(10,10))
+
+plt.subplot(1,2,1)
+plt.imshow(img)
+plt.axis('off')
+plt.title('Original (295, 295)')
+
+plt.subplot(1,2,2)
+plt.imshow(np.array(adap_pool(img_tensor).permute(1,2,0)))
+plt.axis('off')
+plt.title('Adaptive Average Pooling (10,10)')
+
+plt.savefig('adaptive_pool.jpg', bbox_inches='tight')
+```
+- `output_size` : (10)=(10x10)을 의미한다.
+
+<br>
+
+<center>
+<img  src="../public/img/pytorch/adaptive_pool.JPG" width="" style='margin: 0px auto;'/>
+<figcaption> 사진8. Adaptive Average Pooling Layer </figcaption>
+</center>
+
+사용자가 원하는 ouput_size만 설정하면 되기 때문에 모델을 설계할 때 매우 유용하게 사용될 것 같다.
+
+# pooling Layer를 사용하는 이유
+<hr>
+
+Layer들에 대해 설명을 하면서 각각의 장점에 대해 언급을 했다. 가장 큰 이유로는 이미지의 사이즈를 줄여 연산량을 줄이는 **DownSampling**을 하기 위해서이고, Convoultion Layer에서 추출한 정보들을 좀 더 강화하기 위해 사용하기도 한다. 따라서 Convolution Layer와 떨어질 수 없는 한 세트라고 생각해야한다.
+
+<br>
+
+지금까지 pooling Layer들의 종류에 대해 알아보았다. CNN을 다룬다면 반드시 나오는 Layer이기 때문에 자세히 알아두면 매우 좋을 것 같다. 사실 위에서 언급한 Layer들 말고도 Max와 average를 혼합한 테크닉도 있다. 나중에 기회가 된다면 좀 더 발전된 Pooling Layer들에 대해 다뤄보도록 하겠다.
+
+## **읽어주셔서 감사합니다.(댓글과 수정사항은 언제나 환영입니다!)**
