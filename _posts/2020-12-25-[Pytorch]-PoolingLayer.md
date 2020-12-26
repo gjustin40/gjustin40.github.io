@@ -8,9 +8,10 @@ use_math: true
 
 이번 포스터에서는 Convolution Layer을 거쳐서 나온 Feature maps을 Resizing 하여 새로운 Layer를 얻는 **폴링 계층(Pooling Layer)** 에 대해 알아보자.
 
-# 폴링 계층(Pooling Layer)
 <br>
 
+# 폴링 계층(Pooling Layer)
+<hr>
 CNN 알고리즘을 구성하는 필수적인 layer 중 하나인 Pooling Layer는 주로 Convolution Layer 연산을 거쳐 나온 Feature map이나 마지막 출력을 할 때 사용이 된다.
 
 <center>
@@ -22,6 +23,8 @@ CNN 알고리즘을 구성하는 필수적인 layer 중 하나인 Pooling Layer�
 
 Pooling Layer에서 사용하는 필터는 값이 따로 존재하지 않고 단지 '기능'을 수행한다. 즉, Matrix 연산을 사용하지 않고 이미지의 픽셀로부터 값을 뽑아내는 역할을 한다. 다른 Filter들과 동일하게 Size와 Stride을 설정할 수 있꼬 보통 Size는 2x2를 사용하고 Stride는 Size에 맞게 2로 설정한다.(stride를 1로 설정하여 overlapping을 할 때도 있다.)
 
+<br>
+
 <center>
 <img  src="/public/img/pytorch/pooling_layer.png" width="400" style='margin: 0px auto;'/>
 <figcaption> 사진2. Pooling Layer </figcaption>
@@ -31,6 +34,9 @@ Pooling Layer에서 사용하는 필터는 값이 따로 존재하지 않고 단
 <br>
 
 ### Pooling Layer 특징
+
+<br>
+
 Pooling Layer 특징은 다음과 같다.
 - Convolution Layer 다음에 사용이 된다.
 - 각 Feature Map에 대해 독립적으로 적용된다.<br>
@@ -49,13 +55,21 @@ Pooling Layer읠 종류로는 약 4가지가 있다. 물론 Min-Pooling은 거�
 <br>
 
 ### Min-Pooling
+
+<br>
+
 제목 그대로 2x2 Filter를 이용해 최솟값을 추출하는 방법이다. 물론 max가 있다면 min이 있는 건 당연하지만, Google에 검색을 아무리 해도 Min-Pooling을 사용하는 이유에 대해서는 정확히 언급된 사항이 없다. 최솟값을 추출하기 때문에 이미지가 전체적으로 어두어지는 효과가 있다. 
+
+<br>
 
 > 사용을 너무 안 하는 나머지 pytorch에서도 따로 메소드를 제공하지 않는다....나중에 구현해봐야겟네
 
 <br>
 
 ### Max-Pooling
+
+<br>
+
 Min과 반대로 최대값을 추출하는 방법이다. 대부분의 pooling Layer들은 Size와 Stride을 2로 고정한다. 픽셀값 중 최대값을 추출하기 때문에 적용이 된 이미지는 보통 튀는 부분이 부각된다. Edge Filter와 비슷한 기능을 한다고 생각할 수 있다. 
 
 <br>
@@ -98,7 +112,7 @@ plt.savefig('maxpool_result.jpg', bbox_inches='tight')
 <br>
 
 <center>
-<img  src="/public/img/pytorch/maxpool_result.JPG" width="" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/maxpool_result.jpg" width="" style='margin: 0px auto;'/>
 <figcaption> 사진3. Original vs Maxpool </figcaption>
 </center>
 
@@ -116,13 +130,13 @@ Max-Pooling Layer의 가장 큰 장점은 **Translation Invariance**의 효과�
 
 <center>
 <img  src="/public/img/pytorch/benefit_maxpool.JPG" width="400" style='margin: 0px auto;'/>
-<figcaption> 사진4. MaxPooling Layer의 장점(Translation Invariance)
-<figcaption> 출처 : https://www.quora.com/How-exactly-does-max-pooling-create-translation-invariance</figcaption>
-</center>
+<figcaption> 사진4. MaxPooling Layer의 장점(Translation Invariance)</figcaption>
+<figcaption> 출처 : https://www.quora.com/How-exactly-does-max-pooling-create-translation-invariance</figcaption></center>
 
 <br>
 
 ### Average-Pooling
+
 <br>
 
 최솟값과 최댓값을 추출했다면, 마지막으로 **평균** 값을 추출하는 Pooling Layer도 있다. 느낌적으로 알 수 있듯이 주위 픽셀값의 평균은 곧 '불러' 효과를 준다. 노이즈를 줄이는 효과가 있다고 한다.
@@ -158,10 +172,14 @@ plt.savefig('avgpool_result.jpg', bbox_inches='tight')
 <figcaption> 사진5. Original vs Avgpool </figcaption>
 </center>
 
+<br>
+
 사진을 보면 아주 미세하게 흐려진 것을 알 수 있다. Blur 효과가 적용되었다는 뜻인데, 보통 노이즈를 줄이는 효과가 있다.
 
+<br>
 
 ### Global Average-Pooling
+
 <br>
 
 사실 Average-Pooling Layer도 잘 사용하지 않는 추세이다. 단지 Blur의 효과를 얻기 위해서 사용하기에는 효율적이지 못 하기 때문이다. 하지만 **Global Average-Pooling Layer**는 여러 유명한 모델에서 사용되고 있다. Average-pooling Layer와 비슷한 개념이지만, 좀 더 넓은 범위에 대해 적용이 되기 때문에 **Global**이라는 단어가 추가되었다. 
