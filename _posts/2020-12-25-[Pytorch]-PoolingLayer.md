@@ -235,7 +235,7 @@ global_avgpool = nn.AvgPool2d(kernel_size=conv_shape[2:])
 
 **Global Averge Pooling Layer(GAP)**의 가장 큰 장점은 기존에 CNN에서 사용하던 Fully-connected Layer를 대체할 수 있다는 것이다. 대부분의 모델에서 파라미터의 수에 가장 큰 영향을 주던 부분이 Classifier를 하던 FC Layer이다. 따라서 이 부분을 대체함으로서 파라미터의 수를 급격하게 줄일 수 있었다.
 
-또한 또 다른 장점으로는 **GAP**를 사용하면 Model을 좀 더 'Interpretable`하게 만들 수 있다는 것이다. 인간이 보이게 좀 더 직관적으로 이해할 수 있도록 해주는 효과가 있다는 뜻이다. 
+또한 또 다른 장점으로는 **GAP**를 사용하면 Model을 좀 더 'Interpretable`하게 만들 수 있다는 것이다. 사람이 봤을 떄 좀 더 직관적으로 이해할 수 있도록 해주는 효과가 있다는 뜻이다. 
 
 <br>
 
