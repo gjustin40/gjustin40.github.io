@@ -16,9 +16,9 @@ use_math: true
 이름에서도 알 수 있듯이 **과적합(Overfitting)** 이란 '학습데이터에 과하게 학습이 되었다'는 뜻이다. 기계학습을 통해 학습을 하다보면 **학습데이터**에 대한 손실함수가 감소하는 방향으로 모델이 학습이 되지만, **실제데이터** 에 대한 오차가 감소하지 않거나 학습 데이터에 대한 오차가 어느 지점부터 증가하는 순간을 말한다. 즉, Training Datasets에 대해서만 너무 적합한 모델이 되어버린 상태이다.
 
 <center>
-<img  src="../public/img/pytorch/overfitting.png" width="" style='margin: 0px auto;'/>
+<img  src="../public/img/pytorch/overfitting_ill.png" width="400" style='margin: 0px auto;'/>
 <figcaption> 과적합 </figcaption>
-<figcaption> 출처 : http://mlwiki.org/index.php/Overfitting</figcaption>
+<figcaption> 출처 : http://blog.naver.com/PostView.nhn?blogId=laonple&logNo=220522735677</figcaption>
 </center>
 
 ### 일반화(Generalization)
@@ -93,7 +93,75 @@ $$
 
 <br>
 
-위 Loss의 그래프처럼 Train과 Validation을 비교했을 때 Train의 loss는 감소하고 있는 반면 Validation의 Loss가 증가하는 추세가 보이면 overfitting이 되었다고 볼 수 있다. 
+위 Loss의 그래프처럼 Train과 Validation을 비교했을 때 Train의 loss는 감소하고 있는 반면 Validation의 Loss가 증가하는 추세가 보이면 overfitting이 되었다고 볼 수 있다. 학습 데이터에 대해서는 잘 작동하지만, 새로운 데이터에 대해서는 작동하지 못하는 전형적인 현상이다.
+
+<br>
+
+# 과적합 방지
+<hr>
+
+과적합을 방지하는 테크닉은 다음과 같다.
+- 데이터의 양 늘리기(Train with more data)
+- 모델의 복잡도 줄이기
+- Regularization(정규화, 일반화)
+- 앙상블 기법 사용(Ensemble)
+- Drop out 사용
+- Early Stopping
+
+<br>
+
+### 데이터의 양 늘리기
+
+<br>
+
+학습데이터의 양이 상대적으로 적을 경우, 모델이 학습을 하는 과정에서 같은 데이터를 여러 번 학습을 하게 된다. 그러면 결국 분류하고자 하는 특정 물체의 고유한 특징을 찾아내는 것 보다는 이미지 자체의 패턴을 '암기'해버린다. 따라서 데이터의 양을 증가시켜서 좀 더 일반적인 패턴을 배울 수 있도록 해야한다. 데이터를 추가로 더 수집하거나 인위적으로 데이터를 변형시키는 [Augemtation](https://gjustin40.github.io/pytorch/2020/12/19/Pytorch-Transform.html)기법을 활용할 수도 있다. 주의할 점은 딥러닝의 명제 중 하나인 '쓰레기가 들어가면 쓰레기가 나온다'에 비춰볼 때 반드시 전처리가 된 데이터를 추가해줘야한다.
+<br>
+(똥쓰레기 데이터가 추가되면 의미가 없다. 더 안 좋아질텐데~)
+
+<br>
+
+### 모델의 복합도 줄이기
+
+<br>
+
+위에서도 얘기했듯이 모델이 복잡해지면 그만큼 학습해야 하는 파라미터(가중치)가 많아져서 과적합을 야기한다. 따라서 파라미터의 주된 범인인 Fully-connected Layer를 줄이거나 [Pooling Layer](https://gjustin40.github.io/pytorch/2020/12/25/Pytorch-PoolingLayer.html)를 사용하는 등 다양한 방법을 통해서 은닉층(Hidden Layer)을 줄이면 과적합을 방지할 수 있다.
+
+<br>
+
+### Regularization(정규화, 일반화)
+
+<br>
+
+영어를 해석하면 '정규화'가 되지만, 의미로는 '일반화'에 더 가깝기 때문에 두 단어를 혼용해서 사용한다. 기계학습에서 모델$h(x)$이 Loss Function($J(\theta)$)의 값이 최소가 되도록 하는 방향으로 학습이 진행된다.
+
+<br>
+
+$$
+MSE = \frac{1}{n}\sum_{i=1}^{n}(\hat{y}_i - y_i)^2 \\
+\qquad \\
+L2 = \lambda \sum_{j=1}^{m}{\theta_j}^2 \\
+\qquad \\
+J(\theta) =  
+\frac{1}{n}\sum_{i=1}^{n}(h_{\theta}(x_i) - y_i)^2 + \lambda \sum_{j=1}^{m}{\theta_j}^2
+$$
+
+- $h(x)$ : 모델
+- L2 : L2 Regularization
+- $\theta$ : 가중치(파라미터)
+- $\lambda$ : 정규화 변수, 정규화의 강도 설정(하이퍼 파라미터)
+- $J(\theta)$ : 손실함수
+
+<br>
+
+손실함수를 최소로 하는 방향으로 학습을 진행하지만, 동시에 L2 Regularization 식에 있는 $\theta$값도 최소가 되는 방향으로 학습을 진행한다. 즉, MSE는 계산이 된 후에 나온 값(loss)에 대해 최소가 되는 $\theta$가 결정된다면, L2는 $\theta$ 자체의 값을 최소로 하는 방향으로 학습을 한다. 두 가지 모두 만족시키는 것이 최종 목표이다.
+
+<br>
+
+단순히 Loss Function(MSE)에만 의존해서 낮아지는 방향으로 진행이 되면 특정 가중치값이 증가해서 오히려 나쁜 결과를 야기시킬 때도 있다. 
+
+<br>
+
+특정 가중치값이 증가한다는 뜻인 결국 모델의 복잡도가 증가한다는 뜻이다. 
 
 <br>
 <br>
