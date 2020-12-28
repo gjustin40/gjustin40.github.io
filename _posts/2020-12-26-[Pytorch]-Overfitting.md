@@ -81,7 +81,19 @@ $$
 <br>
 
 ### 과적합 탐지
-- V
+
+<br>
+
+학습 도중에 과적합이 발생했다는 것을 어떻게 알 수 있을까? 가장 좋은 방법은 학습 데이터를 Train과 Validation로 나눠서 각각의 Loss를 확인하는 것이다. 
+
+<center>
+<img  src="../public/img/pytorch/train_val.png" width="" style='margin: 0px auto;'/>
+<figcaption> Train과 validation Loss 확인 </figcaption>
+</center>
+
+<br>
+
+위 Loss의 그래프처럼 Train과 Validation을 비교했을 때 Train의 loss는 감소하고 있는 반면 Validation의 Loss가 증가하는 추세가 보이면 overfitting이 되었다고 볼 수 있다. 
 
 <br>
 <br>
