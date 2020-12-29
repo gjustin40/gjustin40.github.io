@@ -17,7 +17,6 @@ use_math: true
 
 <center>
 <img  src="/public/img/pytorch/overfitting_ill.PNG" width="400" style='margin: 0px auto;'/>
-<figcaption> 과적합 </figcaption>
 <figcaption> 출처 : http://blog.naver.com/PostView.nhn?blogId=laonple&logNo=220522735677</figcaption>
 </center>
 
@@ -48,7 +47,6 @@ $$
 
 <center>
 <img  src="/public/img/pytorch/list_of_overfitting.png" width="" style='margin: 0px auto;'/>
-<figcaption> 모델의 성능 </figcaption>
 <figcaption> 출처 : https://medium.com/@srjoglekar246/overfitting-and-human-behavior-5186df1e7d19</figcaption>
 </center>
 
