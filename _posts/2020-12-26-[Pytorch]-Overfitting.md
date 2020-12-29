@@ -104,7 +104,6 @@ $$
 - 데이터의 양 늘리기(Train with more data)
 - 모델의 복잡도 줄이기
 - Regularization(정규화, 일반화)
-- 앙상블 기법 사용(Ensemble)
 - Drop out 사용
 - Early Stopping
 
@@ -124,7 +123,16 @@ $$
 
 <br>
 
-위에서도 얘기했듯이 모델이 복잡해지면 그만큼 학습해야 하는 파라미터(가중치)가 많아져서 과적합을 야기한다. 따라서 파라미터의 주된 범인인 Fully-connected Layer를 줄이거나 [Pooling Layer](https://gjustin40.github.io/pytorch/2020/12/25/Pytorch-PoolingLayer.html)를 사용하는 등 다양한 방법을 통해서 은닉층(Hidden Layer)을 줄이면 과적합을 방지할 수 있다.
+위에서도 얘기했듯이 모델이 복잡해지면 그만큼 학습해야 하는 파라미터(가중치)가 많아져서 과적합을 야기한다. 따라서 파라미터의 주된 범인인 Fully-connected Layer를 줄이거나 [Pooling Layer](https://gjustin40.github.io/pytorch/2020/12/25/Pytorch-PoolingLayer.html)를 사용하는 등 다양한 방법을 통해서 은닉층(Hidden Layer)을 줄이면 과적합을 방지할 수 있다.<br>
+(사실 밑에 나올 Regularization을 하는 이유와 동일하다.)
+
+<br>
+
+<center>
+<img  src="../public/img/pytorch/complex.png" width="300" style='margin: 0px auto;'/>
+<figcaption> Simple vs Complex </figcaption>
+<figcaption> 출처 : https://en.wikipedia.org/wiki/Regularization_(mathematics) </figcaption>
+</center>
 
 <br>
 
@@ -132,7 +140,7 @@ $$
 
 <br>
 
-영어를 해석하면 '정규화'가 되지만, 의미로는 '일반화'에 더 가깝기 때문에 두 단어를 혼용해서 사용한다. 기계학습에서 모델$h(x)$이 Loss Function($J(\theta)$)의 값이 최소가 되도록 하는 방향으로 학습이 진행된다.
+영어를 해석하면 '정규화'가 되지만, 의미로는 '일반화'에 더 가깝기 때문에 두 단어를 혼용해서 사용한다. 기계학습에서 모델 $h(x)$은 Loss Function $J(\theta)$ 의 값이 최소가 되도록 하는 방향으로 학습이 진행된다.
 
 <br>
 
@@ -157,13 +165,32 @@ $$
 
 <br>
 
-단순히 Loss Function(MSE)에만 의존해서 낮아지는 방향으로 진행이 되면 특정 가중치값이 증가해서 오히려 나쁜 결과를 야기시킬 때도 있다. 
+단순히 Loss Function(MSE)에만 의존해서 낮아지는 방향으로 진행이 되면 특정 가중치값이 증가해서 오히려 나쁜 결과를 야기시킬 때도 있다. 특정 가중치값이 증가한다는 뜻은 결국 모델의 복잡도를 증가시키는 것과 같기 때문이다. 따라서 모델 복잡도 증가를 방지하기 위해 정규화 기법을 사용하는 것이다.
 
 <br>
 
-특정 가중치값이 증가한다는 뜻인 결국 모델의 복잡도가 증가한다는 뜻이다. 
+### Drop out
+<br>
+
+**Drop Out** 기법은 모델이 학습하는 과정에서 몇 개의 노드(가중치가 계산되고 난 후)를 강제로 랜덤하게 0값으로 만드는 기법이다. 인공신경망이 특정 뉴런에서 너무 의존적이게 되는 것을 막아주고 항상 다른 뉴런들의 값이 0으로 변하기 때문에 다양한 모델을 사용하는 앙상블 기법이 되는 것 처럼 효과를 만들어 과적합을 방지할 수 있다.
+<br>
+
+<center>
+<img  src="../public/img/pytorch/dropout.png" width="" style='margin: 0px auto;'/>
+<figcaption> Drop Out </figcaption>
+<figcaption> 출처 : https://wikidocs.net/61374 </figcaption>
+</center>
+
+
+### Early Stopping
+<br>
+
+모델을 학습하는 과정에서 train Loss와 Test Loss가 감소하는 양상을 보면서 과적합이 발생하기 시작하는 지점에서 학습을 멈추는 기법을 말한다. 해당 지점부터는 또 다른 방법을 이용해 학습을 하거나 Learning Rate를 조절하는 등 마치 Generalization을 하는 것 같은 효과를 줄 수 있다.
 
 <br>
+
+지금까지 과적합에 대해 알아보았고 방지할 수 있는 방법에 대해 알아보았다. Loss를 낮추기 위해 계속해서 학습을 하다보면 모델이 '학습'을 하는 것 보다는 '암기'를 하게 되는 시점이 생긴다. 따라서 이러한 현상을 방지하기 위해 미리 알고 있는 것이 좋을 것 같다.
+
 <br>
 <br>
 <br>
