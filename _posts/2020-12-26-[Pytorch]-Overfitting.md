@@ -16,7 +16,7 @@ use_math: true
 이름에서도 알 수 있듯이 **과적합(Overfitting)** 이란 '학습데이터에 과하게 학습이 되었다'는 뜻이다. 기계학습을 통해 학습을 하다보면 **학습데이터**에 대한 손실함수가 감소하는 방향으로 모델이 학습이 되지만, **실제데이터** 에 대한 오차가 감소하지 않거나 학습 데이터에 대한 오차가 어느 지점부터 증가하는 순간을 말한다. 즉, Training Datasets에 대해서만 너무 적합한 모델이 되어버린 상태이다.
 
 <center>
-<img  src="/public/img/pytorch/overfitting_ill.png" width="400" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/overfitting_ill.PNG" width="400" style='margin: 0px auto;'/>
 <figcaption> 과적합 </figcaption>
 <figcaption> 출처 : http://blog.naver.com/PostView.nhn?blogId=laonple&logNo=220522735677</figcaption>
 </center>
@@ -85,6 +85,8 @@ $$
 <br>
 
 학습 도중에 과적합이 발생했다는 것을 어떻게 알 수 있을까? 가장 좋은 방법은 학습 데이터를 Train과 Validation로 나눠서 각각의 Loss를 확인하는 것이다. 
+
+<br>
 
 <center>
 <img  src="/public/img/pytorch/train_val.png" width="" style='margin: 0px auto;'/>
@@ -192,8 +194,5 @@ $$
 지금까지 과적합에 대해 알아보았고 방지할 수 있는 방법에 대해 알아보았다. Loss를 낮추기 위해 계속해서 학습을 하다보면 모델이 '학습'을 하는 것 보다는 '암기'를 하게 되는 시점이 생긴다. 따라서 이러한 현상을 방지하기 위해 미리 알고 있는 것이 좋을 것 같다.
 
 <br>
-<br>
-<br>
-<br>
-<br>
 
+## **읽어주셔서 감사합니다.(댓글과 수정사항은 언제나 환영입니다!)**
