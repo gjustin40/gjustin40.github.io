@@ -125,7 +125,7 @@ Overfitting </figcaption>
 <br>
 
 <center>
-<img  src="../public/img/pytorch/dropout_cal.PNG" width="800" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/dropout_cal.PNG" width="800" style='margin: 0px auto;'/>
 <figcaption> 사진4. Drop Out 의 원리(Train vs Test) </figcaption>
 </center>
 
