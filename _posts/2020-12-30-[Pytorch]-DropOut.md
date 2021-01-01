@@ -113,7 +113,91 @@ Drop Out은 Training을 할 때 적용이 된다. 생략되지 않을 확률($p$
 
 <center>
 <img  src="../public/img/pytorch/dropout_testime.png" width="600" style='margin: 0px auto;'/>
-<figcaption> Drop Out 적용 </figcaption>
+<figcaption> 사진3. Drop Out 적용(Train vs Test) </figcaption>
 <figcaption> 출처 : Dropout: A Simple Way to Prevent Neural Networks from
 Overfitting </figcaption>
 </center>
+
+<br>
+
+**논문에 있는 사진들을 참고했을 때 필자는 많이 부족하기 때문에 이해가 더 어려웠다.** Dropout은 신경망 안에 있는 '노드'에 영향을 주는 기법이지, weight와는 아무 상관이 없다. 근데 자꾸 weight랑 엮을라고 하니까 이해가 너무 어려웠다. 사진(3)을 보면 'weight'값에 $p$를 곱했는데, 사실 이건 그냥 '노드'에다가 $p$값을 곱한 것과 같다. 
+
+<br>
+
+<center>
+<img  src="../public/img/pytorch/dropout_cal.png" width="800" style='margin: 0px auto;'/>
+<figcaption> 사진4. Drop Out 의 원리(Train vs Test) </figcaption>
+</center>
+
+<br>
+
+위 사진과 같이 '노드'에만 신경을 쓰면 된다. 식으로 보면 다음과 같다.
+
+<center>
+<img  src="../public/img/pytorch/dropout_formula.png" width="800" style='margin: 0px auto;'/>
+<figcaption> 사진4. Train모드에서 Drop Out의 식(Standard vs Dropout) </figcaption>
+</center>
+
+<br>
+
+위 식에서 'Dropout Network' 부분에 있는 $y^{(l)}$는 직전 layer에서 나온 '노드'이고 그 노드값에 0또는 1값인 $r^{(l)}$을 곱해서 노드의 생,사를 결정한다.($r^{(l)}$은 0또는 1이고, Bernoulli 확률값 $p$에 따라 0또는 1이 결정된다.)
+
+<br>
+
+# Pytorch로 실습하기
+<hr>
+
+Dropout을 적용하는 방법은 다음과 같다.
+
+```python
+import torch
+import torch.nn as nn
+
+class mymodel(nn.Module):
+    
+    def __init__(self):
+        super(mymodel, self).__init__()
+        self.fc1 = nn.Linear(5,4)
+        self.fc2 = nn.Linear(4,3)
+        self.fc3 = nn.Linear(3,2)
+        self.dropout = nn.Dropout(p=0.5) # Dropout instance 설정(0.5확률)
+        
+    def forward(self, x):
+        x1 = self.fc1(x)
+
+        x2 = self.dropout(x1) # fc2까지 계산 된 결과에 dropout 적용(x가 노드이기 때문에~)
+
+        x3 = self.fc2(x2)   
+        x4 = self.fc3(x3)
+        
+        return x4
+```
+
+- `nn.Dropout(p=0.5)` : 0.5의 확률로 Dropout 적용
+
+<br>
+
+아래 사진은 위 코드에 대한 네트워크이다.
+
+<center>
+<img  src="../public/img/pytorch/dropout_python.png" width="800" style='margin: 0px auto;'/>
+<figcaption> 사진5. Trin모드에서 Dropout 적용 </figcaption>
+</center>
+
+<br>
+
+각 노드가 50%확률로 살아있는거지 전체 갯수 중에 50%만 살아남는 것이 아니다. 위 식의 각 노드값을 보면 다음과 같다.
+
+```python
+# input(==x) ===== tensor([1., 1., 1., 1., 1.])
+# x1 ===== tensor([-0.2021, -0.8614, -0.1749, -0.6106], grad_fn=<AddBackward0>)
+# drop ==== tensor([-0.4041, -0.0000, -0.0000, -0.0000], grad_fn=<MulBackward0>)
+# x2 ===== tensor([ 0.6346, -0.1302, -0.0872], grad_fn=<AddBackward0>)
+# x3 ===== tensor([0.5077, 0.5231], grad_fn=<AddBackward0>)
+```
+
+<br>
+
+지금까지 Dropout에 대해 알아보았다. 논문에 나온 그림들을 보고 참고했을 때는 이해가 어려웠는데, '노드'에만 신경을 쓴다고 생각하면 이해가 쉬웠다. 'weight'에다가 하는 것은 Dropconnect라는 다른 기법이 있다. 기회가 된다면 dropconnect도 한 번 다뤄보도록 하겠다.
+
+## **읽어주셔서 감사합니다.(댓글과 수정사항은 언제나 환영입니다!)**
