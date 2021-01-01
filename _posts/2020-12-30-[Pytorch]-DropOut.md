@@ -60,6 +60,8 @@ Drop Out을 적용할 때는 확률값($p$)를 이용한다. '각 뉴런이 생�
 
 위에서 언급했듯이 각 뉴런들이 동조화 되는 **Co-adaptation**를 방지하는 효과가 있다. 보통의 신경망에서는 weight들이 서로 연결되어있고 한 뉴런으로 모이면서 각자가 어떤 영향을 주는지 알고 있는 상태이다. 따라서 loss를 갱신할 때 서로에게 영향을 준다. Drop out을 통해 학습을 하는 동안, 서로 영향을 주던 weight들의 관례를 break함으로서 각 뉴런들이 독립적으로 feature를 추출할 수 있도록 해준다.
 
+<br>
+
 <center>
 <img  src="/public/img/pytorch/co-adatation_prevent.PNG" width="" style='margin: 0px auto;'/>
 <figcaption> Effect of Feature </figcaption>
@@ -75,6 +77,7 @@ Overfitting </figcaption>
 
 Drop Out 기법으로 인해 랜덤으로 뉴런을 생략하면 투표호과(voting)를 내면서 학습을 진행하게 된다. 즉, 생략된 뉴런이 매 학습마다 다양하기 때문에 마치 다른 모델을 학습한 것 같은 효과를 준다. 상대적으로 'thin' 한 여러 네트워크를 샘플링하여 모델을 test할 때 예측값을 평균내는 효과를 내서 **과적합**을 방지하고 **Regularization** 효과를 준다.
 
+<br>
 
 <center>
 <img  src="/public/img/pytorch/dropout_modelconbination.PNG" width="600" style='margin: 0px auto;'/>
