@@ -44,7 +44,7 @@ use_math: true
 <br>
 
 <center>
-<img  src="../public/img/pytorch/dropout.png" width="" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/dropout.png" width="" style='margin: 0px auto;'/>
 <figcaption> Drop Out </figcaption>
 <figcaption> 출처 : https://wikidocs.net/61374 </figcaption>
 </center>
@@ -61,7 +61,7 @@ Drop Out을 적용할 때는 확률값($p$)를 이용한다. '각 뉴런이 생�
 위에서 언급했듯이 각 뉴런들이 동조화 되는 **Co-adaptation**를 방지하는 효과가 있다. 보통의 신경망에서는 weight들이 서로 연결되어있고 한 뉴런으로 모이면서 각자가 어떤 영향을 주는지 알고 있는 상태이다. 따라서 loss를 갱신할 때 서로에게 영향을 준다. Drop out을 통해 학습을 하는 동안, 서로 영향을 주던 weight들의 관례를 break함으로서 각 뉴런들이 독립적으로 feature를 추출할 수 있도록 해준다.
 
 <center>
-<img  src="../public/img/pytorch/co-adatation_prevent.png" width="" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/co-adatation_prevent.png" width="" style='margin: 0px auto;'/>
 <figcaption> Effect of Feature </figcaption>
 <figcaption> 출처 : Dropout: A Simple Way to Prevent Neural Networks from
 Overfitting </figcaption>
@@ -77,7 +77,7 @@ Drop Out 기법으로 인해 랜덤으로 뉴런을 생략하면 투표호과(vo
 
 
 <center>
-<img  src="../public/img/pytorch/dropout_modelconbination.png" width="600" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/dropout_modelconbination.png" width="600" style='margin: 0px auto;'/>
 <figcaption> Model Combination </figcaption>
 <figcaption> 출처 : Dropout: A Simple Way to Prevent Neural Networks from
 Overfitting </figcaption>
@@ -112,7 +112,7 @@ Drop Out은 Training을 할 때 적용이 된다. 생략되지 않을 확률($p$
 <br>
 
 <center>
-<img  src="../public/img/pytorch/dropout_testime.png" width="600" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/dropout_testime.png" width="600" style='margin: 0px auto;'/>
 <figcaption> 사진3. Drop Out 적용(Train vs Test) </figcaption>
 <figcaption> 출처 : Dropout: A Simple Way to Prevent Neural Networks from
 Overfitting </figcaption>
@@ -134,7 +134,7 @@ Overfitting </figcaption>
 위 사진과 같이 '노드'에만 신경을 쓰면 된다. 식으로 보면 다음과 같다.
 
 <center>
-<img  src="../public/img/pytorch/dropout_formula.png" width="800" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/dropout_formula.png" width="800" style='margin: 0px auto;'/>
 <figcaption> 사진4. Train모드에서 Drop Out의 식(Standard vs Dropout) </figcaption>
 </center>
 
@@ -180,7 +180,7 @@ class mymodel(nn.Module):
 아래 사진은 위 코드에 대한 네트워크이다.
 
 <center>
-<img  src="../public/img/pytorch/dropout_python.png" width="800" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/dropout_python.png" width="800" style='margin: 0px auto;'/>
 <figcaption> 사진5. Trin모드에서 Dropout 적용 </figcaption>
 </center>
 
