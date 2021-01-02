@@ -406,7 +406,7 @@ for e in range(1, EPOCH+1):
 
 <br>
 
-지금까지 Regularization에 대해 알아보았다. Pytorch에서도 L2 Regularization 이외에는 제공하지 않을 정도로 나머지 2개는 잘 사용하지 않는 것 같다. 확실히 과적합을 방지하는 기법 중 가장 좋은 방법이라고 생각이 든다.
+지금까지 Regularization에 대해 알아보았다. Pytorch에서도 L2 Regularization 이외에는 제공하지 않을 정도로 나머지 2개는 잘 사용하지 않는 것 같다. 확실히 과적합을 방지하는 기법 중 가장 좋은 방법이라고 생각이 든다. Pytorch 코드 풀버젼은 [여기](https://github.com/gjustin40/Pytorch-Cookbook/blob/master/Advanced/Regularization.ipynb)에서 볼 수 있다.
 
 <br>
 
