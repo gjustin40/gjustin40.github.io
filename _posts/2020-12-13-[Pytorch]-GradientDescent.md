@@ -43,7 +43,7 @@ use_math: true
 <br>
 
 $$
-\theta_{n+1} = \theta_n - \eta\frac{\partial f(\theta_n)}{\partial \theta_n}
+\theta_{n+1} = \theta_n - \eta\frac{\partial f(\theta)}{\partial \theta_n}
 $$
 
 - $\theta_n$ : 현재 매개변수의 값
