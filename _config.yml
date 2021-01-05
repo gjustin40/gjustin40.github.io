@@ -36,9 +36,8 @@ date_format: "%Y-%M-%D"
 
 plugins:
   - jekyll-feed
-
-plugins:
   - jekyll-sitemap
+  
 
 
 category_dir: category/
