@@ -23,7 +23,7 @@ email: gjustin@naver.com
 description: >- # this means to ignore newlines until "baseurl:"
 
 baseurl: "" # the subpath of your site, e.g. /blog
-url: https://gjustin40.github.io # the base hostname & protocol for your site, e.g. http://example.com
+url: 'https://gjustin40.github.io' # the base hostname & protocol for your site, e.g. http://example.com
 github_username: gjustin40
 highlighter: rouge
 svg:
@@ -36,7 +36,8 @@ date_format: "%Y-%M-%D"
 #  - jekyll-feed
 
 plugins:
-  - jekyll-sitemap 
+  - jekyll-sitemap
+
 category_dir: category/
 tag_dir: tag/
 
