@@ -6,5 +6,4 @@ category: Pytorch
 use_math: true
 ---
 
-오늘은 과적합을 방지하는 테크닉 중 하나인 Drop Out에 대해 알아보도록 하자.
-
+aaa
