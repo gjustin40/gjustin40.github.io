@@ -1,21 +1,132 @@
----
-layout: null
----
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    {% for post in site.posts %}
-    <url>
-        <loc>{{ site.url }}{{ post.url | remove: 'index.html' }}</loc>
-    </url>
-    {% endfor %}
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
 
-    {% for page in site.pages %}
-    {% if page.layout != nil %}
-    {% if page.layout != 'feed' %}
-    <url>
-        <loc>{{ site.url }}{{ page.url | remove: 'index.html' }}</loc>
-    </url>
-    {% endif %}
-    {% endif %}
-    {% endfor %}
+
+<url>
+  <loc>https://gjustin40.github.io/</loc>
+  <lastmod>2021-01-05T13:48:52+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://gjustin40.github.io/about/</loc>
+  <lastmod>2021-01-05T13:48:52+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://gjustin40.github.io/public/css/syntax/</loc>
+  <lastmod>2021-01-05T13:48:52+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://gjustin40.github.io/category/</loc>
+  <lastmod>2021-01-05T13:48:52+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://gjustin40.github.io/pytorch/2020/12/30/Pytorch-remove.html</loc>
+  <lastmod>2021-01-05T13:48:52+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://gjustin40.github.io/pytorch/2020/12/30/Pytorch-DropOut.html</loc>
+  <lastmod>2021-01-05T13:48:52+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://gjustin40.github.io/pytorch/2020/12/28/Pytorch-Regularization.html</loc>
+  <lastmod>2021-01-05T13:48:52+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://gjustin40.github.io/pytorch/2020/12/28/Pytorch-Overfitting.html</loc>
+  <lastmod>2021-01-05T13:48:52+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://gjustin40.github.io/pytorch/2020/12/25/Pytorch-PoolingLayer.html</loc>
+  <lastmod>2021-01-05T13:48:52+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://gjustin40.github.io/pytorch/2020/12/24/Pytorch-CustomDatasets.html</loc>
+  <lastmod>2021-01-05T13:48:52+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://gjustin40.github.io/pytorch/2020/12/23/Pytorch-Activation.html</loc>
+  <lastmod>2021-01-05T13:48:52+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://gjustin40.github.io/pytorch/2020/12/20/Pytorch-CNN.html</loc>
+  <lastmod>2021-01-05T13:48:52+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://gjustin40.github.io/pytorch/2020/12/19/Pytorch-Transform.html</loc>
+  <lastmod>2021-01-05T13:48:52+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://gjustin40.github.io/pytorch/2020/12/18/Pytorch-ClassificationProject.html</loc>
+  <lastmod>2021-01-05T13:48:52+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://gjustin40.github.io/pytorch/2020/12/15/Pytorch-LossFunction.html</loc>
+  <lastmod>2021-01-05T13:48:52+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://gjustin40.github.io/pytorch/2020/12/13/Pytorch-NeuralNetwork.html</loc>
+  <lastmod>2021-01-05T13:48:52+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://gjustin40.github.io/pytorch/2020/12/13/Pytorch-GradientDescent.html</loc>
+  <lastmod>2021-01-05T13:48:52+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://gjustin40.github.io/pytorch/2020/12/12/Pytorch-LinearRegression.html</loc>
+  <lastmod>2021-01-05T13:48:52+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://gjustin40.github.io/pytorch/2020/12/11/Pytorch-Autograd.html</loc>
+  <lastmod>2021-01-05T13:48:52+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://gjustin40.github.io/pytorch/2020/12/10/Pytorch-Tensor.html</loc>
+  <lastmod>2021-01-05T13:48:52+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://gjustin40.github.io/computervision/2020/01/20/OCR-%EC%9E%90%EB%8F%99%EC%B0%A8-%EB%B2%88%ED%98%B8%ED%8C%90-Detection-Recognition-without-Deep-Learning.html</loc>
+  <lastmod>2021-01-05T13:48:52+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://gjustin40.github.io/data-structure/2020/01/15/%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0-%EA%B0%9C%EC%9A%94,%EB%B0%B0%EC%97%B4(Array),%ED%81%90(Queue).html</loc>
+  <lastmod>2021-01-05T13:48:52+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://gjustin40.github.io/computervision/2019/08/26/Bag-of-Visual-Words.html</loc>
+  <lastmod>2021-01-05T13:48:52+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://gjustin40.github.io/paper-review/2019/08/24/%EB%85%BC%EB%AC%B8%EB%A6%AC%EB%B7%B0-Character-Recognition-in-Natural-Images(2009).html</loc>
+  <lastmod>2021-01-05T13:48:52+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+
+
 </urlset>
