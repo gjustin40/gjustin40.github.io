@@ -30,7 +30,7 @@ LeNet은 [Gradient-Based Learning Applied to Document Recognition](http://yann.l
 <br>
 
 <center>
-<img  src="../public/img/pytorch/MNIST.png" width="" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/MNIST.png" width="" style='margin: 0px auto;'/>
 <figcaption> MNIST Dataset</figcaption>
 </center>
 
@@ -45,7 +45,7 @@ LeNet은 [Gradient-Based Learning Applied to Document Recognition](http://yann.l
 <br>
 
 <center>
-<img  src="../public/img/pytorch/lenet5-arch.png" width="" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/lenet5-arch.PNG" width="" style='margin: 0px auto;'/>
 <figcaption> Architecture of Lenet5 </figcaption>
 <figcaption> 출처 : http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf </figcaption>
 </center>
@@ -283,7 +283,7 @@ plt.show()
 - `no_grad()` : 계산이 이루어질 때 자동미분 기능을 off한다.
 
 <center>
-<img  src="../public/img/pytorch/lenet5-result.png" width="500" style='margin: 0px auto;'/>
+<img  src="../public/img/pytorch/lenet5-result.PNG" width="500" style='margin: 0px auto;'/>
 <figcaption> Loss </figcaption>
 </center>
 
