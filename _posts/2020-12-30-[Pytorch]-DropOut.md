@@ -207,6 +207,9 @@ class mymodel(nn.Module):
 <br>
 
 Pytorch에서 제공하는 Dropout에 대한 설명을 보면 다음과 같은 내용이 있다.
+
+<br>
+
 > Furthermore, the outputs are scaled by a factor of $\frac{1}{1-p}$ during training. This means that during evaluation the module simply computes an identity function.
 
 <br>
@@ -243,6 +246,8 @@ model(a)
 <br>
 
 Docu에서 scaling에 대한 내용을 봤을 때 혼란스러웠는데, 역시나 이러한 이유가 숨어져있었다. 
+
+<br>
 
 > 또한 논문에서는 p가 살아남을 확률, Python Document에서는 p가 죽을 확률을 나타냅니다. 헷깔리지 않도록 주의!
 
