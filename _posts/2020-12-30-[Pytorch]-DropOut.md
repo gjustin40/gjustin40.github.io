@@ -226,7 +226,7 @@ Train을 할 때 dropout을 적용하면 각 노드들이 $\frac{1}{1-p}$값이 
 
 <br>
 
-따라서 실제 코드를 보면 train과 eval 모드일 때 각각의 dropout의 결과가 다르다.
+따라서 실제 코드를 보면 train과 eval 모드일 때 각각의 dropout의 결과가 다르다.<br>
 (위 코드에서 결과만 가져오면)
 
 ```python
