@@ -203,6 +203,51 @@ class mymodel(nn.Module):
 
 <br>
 
+### Pytorch에서 Dropout의 특징(Scaling)
+<br>
+
+Pytorch에서 제공하는 Dropout에 대한 설명을 보면 다음과 같은 내용이 있다.
+> Furthermore, the outputs are scaled by a factor of $\frac{1}{1-p}$ during training. This means that during evaluation the module simply computes an identity function.
+
+<br>
+
+Train을 할 때 dropout을 적용하면 각 노드들이 $\frac{1}{1-p}$값이 곱해진다는 뜻이다. 갑자기 이 식은 어디서 나온 것일까?
+
+<br>
+
+위 글에서도 언급을 했지만 train할 때 p확률로 노드가 off되었으니, test를 할 때는 (1-p)확률로 노드가 on될 것이다. test할 때는 모든 노드가 정상적으로 작동해야하기에 dropout이 적용되는 노드(Layer)에 (1-p)확률을 곱해줘야한다. 
+
+<br>
+
+그런데 dropout은 train일 때만 단지 노드들을 0값으로 만들어서 마치 그 노드가 train에 참여하지 않는 것 처럼 보이게 만들려는 것일 뿐, test 모드일 때는 모든 수치가 처음 모델과 같아야하기 때문에 (1-p)가 곱해져도 처음 모델과 같도록 조치를 해줘야하고, 따라서 train일 때 $\frac{1}{1-p}$로 scaling되는 것이다.
+
+<br>
+
+따라서 실제 코드를 보면 train과 eval 모드일 때 각각의 dropout의 결과가 다르다.
+(위 코드에서 결과만 가져오면)
+
+```python
+model.train()
+model(a)
+# x1 ===== tensor([ 0.6792,  0.0767, -0.1639, -0.4744], grad_fn=<AddBackward0>)
+# drop ==== tensor([ 0.0000,  0.1535, -0.3277, -0.0000], grad_fn=<MulBackward0>)
+
+model.eval()
+model(a)
+# x1 ===== tensor([ 0.6792,  0.0767, -0.1639, -0.4744], grad_fn=<AddBackward0>)
+# drop ==== tensor([ 0.6792,  0.0767, -0.1639, -0.4744], grad_fn=<AddBackward0>)
+```
+- train모드에서는 x1이 scaling되어 값이 다르게 보이고(노드가 0값으로 바뀌지 않은 노드 참고)
+- test모드에서는 x1과 dropout에서의 노드값이 똑같이 나온다.
+
+<br>
+
+Docu에서 scaling에 대한 내용을 봤을 때 혼란스러웠는데, 역시나 이러한 이유가 숨어져있었다. 
+
+> 또한 논문에서는 p가 살아남을 확률, Python Document에서는 p가 죽을 확률을 나타냅니다. 헷깔리지 않도록 주의!
+
+<br>
+
 지금까지 Dropout에 대해 알아보았다. 논문에 나온 그림들을 보고 참고했을 때는 이해가 어려웠는데, '노드'에만 신경을 쓴다고 생각하면 이해가 쉬웠다. 'weight'에다가 하는 것은 Dropconnect라는 다른 기법이 있다. 기회가 된다면 dropconnect도 한 번 다뤄보도록 하겠다.
 
 <br>
