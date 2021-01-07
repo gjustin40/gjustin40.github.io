@@ -34,8 +34,6 @@ LeNet은 [Gradient-Based Learning Applied to Document Recognition](http://yann.l
 <figcaption> MNIST Dataset</figcaption>
 </center>
 
-<br>
-
 ### Model Architecture
 <br>
 
@@ -60,7 +58,8 @@ LeNet은 [Gradient-Based Learning Applied to Document Recognition](http://yann.l
 
 <br>
 
-입력 이미지는 32x32x1(channel) 이미지이고 두 Convolution Layer의 필터 사이즈는 5x5이다. 각각 6개와 16개의 Feature map을 생성하고 tanh함수를 거쳐서 average Pooling Layer를 거친다. 최종적으로 만들어진 16개의 Feature map은 Fully-connected Layer로 가서 10개의 출력값을 낸다.(0부터 9까지의 숫자)
+입력 이미지는 32x32x1(channel) 이미지이고 두 Convolution Layer의 필터 사이즈는 5x5이다. 각각 6개와 16개의 Feature map을 생성하고 tanh함수를 거쳐서 average Pooling Layer를 거친다. 최종적으로 만들어진 16개의 Feature map은 Fully-connected Layer로 가서 10개의 출력값을 낸다.<br>
+(0부터 9까지의 숫자)
 
 <br>
 
@@ -283,7 +282,7 @@ plt.show()
 - `no_grad()` : 계산이 이루어질 때 자동미분 기능을 off한다.
 
 <center>
-<img  src="../public/img/pytorch/lenet5-result.PNG" width="500" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/lenet5-result.PNG" width="500" style='margin: 0px auto;'/>
 <figcaption> Loss </figcaption>
 </center>
 
