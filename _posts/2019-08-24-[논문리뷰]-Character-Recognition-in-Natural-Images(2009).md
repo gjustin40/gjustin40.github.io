@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "논문리뷰 : Character Recognition in Natural Images(2009)"
+title:  "[논문리뷰] - Character Recognition in Natural Images(2009)"
 date:   2019-08-24
 categories: Paper-Review
 tags: OCR, 논문리뷰
