@@ -6,11 +6,12 @@ category: Pytorch
 use_math: true
 ---
 
-오늘은 비교적 가벼운 주제이고 Pytorch만의 특성인 'model.eval()과 torch.no_grad()의 차이'에 대해 알아보자.<br>
-(코드는 [여기](https://github.com/gjustin40/Pytorch-Cookbook/blob/master/Advanced/model.eval_vs_torch.no_grad.ipynb)를 참고)
+오늘은 비교적 가벼운 주제이고 Pytorch만의 특성인 'model.eval()과 torch.no_grad()의 차이'에 대해 알아보자.(코드는 [여기](https://github.com/gjustin40/Pytorch-Cookbook/blob/master/Advanced/model.eval_vs_torch.no_grad.ipynb)를 참고)
 
 # Pytorch 코드
 <hr>
+
+<br>
 
 두 메소드 모두 보통 Validation 또는 Test할 때 사용을 한다. 아래는 학습을 할 때의 코드이다.
 ```python
@@ -68,6 +69,8 @@ for e in range(EPOCH):
 정리하면 다음과 같다.
 - `model.eval()` : 모델에게 eval모드로 전환된다고 알리고,  Dropout이나 BN 등의 테크닉을 off한다.
 - `torch.no_grad()` : 자동미분(Autograd)를 비활성화하고, 메모리와 연산속도를 증가시킨다.(단, 오차역전파 불가능)
+
+<br>
 
 ### 코드로 보기
 
