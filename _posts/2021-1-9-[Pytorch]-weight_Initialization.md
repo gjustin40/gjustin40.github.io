@@ -36,7 +36,7 @@ use_math: true
 가중치의 초기화가 학습에 어떤 영향을 미치는지 여러가지 실험을 통해 알아보려고 한다. 여러 활성화 함수와 가중치의 초깃값을 조합하여 weight가 어떻게 분포하는지에 대해 알아보자.(히스토그램 활용)
 
 <center>
-<img  src="../public/img/pytorch/layer5.PNG" width="" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/layer5.PNG" width="" style='margin: 0px auto;'/>
 <figcaption> Model Example(5-Layers) </figcaption>
 </center>
 
@@ -101,4 +101,4 @@ use_math: true
 
 <br>
 
-사비에르 글로로트와 요슈아 벤지오의 논문
+일반적으로 많이 사용하는 초기값 중 하나이며 사비에르 글로로트와 요슈아 벤지오가 고안한 **Xavier** 초기값이다. **Xavier** 초기값은 "[Understanding the difficulty of training deep feedforward neural networks](http://proceedings.mlr.press/v9/glorot10a/glorot10a.pdf)"라는 논문에서 다뤘다. 
