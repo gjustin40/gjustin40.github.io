@@ -57,7 +57,7 @@ use_math: true
 <br>
 
 <center>
-<img  src="../public/img/pytorch/sigmoid_weight.jpg" width="" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/sigmoid_weight.jpg" width="" style='margin: 0px auto;'/>
 <figcaption> 실험1. weight의 히스토그램(5-Layers) </figcaption>
 </center>
 
@@ -76,7 +76,7 @@ use_math: true
 <br>
 
 <center>
-<img  src="../public/img/pytorch/sigmoid_weight2.jpg" width="" style='margin: 0px auto;'/>
+<img  src="/public/img/pytorch/sigmoid_weight2.jpg" width="" style='margin: 0px auto;'/>
 <figcaption> 실험2. weight의 히스토그램(5-Layers) </figcaption>
 </center>
 
