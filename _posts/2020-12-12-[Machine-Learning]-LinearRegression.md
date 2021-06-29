@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "[Pytorch] - 선형회귀(Linear Regression)"
+title: "[Machine-Learning] - 선형회귀(Linear Regression)"
 date: 2020-12-12 15:00:00
-category: Pytorch
+category: Machine-Learning
 use_math: true
 ---
 

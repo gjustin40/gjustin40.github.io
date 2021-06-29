@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "[Pytorch] - 신경망 정의(Neural Network)"
+title: "[Deep-Learning] - 신경망 정의(Neural Network)"
 date: 2020-12-13 15:00:00
-category: Pytorch
+category: Deep-Learning
 use_math: true
 ---
 

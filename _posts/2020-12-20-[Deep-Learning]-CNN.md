@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "[Pytorch] - 합성곱 신경망(Convolutional Neural Network, CNN)"
+title: "[Deep-Learning] - 합성곱 신경망(Convolutional Neural Network, CNN)"
 date: 2020-12-20 19:00:00
-category: Pytorch
+category: Deep-Learning
 use_math: true
 ---
 

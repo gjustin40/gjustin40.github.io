@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "[Pytorch] - 가중치 초기화(weight Initialization)"
+title: "[Machine-Learning] - 가중치 초기화(weight Initialization)"
 date: 2021-01-07 19:00:00
-category: Pytorch
+category: Machine-Learning
 use_math: true
 ---
 

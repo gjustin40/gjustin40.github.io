@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "[Pytorch] - 손실(=목적)함수(Loss Function)"
+title: "[Machine-Learning] - 손실(=목적)함수(Loss Function)"
 date: 2020-12-15 23:00:00
-category: Pytorch
+category: Machine-Learning
 use_math: true
 ---
 

@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "[Pytorch] - 정규화(Regularization)"
+title: "[Machine-Learning] - 정규화(Regularization)"
 date: 2020-12-28 19:00:00
-category: Pytorch
+category: Machine-Learning
 use_math: true
 ---
 

@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "[Pytorch] - Drop Out(드롭아웃)"
+title: "[Machine-Learning] - Drop Out(드롭아웃)"
 date: 2020-12-30 19:00:00
-category: Pytorch
+category: Machine-Learning
 use_math: true
 ---
 

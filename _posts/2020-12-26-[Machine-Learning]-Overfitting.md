@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "[Pytorch] - 과적합(Overfitting)"
+title: "[Machine-Learning] - 과적합(Overfitting)"
 date: 2020-12-28 19:00:00
-category: Pytorch
+category: Machine-Learning
 use_math: true
 ---
 

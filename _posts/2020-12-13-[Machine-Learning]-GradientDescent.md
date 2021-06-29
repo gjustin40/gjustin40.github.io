@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "[Pytorch] - 경사하강법(Gradient Descent)"
+title: "[Machine-Learning] - 경사하강법(Gradient Descent)"
 date: 2020-12-13 15:00:00
-category: Pytorch
+category: Machine-Learning
 use_math: true
 ---
 

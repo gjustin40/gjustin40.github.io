@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "[Pytorch] - 폴링 계층(Pooling Layer)"
+title: "[Deep-Learning] - 폴링 계층(Pooling Layer)"
 date: 2020-12-25 19:00:00
-category: Pytorch
+category: Deep-Learning
 use_math: true
 ---
 
