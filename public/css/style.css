@@ -171,7 +171,7 @@ a.nav-item {
 
 a.nav-item:hover { color: #777; }
 
-.badge { font-size: 70%; }
+.badge { font-size: 60%; }
 .badge::before { content: "("; }
 .badge::after { content: ")"; }
 
