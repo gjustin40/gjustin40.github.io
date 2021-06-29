@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Machine-Learning] - Drop Out(드롭아웃)"
+title: "[Machine-Learning] - 드롭아웃(Drop Out)"
 date: 2020-12-30 19:00:00
 category: Machine-Learning
 use_math: true
