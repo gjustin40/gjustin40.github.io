@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "[Deep-Learning] - 신경망 정의(Neural Network)"
+title: "[Machine-Learning] - 신경망 정의(Neural Network)"
 date: 2020-12-13 15:00:00
-category: Deep-Learning
+category: Machine-Learning
 use_math: true
 ---
 

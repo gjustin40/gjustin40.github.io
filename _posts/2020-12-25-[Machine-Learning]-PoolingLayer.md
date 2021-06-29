@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "[Deep-Learning] - 폴링 계층(Pooling Layer)"
+title: "[Machine-Learning] - 폴링 계층(Pooling Layer)"
 date: 2020-12-25 19:00:00
-category: Deep-Learning
+category: Machine-Learning
 use_math: true
 ---
 
