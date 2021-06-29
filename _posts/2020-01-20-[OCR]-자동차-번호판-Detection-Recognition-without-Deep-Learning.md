@@ -2,7 +2,7 @@
 layout: post
 title:  "자동차 번호판 Detection and Recognition without Deep Learning"
 date:   2020-01-20 21:00:00
-categories: ComputerVision
+categories: Project
 ---
 
 오늘 포스팅할 내용은 **'자동차 번호판 인식'**이다. 제목에는 Detection, Recognition 등 영어로 멋진 척을 좀 했지만 사실 주변에 많이 사용되고 있는 번호판 인식이다. 물론 번호판 인식 기술은 매우 오래되어서 이미 인공지능 모델도 많이 나온 상황이다. 하지만 단순히 모델 하나를 딱 써서 하는 것 보다는 뭔가 바닥부터 코딩하는? 느낌을 느껴보고 싶어서 딥러닝 모델 없이 조건을 이용해 번호판 인식을 해봤다. 다양한 방법을 시도하기 위해 여러 블로그, 사이트 등에서 참고했다. 
