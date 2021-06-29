@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "[Machine-Learning] Bag-of-Visual-Words 이해하기"
+title:  "[Machine-Learning] - Bag-of-Visual-Words 이해하기"
 date:   2019-08-26
 categories: Machine-Learning
 tags: cv, computer vision, representation, Machine-Learning
