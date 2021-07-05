@@ -32,7 +32,7 @@ self를 이해하기 위한 포스터이기 때문에 Class에 대해 더 자세
 
 <br>
 
-## 인스턴스(Instance) 생성
+### 인스턴스(Instance) 생성
 정의된 Class를 이용해 하나의 객체로 저장하는 것을 '인스턴스 생성'으로 생각하면 된다. Class란 여러 객체를 찍어내기 위한 '틀'이기 때문에 한 가지 Class로 여러개의 인스턴스를 만들 수 있다.
 
 ```python
@@ -48,9 +48,12 @@ instance3 = MyClass()
 
 <br>
 
-## 클래스 변수와 인스턴스 변수(Class & Instance Variables)
+### 클래스 변수와 인스턴스 변수(Class & Instance Variables)
+
 Class 안에서 사용하는 변수는 **클래스 변수**와 **인스턴스 변수**가 있다.
+
 <br>
+
 **클래스 변수**는 모든 인스턴스에서 동일한 데이터를 사용할 수 있는 변수이다. 즉, 같은 Class로 각각 다른 객체를 생성해도 안에 있는 변수의 값은 언제나 동일하다.
 
 ```python
@@ -80,7 +83,15 @@ class MyClass:
 
 언어는 English로 동일하지만, English를 사용하는 국가는 다양하기 때문에 사람(객체)별로 본인이 해당하는 국가를 설정하면 그것은 각 객체를 구별할 수 있는 **인스턴스 변수**가 된다.
 
-``python
+```python
+person1 = MyClass('America')
+person2 = MyClass('England')
+
+print(person1.country, person2.country)
+# America England
+```
+- 국가(인스턴스 변수)가 다른 사람(객체)를 생성
+- 하지만 두 사람(객체) 모두 같은 언어(클래스 변수)를 사용한다.
 
 
 
