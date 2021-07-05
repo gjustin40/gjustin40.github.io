@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Python] - Class에서 사용하는 self 이해하기"
+title: "[Python] - Class에 대한 전반적인 이야기"
 date: 2021-07-05 13:00:00
 category: Python
 use_math: true
@@ -120,4 +120,34 @@ class를 정의할 때 항상 나타나는 **self**는 과연 무엇일까?
 ## self는 나 자신이다!
 <hr>
 
-class로 객체를 생성할 당시 '객체'에 해당하는 부분이 self인 것이다. class 내부에 있는 메소드나 변수, 속성들은 객체가 
+class로 객체를 생성할 당시 '객체'에 해당하는 부분이 self인 것이다. class 내부에 있는 메소드나 변수, 속성들은 객체가 생성된 후에 **객체.메소드**나 **객체.속성** 처럼 호출이 되기 때문에 self 인자를 사용하는 것이다.<br>
+(반드시 self일 필요는 없고 다른 글자를 사용해도 가능하다.) 
+
+```python
+class MyClass:
+    
+    intro = '제 이름은 {}이고 나이는 {}입니다.'
+    
+    def __init__(aaa, name, age): # self 말고 aaa도 가능
+        aaa.name = name
+        aaa.age = age
+        pass
+    
+    def introduce(aaa):
+        return aaa.intro.format(aaa.name, aaa.age)
+        
+person1 = MyClass('justin', 25)
+person2 = MyClass('sakong', 20)
+
+print(person1.introduce(), person2.introduce())
+```
+- 인스턴스를 생성할 때 **생성자**를 이용하여 인스턴스 변수를 만들면 관리가 쉽다.
+- 객체로부터 호출할 때 매우 편리하다.
+
+<br>
+
+Class에 대해 전반적으로 알아보았다. Python을 다루면서 많이 사용했는데, 내부 요소들을 이해하고 사용한 적은 없었던 것 같다. 제3자가 물어봤을 때 대답을 못 할 것 같다는 생각이 많았는데, 지금은 어느정도 설명은 할 수 있을 것 같다는 자신감이 샘솟는다. 생각없이 코딩을 한 자신을 반성하게 되는 시간이었다.
+
+<br>
+
+## **읽어주셔서 감사합니다.(댓글과 수정사항은 언제나 환영입니다!)**
