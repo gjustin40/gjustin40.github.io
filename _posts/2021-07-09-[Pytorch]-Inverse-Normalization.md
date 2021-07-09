@@ -161,3 +161,9 @@ img_show(trainloader, inv_norm=True)
 ```
 
 <img  src="/public/img/pytorch/inverse_normalized_image.jpg" width="400" style='margin: 0px auto;'/>
+
+<br>
+
+지금까지 정규화(Normalization)된 이미지를 역정규화(Inverse Normalization)을 하는 방법에 대해 알아보았다. 이미지로 딥러닝 프로젝트를 진행한다면 필수로 사용하는 방법이라 Pytorch 자체에서 utils로 제공할 줄 알았지만, 아무리 찾아봐도 보이지가 않았다. 여러 Pytorch 커뮤니티에서도 위 식처럼 직접 대입해서 푸는 방법이 대부분이었다. 이제 방법을 알았으니 유용하게 사용할 일만 남았다!
+
+## **읽어주셔서 감사합니다.(댓글과 수정사항은 언제나 환영입니다!)**
