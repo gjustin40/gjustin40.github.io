@@ -47,6 +47,38 @@ def img_show(dataloader):
 
 - ```mark_grid``` : Pytorch에서 제공하는 메소드로, batch로 묶인 이미지를 grid로 변환한다.
 
+<br>
+
+위 사진을 보면 원본 사진을 보지 않더라도 뭔가 좀 어색하다는 것을 느낄 수 있다.<br>
+정규화가 적용된 이미지의 픽셀값들은 0과 1사이로 변환되기 때문에 Float형으로 바뀐다. 하지만 이미지의 픽셀값은 int형(0~255)이라 ```plt.imshow()```메소드가 호출될 때 float형을 int형으로 바꿔주는 작업이 필요하다. 다행히 ```plt.imshow()```메소드가 자동으로 변환을 해주지만, 이 과정에서 0~1의 값을 0~255값으로 비율에 맞게 변환하기 때문에 원본과는 다소 차이가 나는 결과가 나온다.
+
+<br>
+
+따라서 ```plt.imshow()```메소드의 자동 변환에 의지하는 것 보다는 정규화를 역으로 적용하여 원본 이미지의 픽셀값으로 바꿔준 후 시각화를 해야한다.
+
+<br>
+
+## Inverse Normalization(역 정규화?)
+<hr>
+
+역정규화를 변역하면 보통 **DeNormalization**이라는 표현을 쓰는데, Pytorch에서 검색을 하다보면 **Inverse Normalization**이라는 표현을 더 많이 쓰는 것을 알 수 있다. 그럼 Inverse Normalization을 하는 방법에 대해 알아보자.
+
+<br>
+
+역으로 가기 위해서는 정방향이 어떻게 이루어졌는데 알아야하기에, 정규화 식을 보면 다음과 같다.
+
+$$
+z = \frac{x - \mu}{\sigma}
+$$
+
+<br>
+
+위 식은 정규화식을 포현한 것이고, 밑에는 실제 ```torchvision```에서 이미지에 정규화를 적용할 때 사용하는 식이다. ([공식 문서 참고](https://pytorch.org/vision/stable/transforms.html))
+
+$$
+output[channel] = \frac{input[channel] - mean[channel]}{std[channel]}
+$$
+
 
 
 1. Noramlization 하는 이유 0
