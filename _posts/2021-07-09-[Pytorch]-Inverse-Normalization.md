@@ -27,6 +27,11 @@ transform = transforms.Compose([
 trainset = torchvision.datasets.CIFAR10(root='../data', train=True, download=False, transform=transform)
 trainloader = torch.utils.data.DataLoader(trainset, batch_size=TRAIN_BATCH_SIZE, shuffle=True)
 ```
+- ```transforms.Compose``` : 이미지 데이터에 적용할 여러 메소드들을 한 번에 묶는 메소드(이미지 변환 및 Augmentation)
+- ```transforms.ToTenr``` : array 자료형이었던 이미지 데이터를 tensor 자료형으로 변환
+- ```mean&std``` : 각각 RGB에 적용되는 수치
+
+<br>
 
 ## 정규화 된 이미지 시각화
 <hr>
@@ -56,6 +61,9 @@ def img_show(dataloader):
 
 따라서 ```plt.imshow()```메소드의 자동 변환에 의지하는 것 보다는 정규화를 역으로 적용하여 원본 이미지의 픽셀값으로 바꿔준 후 시각화를 해야한다.
 
+<img  src="/public/img/pytorch/inverse_normalized_image.jpg" width="400" style='margin: 0px auto;'/>
+
+
 <br>
 
 ## Inverse Normalization(역 정규화?)
@@ -73,16 +81,60 @@ $$
 
 <br>
 
-위 식은 정규화식을 포현한 것이고, 밑에는 실제 ```torchvision```에서 이미지에 정규화를 적용할 때 사용하는 식이다. ([공식 문서 참고](https://pytorch.org/vision/stable/transforms.html))
+이미지 데이터는 보통 3개의 채널(RBG)로 이루어져있기 때문에 channel요소가 포함된다. 위 식은 정규화식을 포현한 것이고, 이미지 데이터에 적용하면 다음과 같이 표시할 수 있다. 물론 흑백 이미지일 경우 channel은 1개 뿐이다.([공식 문서 참고](https://pytorch.org/vision/stable/transforms.html))
 
 $$
 output[channel] = \frac{input[channel] - mean[channel]}{std[channel]}
 $$
 
+$$
+output = z,\quad input = x,\quad mean = \mu, \quad std = \sigma
+$$
 
 
-1. Noramlization 하는 이유 0
-2. Noramlization으로 인한 문제점
+<br>
+
+다른 포스터에서도 자주 언급했지만 필자가 매우 멍청이라 역으로 정규화를 하는 과정을 여러번 시도 끝에 이해할 수 있었다. 이해를 쉽게 하기 위해 코드와 수식을 같이 표시할 예정이다.
+
+```python
+normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+
+inv_normalize = transforms.Normalize(mean=[-0.485/0.229, -0.456/0.224, -0.406/0.225],
+                                             std=[1/0.229, 1/0.224, 1/0.225])
+
+inv_normalized_images = inv_normalize(normalized_image)
+```
+
+코드를 보면 **inverse Normalization**의 경우 mean값과 std값에 다양한 수치가 적용된 것을 알 수 있는데, 이미 Normalization이 된 데이터에 위와 같은 값으로 Normalization을 진행하면 원본 이미지를 얻을 수 있다. 수치를 자세히 보면 Normalization을 적용했던 mean과 std의 조합으로 구할 수 있다.
+
+<br>
+
+$$
+\begin{align}
+\mu_{inverse} = -\frac{\mu}{\sigma} \\
+\sigma_{inverse} = \frac{1}{\sigma} \\
+\end{align}
+$$
+
+mean과 std가 각각 위와 같은 식으로 변환되고, **Inverse-Normalization**에서 input(x)으로 들어가는 값은 Normalization이 된 값이다. 따라서 구해야 하는 값(원본 이미지 데이터 $x$값)은 다음과 같다.
+
+$$
+z_{inverse} = \frac{x_{normalized} - \mu_{inverse}}{\sigma_{inverse}} = x
+$$
+
+$$
+x_{normalized} = \frac{x - \mu}{\sigma}
+$$
+
+$(1)$과 $(2)$를 대입하면 다음과 같다.
+
+$$
+\begin{align}
+\mu_{inverse} = -\frac{\mu}{\sigma} \\
+\sigma_{inverse} = \frac{1}{\sigma} \\
+\end{align}
+$$
+
 3. 해결 방법
  - 계산식
 4. 유용한 utils는 없는지 검색
