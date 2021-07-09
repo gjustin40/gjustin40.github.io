@@ -28,11 +28,11 @@ class MyClass:
         pass
 ```
 
-self를 이해하기 위한 포스터이기 때문에 Class에 대해 더 자세히 알고 싶으면 [다음](https://blog.naver.com/PostView.nhn?blogId=kids_power&logNo=221908169295&categoryNo=54&parentCategoryNo=32) 링크를 참고하자!
+Class에 대해 더 자세히 알고 싶으면 [다음](https://blog.naver.com/PostView.nhn?blogId=kids_power&logNo=221908169295&categoryNo=54&parentCategoryNo=32) 링크를 참고하자!
 
 <br>
 
-## 인스턴스(Instance) 생성
+##### 인스턴스(Instance) 생성
 정의된 Class를 이용해 하나의 객체로 저장하는 것을 '인스턴스 생성'으로 생각하면 된다. Class란 여러 객체를 찍어내기 위한 '틀'이기 때문에 한 가지 Class로 여러개의 인스턴스를 만들 수 있다.
 
 ```python
@@ -48,7 +48,7 @@ instance3 = MyClass()
 
 <br>
 
-## 클래스 변수와 인스턴스 변수(Class & Instance Variables)
+##### 클래스 변수와 인스턴스 변수(Class & Instance Variables)
 
 Class 안에서 사용하는 변수는 **클래스 변수**와 **인스턴스 변수**가 있다.
 
@@ -97,7 +97,7 @@ print(person1.country, person2.country)
 
 <br>
 
-## 생성자(Constructor)
+##### 생성자(Constructor)
 Python을 다뤄본 사람이라면 ```__init__```이라는 함수를 본 적이 있을 것이다. ```___init___```이란 Class를 호출할 때 자동으로 실행되는 함수이다.
 
 ```python
@@ -117,8 +117,7 @@ class를 정의할 때 항상 나타나는 **self**는 과연 무엇일까?
 
 <br>
 
-## self는 나 자신이다!
-<hr>
+##### self는 나 자신이다!
 
 class로 객체를 생성할 당시 '객체'에 해당하는 부분이 self인 것이다. class 내부에 있는 메소드나 변수, 속성들은 객체가 생성된 후에 **객체.메소드**나 **객체.속성** 처럼 호출이 되기 때문에 self 인자를 사용하는 것이다.<br>
 (반드시 self일 필요는 없고 다른 글자를 사용해도 가능하다.) 
