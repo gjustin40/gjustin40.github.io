@@ -25,11 +25,31 @@ transform = transforms.Compose([
 ])
 
 trainset = torchvision.datasets.CIFAR10(root='../data', train=True, download=False, transform=transform)
-testset = torchvision.datasets.CIFAR10(root='../data', train=False, download=False, transform=transform)
+trainloader = torch.utils.data.DataLoader(trainset, batch_size=TRAIN_BATCH_SIZE, shuffle=True)
 ```
 
+## 정규화 된 이미지 시각화
+<hr>
 
-1. Noramlization 하는 이유
+하지만 정규화가 된 이미지를 보기 위해 시각화를 하면 원본 사진과는 약간의 괴리가 있다.
+(아래 코드는 이미지를 시각화하는 함수를 정의했다.)
+
+```python
+def img_show(dataloader):
+    images, labels = iter(dataloader).next()      
+    grid = torchvision.utils.make_grid(images, padding=1)
+    grid = grid.permute(1,2,0)
+
+    plt.imshow(grid)
+```
+
+<img  src="/public/img/pytorch/normalized_image.jpg" width="400" style='margin: 0px auto;'/>
+
+- ```mark_grid``` : Pytorch에서 제공하는 메소드로, batch로 묶인 이미지를 grid로 변환한다.
+
+
+
+1. Noramlization 하는 이유 0
 2. Noramlization으로 인한 문제점
 3. 해결 방법
  - 계산식
