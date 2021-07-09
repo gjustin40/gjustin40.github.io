@@ -111,30 +111,53 @@ inv_normalized_images = inv_normalize(normalized_image)
 
 $$
 \begin{align}
-\mu_{inverse} = -\frac{\mu}{\sigma} \\
-\sigma_{inverse} = \frac{1}{\sigma} \\
+\mu_{inverse} & = -\frac{\mu}{\sigma} \\
+\sigma_{inverse} & = \frac{1}{\sigma} \\
+x_{normalized} & = \frac{x - \mu}{\sigma} \\
 \end{align}
 $$
 
 mean과 std가 각각 위와 같은 식으로 변환되고, **Inverse-Normalization**에서 input(x)으로 들어가는 값은 Normalization이 된 값이다. 따라서 구해야 하는 값(원본 이미지 데이터 $x$값)은 다음과 같다.
 
 $$
+\quad \\
 z_{inverse} = \frac{x_{normalized} - \mu_{inverse}}{\sigma_{inverse}} = x
+\quad \\
+\quad 
 $$
 
-$$
-x_{normalized} = \frac{x - \mu}{\sigma}
-$$
 
-$(1)$과 $(2)$를 대입하면 다음과 같다.
+위 식에 $(1)$,$(2)$,$(3)$을 대입하면 다음과 같다.
 
 $$
-\begin{align}
-\mu_{inverse} = -\frac{\mu}{\sigma} \\
-\sigma_{inverse} = \frac{1}{\sigma} \\
-\end{align}
+\begin{aligned}
+\frac{\frac{x-\mu}{\sigma} - (-\frac{\mu}{\sigma})}{\frac{1}{\sigma}} & = \frac{\frac{x-\mu+\mu}{\sigma}}{\frac{1}{\sigma}} \
+= \frac{\frac{x}{\sigma}}{\frac{1}{\sigma}} = x
+\end{aligned}
 $$
 
-3. 해결 방법
- - 계산식
-4. 유용한 utils는 없는지 검색
+원본 이미지 데이터인 $x$로 복구를 했다.
+
+<br>
+
+역정규화를 하는 방법에 대해 알았으니, 코드에 적용시켜 원본 이미지를 시각화하면 다음과 같다.
+
+```python
+def img_show(dataloader, inv_norm=True):
+    images, labels = iter(dataloader).next()
+
+    if inv_norm:
+        inv_normalize = transforms.Normalize(mean=[-0.485/0.229, -0.456/0.224, -0.406/0.225],
+                                             std=[1/0.229, 1/0.224, 1/0.225])
+        images = inv_normalize(images)
+
+    grid = torchvision.utils.make_grid(images, padding=1)
+    grid = grid.permute(1,2,0)
+    
+    plt.axis('off')
+    plt.imshow(grid)
+
+img_show(trainloader, inv_norm=True)
+```
+
+<img  src="/public/img/pytorch/inverse_normalized_image.jpg" width="400" style='margin: 0px auto;'/>
