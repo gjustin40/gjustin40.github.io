@@ -52,7 +52,50 @@ use_math: true
 # Pytorch로 실습하기
 <hr>
 
+실습에는 CIFAR10데이터셋을 이용하고, 모델은 Classification의 대표 중 하나인 VGG16을 이용할 예정이다. 만약 Classification에 대해 알고 싶다면 [CNN을 이용한 CIFAR10 데이터 Classification(분류)](https://gjustin40.github.io/pytorch/2020/12/18/Pytorch-ClassificationProject.html)를 참고하자.
 
+<br>
+
+**전이 학습**을 하는 방법은 다음과 같다.
+1. 데이터 불러오기 및 transfer 적용
+2. 전이학습에 사용할 모델(VGG16) 불러오기(```Trained=True```)
+3. 특징 추출하는 부분은 학습이 되지 않도록 얼리기(Freeze)
+4. 특징들을 분류하는 부분만 학습이 될 수 있도록 설정
+5. 목표로 하는 테스크에 맞게 모델의 출력 사이즈 재설정(class의 수)
+
+<br>
+
+**1번은 이미 과거 포스터에서 다루었기 때문에 따로 설명은 하지 않겠지만, 전체 코드가 잘 작동될 수 있도록 코드는 전부 첨부하고자 한다.**
+
+<br>
+
+#### 1. 데이터 로드 및 transfer 적용
+
+```python
+transform = transforms.Compose([
+    transforms.ToTensor(),
+    transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+])
+
+trainset = torchvision.datasets.CIFAR10(root='../data', train = True,
+                                        download=True, transform=transform)
+testset = torchvision.datasets.CIFAR10(root='../data', train = False,
+                                        download=True, transform=transform)
+
+trainloader = torch.utils.data.DataLoader(trainset, batch_size = train_batch,
+                                          shuffle = True, num_workers = 1)
+testloader = torch.utils.data.DataLoader(testset, batch_size = test_batch,
+                                          shuffle = True, num_workers = 1)
+```
+- Import하는 부분이 있으면 너무 난잡해보여서 생략했다.
+
+<br>
+
+2. 전이학습에 사용할 모델(VGG16) 불러오기(```Trained=True```)
+
+```python
+
+```
 
 4. 하는 방법(코드)
 - vgg16으로 예시(classification)
