@@ -91,11 +91,91 @@ testloader = torch.utils.data.DataLoader(testset, batch_size = test_batch,
 
 <br>
 
-2. 전이학습에 사용할 모델(VGG16) 불러오기(```Trained=True```)
+#### 2. 전이학습에 사용할 모델(VGG16) 불러오기(```Trained=True```)
 
 ```python
+from torchvision import models
+vgg = models.vgg16(pretrained=True)
+vgg
 
+# VGG(
+#   (features): Sequential(
+#     (0): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+#     (1): ReLU(inplace=True)
+#     (2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+#     (3): ReLU(inplace=True)
+#     (4): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+#     (5): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+#     (6): ReLU(inplace=True)
+#     (7): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+#     (8): ReLU(inplace=True)
+#     (9): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+#     (10): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+#     (11): ReLU(inplace=True)
+#     (12): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+#     (13): ReLU(inplace=True)
+#     (14): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+#     (15): ReLU(inplace=True)
+#     (16): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+#     (17): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+#     (18): ReLU(inplace=True)
+#     (19): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+#     (20): ReLU(inplace=True)
+#     (21): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+#     (22): ReLU(inplace=True)
+#     (23): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+#     (24): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+#     (25): ReLU(inplace=True)
+#     (26): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+#     (27): ReLU(inplace=True)
+#     (28): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+#     (29): ReLU(inplace=True)
+#     (30): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+#   )
+#   (avgpool): AdaptiveAvgPool2d(output_size=(7, 7))
+#   (classifier): Sequential(
+#     (0): Linear(in_features=25088, out_features=4096, bias=True)
+#     (1): ReLU(inplace=True)
+#     (2): Dropout(p=0.5, inplace=False)
+#     (3): Linear(in_features=4096, out_features=4096, bias=True)
+#     (4): ReLU(inplace=True)
+#     (5): Dropout(p=0.5, inplace=False)
+#     (6): Linear(in_features=4096, out_features=1000, bias=True)
+#   )
+# )
 ```
+- ```VGG16``` : 뒤에 붙은 숫자 16은 모델의 깊이를 말한다. 16말고도 13, 19 등이 있다.
+- ```pretrained``` : 학습 완료 여부를 설정하는 부분, VGG16모델의 껍데기만 사용할 예정이라면 False를 설정하면 된다.
+- ```VGG16```모델의 속을 보면 크게 ```features```와 ```avgpool```, ```classifier```부분으로 나눠져 있다.
+- ```features``` : 전이학습에 활용할 **특징 추출**부분
+- ```avgpool``` : 입력 이미지의 사이즈에 상관없이 사용자가 원하는 output size로 출력
+- ```classifier``` : 우리가 학습하고자 하는 부분으로, 특징들을 이용해 분류를 하고 예측을 하는 부분.
+
+<br>
+
+#### 3. 특징 추출하는 부분은 학습이 되지 않도록 얼리기(Freeze)
+Tensor의 자동미분을 off해서 역전파가 이루어지지 않도록 하는 부분[(자동미분(Autograd))](https://gjustin40.github.io/pytorch/2020/12/11/Pytorch-Autograd.html)
+
+```python
+# 모델 고정하기(학습x)
+for p in vgg.features.parameters():
+    p.requires_grad = False
+```
+- ```vgg.features.parameters``` : features부분에 있는 파라미터(가중치)를 불러오는 부분
+- ```requires_grad``` : 파라미터들이 학습되지 않도록 미분을 off하는 부분
+- ```features```부분의 파라미터들은 loss를 계산하지 않기 때문에 역전파가 이루어지지 않아 학습이 되지 않는다.
+- 모델을 불러올 때 이미 ```requires_grad```의 기본값은 ```True```이기 때문에 다른 부분은 그냥 두면 된다.
+
+<br>
+
+#### 5. 목표로 하는 테스크에 맞게 모델의 출력 사이즈 재설정(class의 수)
+ImageNet의 데이터셋으로 학습된 모델들은 보통 1000개의 class를 가지고 있기 때문에 마지막 ```classifier```의 output size는 1000이다. 따라서 전이학습에 사용하는 데이터셋에 맞도록 output size를 설정해야한다.
+
+```python
+vgg.classifier[6] = nn.Linear(in_features=4096, out_features=10, bias=True)
+```
+- ```vgg.classifier[6]``` : classifier부분에서 가장 마지막 layer
+- ```nn.Linear``` : 가장 마지막 부분의 ```out_features```크기를 CIFAR10에 맞도록 10으로 설정
 
 4. 하는 방법(코드)
 - vgg16으로 예시(classification)
