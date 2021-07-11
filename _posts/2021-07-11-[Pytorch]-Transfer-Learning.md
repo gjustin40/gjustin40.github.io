@@ -22,6 +22,9 @@ use_math: true
 <hr>
 
 **전이**라는 단어를 인터넷에 검색해보았다. 물론 대부분 비슷했지만 의학에서 사용한 **전이**의 뜻이 딥러닝에서의 **전이**와 가장 비슷하다고 생각했다.(개인적인 생각이다.....)
+
+<br>
+
 > 내담자가 과거에 중요하게 생각했던 사람에게 느꼈던 감정을 상담자에게 옮겨서 생각하는 것 [나무위키](https://namu.wiki/w/%EC%A0%84%EC%9D%B4)
 
 <br>
@@ -65,9 +68,9 @@ use_math: true
 
 <br>
 
-**최대한 전체 코드를 첨부할 예정이지만, 포스트 주제에 맞지 않는 부분은 생략할 예정이다.**
+**최대한 전체 코드를 첨부할 예정이지만, 포스트 주제에 맞지 않는 부분은 생략했다.**
 
-#### 1. 데이터 로드 및 transfer 적용
+### 1. 데이터 로드 및 transfer 적용
 
 ```python
 transform = transforms.Compose([
@@ -89,7 +92,7 @@ testloader = torch.utils.data.DataLoader(testset, batch_size = test_batch,
 
 <br>
 
-#### 2. 전이학습에 사용할 모델(VGG16) 불러오기(```Trained=True```)
+### 2. 전이학습에 사용할 모델(VGG16) 불러오기(```Trained=True```)
 
 ```python
 from torchvision import models
@@ -151,11 +154,10 @@ vgg
 
 <br>
 
-#### 3. 특징 추출하는 부분은 학습이 되지 않도록 얼리기(Freeze)
+### 3. 특징 추출하는 부분은 학습이 되지 않도록 얼리기(Freeze)
 Tensor의 자동미분을 off해서 역전파가 이루어지지 않도록 하는 부분[(자동미분(Autograd))](https://gjustin40.github.io/pytorch/2020/12/11/Pytorch-Autograd.html)
 
 ```python
-# 모델 고정하기(학습x)
 for p in vgg.features.parameters():
     p.requires_grad = False
 ```
@@ -166,7 +168,7 @@ for p in vgg.features.parameters():
 
 <br>
 
-#### 5. 목표로 하는 테스크에 맞게 모델의 출력 사이즈 재설정(class의 수)
+### 5. 목표로 하는 테스크에 맞게 모델의 출력 사이즈 재설정(class의 수)
 ImageNet의 데이터셋으로 학습된 모델들은 보통 1000개의 class를 가지고 있기 때문에 마지막 ```classifier```의 output size는 1000이다. 따라서 전이학습에 사용하는 데이터셋에 맞도록 output size를 설정해야한다.
 
 ```python
